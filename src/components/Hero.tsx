@@ -7,7 +7,10 @@ export default function Hero() {
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <div className="grid gap-10 md:grid-cols-12 items-center">
           <div className="md:col-span-7">
-            <h1 className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05] animate-fade-up anim-delay-1 stagger-words">
+            <h1
+              className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05] animate-fade-up anim-delay-1 stagger-words"
+              suppressHydrationWarning
+            >
               {brand.tagline}
             </h1>
 

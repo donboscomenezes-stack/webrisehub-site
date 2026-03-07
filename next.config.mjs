@@ -13,8 +13,11 @@ const normalizedBasePath = useBasePath
 
 const basePath = normalizedBasePath === "/" ? "" : normalizedBasePath;
 
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig = {
-  output: "export", // static export for Cloudflare Pages
+  // Use static export for Cloudflare Pages only in production builds.
+  ...(isProd ? { output: "export" } : {}),
   ...(basePath ? { basePath, assetPrefix: basePath } : {})
 };
 
