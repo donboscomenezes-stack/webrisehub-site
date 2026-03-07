@@ -22,7 +22,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Book a Strategy Call
+                Book a 15-min Call
               </a>
               <a
                 href={links.whatsapp}

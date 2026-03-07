@@ -1,15 +1,19 @@
 export const brand = {
-  name: "WebAscend",
+  name: "WebRiseHub",
   tagline: "Websites that turn visitors into leads.",
   subtagline:
     "Premium design, clean messaging, and fast performance—built for service businesses in India and the US."
 };
 
-// Replace these with your real links later
+// Replace these with your real links later (or set env vars in .env.local)
 export const links = {
-  bookCall: "https://calendly.com/YOUR-LINK",     // placeholder
-  whatsapp: "https://wa.me/91XXXXXXXXXX",        // placeholder
-  email: "michaellopes183@gmail.com"                   // placeholder
+  bookCall:
+    process.env.NEXT_PUBLIC_BOOK_CALL_URL ??
+    "https://calendar.google.com/calendar/appointments/schedules/AcZssZ1sXQu80QBDUEoX3otyJ9hgnvcFaZ8K_D3VzKSDIgDTqyatmBAkpmXHoVg7U4WT7sDKZLqdRsg0?gv=true",
+  whatsapp:
+    process.env.NEXT_PUBLIC_WHATSAPP_URL ??
+    "https://wa.me/91XXXXXXXXXX", // placeholder
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "donbosco.menezes@webrisehub.com"
 };
 
 export const socialProof = {
