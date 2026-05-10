@@ -1,12 +1,12 @@
 import { brand, links } from "@/lib/config";
+import { socialProof } from "@/lib/config";
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="glow absolute inset-0" />
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <div className="grid gap-10 md:grid-cols-12 items-center">
-          <div className="md:col-span-7">
+        <div className="max-w-3xl">
             <h1
               className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05] animate-fade-up anim-delay-1 stagger-words"
               suppressHydrationWarning
@@ -25,39 +25,19 @@ export default function Hero() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Book a 15-min Call
+                Book a Free Consultation
               </a>
               <a
-                href={links.whatsapp}
+                href="#work"
                 className="inline-flex items-center justify-center rounded-xl border border-white/10 px-6 py-3 font-semibold text-text hover:bg-white/5 transition-transform duration-200 hover:-translate-y-0.5 hover-scale"
-                target="_blank"
-                rel="noreferrer"
               >
-                Chat on WhatsApp
+                View Our Work
               </a>
             </div>
-          </div>
 
-          <div className="md:col-span-5">
-            <div className="glass rounded-3xl p-6 animate-fade-up anim-delay-2 reveal">
-              <div className="rounded-2xl border border-white/10 bg-charcoal p-5">
-                <p className="text-xs text-muted">Preview</p>
-                <p className="mt-2 text-lg font-semibold">Premium, modern, and built to convert.</p>
-                <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/5 animate-float">
-                  <img
-                    src="/bg.gif"
-                    alt="Website preview"
-                    className="h-52 w-full object-cover opacity-90"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
-              </div>
-              <p className="mt-4 text-sm text-muted fade-up">
-                This area can later become a real screenshot, a case study card, or an interactive demo.
-              </p>
-            </div>
-          </div>
+            <p className="mt-6 max-w-2xl text-sm text-muted animate-fade-up anim-delay-3 fade-up">
+              {socialProof.regionLine}
+            </p>
         </div>
       </div>
 

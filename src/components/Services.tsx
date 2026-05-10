@@ -8,9 +8,9 @@ export default function Services() {
     <Section
       id="services"
       title="What We Do"
-      subtitle="Premium websites + marketing systems that help small businesses grow with clarity."
+      subtitle="Professional digital solutions built to help businesses stand out online and generate real growth."
     >
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {services.map((s, idx) => (
           <div
             key={s.title}
@@ -18,7 +18,6 @@ export default function Services() {
           >
             <h3 className="text-lg font-semibold">{s.title}</h3>
             <p className="mt-3 text-sm text-muted">{s.desc}</p>
-            <p className="mt-6 text-sm text-accent font-semibold">Learn more →</p>
           </div>
         ))}
       </div>

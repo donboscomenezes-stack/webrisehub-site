@@ -7,8 +7,8 @@ export default function Portfolio() {
   return (
     <Section
       id="work"
-      title="Example Work"
-      subtitle="Realistic examples of what we build—premium design, fast performance, and conversion-first structure."
+      title="Recent Projects"
+      subtitle="A selection of modern websites, landing pages, and digital experiences built for growing businesses."
     >
       <div className="grid gap-5 md:grid-cols-3">
         {portfolioItems.map((item, idx) => (

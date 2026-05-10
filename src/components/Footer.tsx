@@ -6,13 +6,14 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
         <div>
           <p className="font-semibold">{brand.name}</p>
-          <p className="text-sm text-muted mt-1">Premium websites & marketing for India + US.</p>
+          <p className="text-sm text-muted mt-1">WebRiseHub builds modern websites, landing pages, business blogs, and digital experiences designed for growth.</p>
         </div>
 
         <div className="text-sm text-muted flex flex-wrap gap-4">
+          <a className="hover:text-text" href="#about">About</a>
           <a className="hover:text-text" href="#services">Services</a>
           <a className="hover:text-text" href="#work">Work</a>
-          <a className="hover:text-text" href="#pricing">Pricing</a>
+          <a className="hover:text-text" href="#process">Process</a>
           <a className="hover:text-text" href="#contact">Contact</a>
           <a className="hover:text-text" href={`mailto:${links.email}`}>{links.email}</a>
         </div>
