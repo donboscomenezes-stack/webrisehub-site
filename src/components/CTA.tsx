@@ -12,7 +12,7 @@ export default function CTA() {
             Let’s create a website that helps your business stand out, build trust, and grow online.
           </p>
           <p className="mt-3 max-w-2xl text-sm text-muted">
-            We keep the process transparent, so you can review the delivered output with confidence before finalizing payment.
+            We follow a service-first approach, so you can review the delivered work before making payment. No upfront payment is required.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">

@@ -71,7 +71,7 @@ export const whyChooseUs = {
     "Clear business-focused messaging",
     "Professional branding approach",
     "Ongoing support and updates",
-    "Output-first delivery with transparent payment confidence"
+    "Service-first delivery with clear and transparent payment terms"
   ]
 };
 
