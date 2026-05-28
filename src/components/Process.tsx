@@ -5,7 +5,7 @@ const stepBackgrounds = [
   "/Discovery.jpg",
   "/Design.jpg",
   "/Development.jpg",
-  "/Launch Support.jpg"
+  "/Launch-Support.jpg"
 ];
 
 export default function Process() {
