@@ -21,7 +21,7 @@ export default function HomePage() {
         <WhyChooseUs />
         <Process />
         <Portfolio />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <CTA />
         <Contact />
       </main>

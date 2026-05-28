@@ -41,15 +41,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Floating WhatsApp button */}
-      <a
-        href={links.whatsapp}
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-5 right-5 z-50 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-accent2 transition-transform duration-200 hover:-translate-y-1 hover-scale"
-      >
-        WhatsApp
-      </a>
     </section>
   );
 }

@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en">
-      <body>
+      <body id="top">
         {children}
         <Script src={`${basePath}/animations.js`} strategy="afterInteractive" />
       </body>

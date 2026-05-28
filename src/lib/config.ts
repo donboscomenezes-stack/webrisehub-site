@@ -10,9 +10,6 @@ export const links = {
   bookCall:
     process.env.NEXT_PUBLIC_BOOK_CALL_URL ??
     "https://calendar.google.com/calendar/appointments/schedules/AcZssZ1sXQu80QBDUEoX3otyJ9hgnvcFaZ8K_D3VzKSDIgDTqyatmBAkpmXHoVg7U4WT7sDKZLqdRsg0?gv=true",
-  whatsapp:
-    process.env.NEXT_PUBLIC_WHATSAPP_URL ??
-    "https://wa.me/91XXXXXXXXXX", // placeholder
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "donbosco.menezes@webrisehub.com"
 };
 
@@ -29,22 +26,6 @@ export const services = [
   {
     title: "QA & Release Testing",
     desc: "We support releases with manual test cases, Postman API test coverage, UI automation reports, and post-release validation to confirm everything is working as expected."
-  },
-  {
-    title: "Performance Marketing",
-    desc: "Data-driven marketing strategies designed to improve visibility, generate leads, and help businesses grow consistently across digital platforms."
-  },
-  {
-    title: "SEO & Growth Systems",
-    desc: "SEO-focused website structures, blog strategies, and content systems that help your business rank better and attract long-term organic traffic."
-  },
-  {
-    title: "Social Media Management",
-    desc: "We manage and grow social media pages through consistent content creation, creative design, branding, and audience engagement strategies."
-  },
-  {
-    title: "Content & Creative Design",
-    desc: "Professional visuals, website graphics, social media creatives, and branding assets designed to strengthen your online identity."
   },
   {
     title: "Landing Page Design",
