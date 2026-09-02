@@ -1,8 +1,8 @@
 export const brand = {
   name: "WebRiseHub",
-  tagline: "Websites That Help Businesses Grow Faster",
+  tagline: "Where Players Engage. Brands Rise.",
   subtagline:
-    "We design modern websites, landing pages, and content-driven platforms that help businesses build credibility, attract customers, and grow online with confidence."
+    "Interactive games designed to attract attention and keep people coming back."
 };
 
 // Replace these with your real links later (or set env vars in .env.local)
@@ -15,7 +15,7 @@ export const links = {
 
 export const socialProof = {
   regionLine:
-    "Helping startups, local businesses, and growing brands build a stronger digital presence through design, content, and marketing."
+    "Built for campaigns, launches, local promotions, and brands that want attention beyond ordinary ads."
 };
 
 export const services = [

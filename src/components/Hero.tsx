@@ -1,14 +1,13 @@
-import { brand, links } from "@/lib/config";
-import { socialProof } from "@/lib/config";
+import { brand } from "@/lib/config";
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="glow absolute inset-0" />
-      <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <div className="max-w-3xl">
+      <div className="mx-auto flex max-w-7xl px-6 py-12 md:px-10 md:py-16">
+        <div className="max-w-3xl text-left">
             <h1
-              className="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05] animate-fade-up anim-delay-1 stagger-words"
+              className="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.04] animate-fade-up anim-delay-1 stagger-words"
               suppressHydrationWarning
             >
               {brand.tagline}
@@ -18,26 +17,10 @@ export default function Hero() {
               {brand.subtagline}
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-3 animate-fade-up anim-delay-3 fade-up">
-              <a
-                href={links.bookCall}
-                className="inline-flex items-center justify-center rounded-xl bg-accent px-6 py-3 font-semibold text-white hover:bg-accent2 transition-transform duration-200 hover:-translate-y-0.5 hover-scale"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Book a Free Consultation
-              </a>
-              <a
-                href="#work"
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 px-6 py-3 font-semibold text-text hover:bg-white/5 transition-transform duration-200 hover:-translate-y-0.5 hover-scale"
-              >
-                View Our Work
-              </a>
-            </div>
-
-            <p className="mt-6 max-w-2xl text-sm text-muted animate-fade-up anim-delay-3 fade-up">
-              {socialProof.regionLine}
+            <p className="mt-5 max-w-2xl text-base font-semibold text-white animate-fade-up anim-delay-2 fade-up">
+              Advertise with WebRiseHub and put your brand inside experiences people actually enjoy.
             </p>
+
         </div>
       </div>
 

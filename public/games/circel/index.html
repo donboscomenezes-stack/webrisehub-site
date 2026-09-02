@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DrawMatch</title>
+    <meta name="description" content="Pick a shape, draw it freehand, and see how close you get.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="bg-shapes" aria-hidden="true"></div>
+    <canvas id="fxCanvas" class="fx-canvas" aria-hidden="true"></canvas>
+
+    <main class="app-shell">
+      <section id="landingScreen" class="screen screen-active landing-screen">
+        <div class="brand">DrawMatch</div>
+        <h1>How Well Can You Draw?</h1>
+        <p>Pick a shape. Draw it. See how close you get.</p>
+        <button id="startBtn" class="button button-primary">Start Drawing</button>
+
+        <div class="daily-challenge">
+          <div>
+            <span class="mini-label">Today's Challenge</span>
+            <strong id="dailyName">Draw a Star</strong>
+            <small id="dailyBest">Best Score: 0%</small>
+          </div>
+          <button id="dailyBtn" class="button button-quiet">Try Today's Challenge</button>
+        </div>
+      </section>
+
+      <section id="chooseScreen" class="screen choose-screen" aria-labelledby="chooseTitle">
+        <button class="back-button" data-go="landingScreen" aria-label="Back">←</button>
+        <h2 id="chooseTitle">What do you want to draw?</h2>
+        <div id="shapeGrid" class="shape-grid"></div>
+      </section>
+
+      <section id="referenceScreen" class="screen reference-screen" aria-labelledby="referenceTitle">
+        <div class="top-row">
+          <button class="back-button" data-go="chooseScreen" aria-label="Back">←</button>
+          <label class="toggle">
+            <input id="keepReference" type="checkbox">
+            <span>Keep reference visible</span>
+          </label>
+        </div>
+        <h2 id="referenceTitle">Memorize this</h2>
+        <canvas id="referenceCanvas" class="reference-canvas" width="320" height="320"></canvas>
+        <div id="countdown" class="countdown">3</div>
+      </section>
+
+      <section id="drawScreen" class="screen draw-screen" aria-labelledby="drawTitle">
+        <div class="draw-header">
+          <button class="back-button" data-go="chooseScreen" aria-label="Back">←</button>
+          <div>
+            <span class="mini-label">Classic Mode</span>
+            <h2 id="drawTitle">Draw a Circle</h2>
+          </div>
+          <div class="timer" id="timer">0:00</div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="drawingCanvas" class="drawing-canvas" width="900" height="620"></canvas>
+          <div id="emptyHint" class="empty-hint">Draw here</div>
+          <canvas id="referenceThumb" class="reference-thumb" width="120" height="120" hidden></canvas>
+        </div>
+
+        <div class="toolbar" aria-label="Drawing tools">
+          <button id="undoBtn" class="icon-button" aria-label="Undo" title="Undo">↶</button>
+          <button id="redoBtn" class="icon-button" aria-label="Redo" title="Redo">↷</button>
+          <button id="clearBtn" class="icon-button" aria-label="Clear" title="Clear">×</button>
+          <label class="brush-control">
+            <span>Brush</span>
+            <input id="brushSize" type="range" min="4" max="28" value="11">
+          </label>
+          <label class="sound-toggle">
+            <input id="soundToggle" type="checkbox">
+            <span>Sound</span>
+          </label>
+          <button id="finishBtn" class="button button-primary">Finish Drawing</button>
+        </div>
+      </section>
+
+      <section id="resultScreen" class="screen result-screen" aria-labelledby="resultTitle">
+        <div id="scoreBurst" class="score-burst">
+          <span id="animatedScore">0%</span>
+          <strong id="resultTitle">MATCH</strong>
+          <em id="rating">Great Drawing</em>
+        </div>
+
+        <div class="comparison">
+          <div class="compare-pane">
+            <span>Target</span>
+            <canvas id="targetResultCanvas" width="260" height="260"></canvas>
+          </div>
+          <div class="versus">vs.</div>
+          <div class="compare-pane">
+            <span>Your drawing</span>
+            <canvas id="userResultCanvas" width="260" height="260"></canvas>
+          </div>
+        </div>
+
+        <label class="overlay-toggle">
+          <input id="overlayToggle" type="checkbox">
+          <span>Show comparison overlay</span>
+        </label>
+        <canvas id="overlayCanvas" class="overlay-canvas" width="360" height="360" hidden></canvas>
+
+        <div class="score-grid">
+          <div><span>Accuracy</span><strong id="metricAccuracy">0%</strong></div>
+          <div><span>Shape similarity</span><strong id="metricShape">0%</strong></div>
+          <div><span>Position accuracy</span><strong id="metricPosition">0%</strong></div>
+          <div><span>Size accuracy</span><strong id="metricSize">0%</strong></div>
+          <div><span>Outline similarity</span><strong id="metricStroke">0%</strong></div>
+        </div>
+
+        <div class="stats-strip">
+          <div><span>Best Score</span><strong id="bestScore">0%</strong></div>
+          <div><span>Average</span><strong id="averageScore">0%</strong></div>
+          <div><span>Completed</span><strong id="completedCount">0</strong></div>
+          <div><span>Best Object</span><strong id="bestObject">-</strong></div>
+          <div id="streakStat"><span>Streak</span><strong>0</strong></div>
+        </div>
+
+        <div class="result-actions">
+          <button id="tryAgainBtn" class="button button-primary">Try Again</button>
+          <button id="elseBtn" class="button button-secondary">Draw Something Else</button>
+          <button id="shareBtn" class="button button-quiet">Share Score</button>
+        </div>
+        <p id="shareStatus" class="share-status" role="status"></p>
+      </section>
+    </main>
+
+    <script type="module" src="scripts/app.js"></script>
+  </body>
+</html>

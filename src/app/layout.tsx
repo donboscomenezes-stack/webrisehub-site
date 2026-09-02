@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./animations.css";
+import "./scroll-life.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 
@@ -10,9 +11,9 @@ const siteUrl = siteUrlRaw.startsWith("http://") || siteUrlRaw.startsWith("https
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "WebRiseHub — Websites That Help Businesses Grow Faster",
+  title: "WebRiseHub — Where Players Engage. Brands Rise.",
   description:
-    "Modern websites, landing pages, content platforms, and QA-backed digital solutions that help businesses build trust and grow online."
+    "Interactive games designed to attract attention, keep players coming back, and place brands inside experiences people enjoy."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -23,6 +24,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en">
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8579719479106704"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body id="top">
         {children}
         <Script src={`${basePath}/animations.js`} strategy="afterInteractive" />
