@@ -41,6 +41,15 @@ const games: Game[] = [
     duration: "3-10 min",
     status: "NEW",
     accent: "purple"
+  },
+  {
+    title: "X0 Arena",
+    category: "Casual",
+    description: "Play a 3D Tic-Tac-Toe match with bot levels, shapes, and character pieces.",
+    href: "/games/x0-arena",
+    duration: "1-3 min",
+    status: "NEW",
+    accent: "cyan"
   }
 ];
 
@@ -60,6 +69,14 @@ function GameVisual({ game }: { game: Game }) {
           {["♜", "♞", "♝", "♛", "♚", "♟"].map((piece, index) => (
             <span key={`${piece}-${index}`}>{piece}</span>
           ))}
+        </div>
+      ) : game.title === "X0 Arena" ? (
+        <div className="x0-art" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <b>X</b>
+          <b>0</b>
         </div>
       ) : (
         <div className="build-art" aria-hidden="true">
