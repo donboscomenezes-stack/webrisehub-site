@@ -2,6 +2,7 @@
 /* oxlint-disable react/react-compiler, react-hooks/exhaustive-deps */
 
 import { Chess, type Move, type Square } from 'chess.js';
+import stockfishUrl from 'stockfish/bin/stockfish-18-asm.js?url';
 import {
   BarChart3,
   Bot,
@@ -16,6 +17,7 @@ import {
   Moon,
   RotateCcw,
   Settings,
+  Share2,
   Sparkles,
   Sun,
   Swords,
@@ -38,7 +40,7 @@ import {
 } from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
 
-type AppView = 'home' | 'botSetup' | 'localSetup' | 'game' | 'stats';
+type AppView = 'home' | 'botSetup' | 'localSetup' | 'onlineSetup' | 'game' | 'stats';
 type GameMode = 'bot' | 'local';
 type Difficulty = 'easy' | 'medium' | 'hard';
 type PlayerColorChoice = 'white' | 'black' | 'random';
@@ -275,11 +277,84 @@ function useStockfish() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
-    const worker = new Worker(new URL('../engine/stockfishWorker.ts', import.meta.url), { type: 'module' });
+    const workerSource = `
+      const stockfishUrl = ${JSON.stringify(stockfishUrl)};
+      const settings = {
+        easy: { skill: 3, depth: 4, multiPv: 3 },
+        medium: { skill: 10, depth: 9, multiPv: 2 },
+        hard: { skill: 18, depth: 15, multiPv: 1 }
+      };
+      let engine = null;
+      let activeRequest = null;
+      let candidates = new Map();
+
+      function post(line) {
+        if (engine) engine.postMessage(line);
+      }
+
+      function chooseMove(difficulty, bestMove) {
+        const ordered = [...candidates.entries()].sort(([a], [b]) => a - b).map(([, move]) => move);
+        if (!ordered.length && bestMove) return bestMove;
+        if (difficulty === 'hard') return bestMove || ordered[0] || null;
+        if (difficulty === 'medium') return Math.random() < 0.82 ? ordered[0] || bestMove : ordered[1] || ordered[0] || bestMove;
+        const roll = Math.random();
+        if (roll < 0.55) return ordered[0] || bestMove;
+        if (roll < 0.82) return ordered[1] || ordered[0] || bestMove;
+        return ordered[2] || ordered[1] || ordered[0] || bestMove;
+      }
+
+      try {
+        engine = new Worker(stockfishUrl);
+        engine.onmessage = (event) => {
+          const line = String(event.data);
+          const pvMatch = line.match(/\\bmultipv\\s+(\\d+).*?\\bpv\\s+([a-h][1-8][a-h][1-8][qrbn]?)/);
+          if (pvMatch) candidates.set(Number(pvMatch[1]), pvMatch[2]);
+          if (line.startsWith('bestmove') && activeRequest) {
+            const parts = line.split(/\\s+/);
+            const best = parts[1] && parts[1] !== '(none)' ? parts[1] : null;
+            const move = chooseMove(activeRequest.difficulty, best);
+            self.postMessage({ type: 'bestmove', requestId: activeRequest.requestId, move, candidates: [...candidates.values()] });
+            activeRequest = null;
+            candidates = new Map();
+          }
+        };
+        engine.onerror = () => {
+          if (activeRequest) self.postMessage({ type: 'error', requestId: activeRequest.requestId, message: 'Stockfish worker failed.' });
+          activeRequest = null;
+        };
+        post('uci');
+        self.postMessage({ type: 'ready' });
+      } catch {
+        self.postMessage({ type: 'error', requestId: 'init', message: 'Stockfish could not load.' });
+      }
+
+      self.onmessage = (event) => {
+        if (event.data.type !== 'bestmove') return;
+        if (!engine) {
+          self.postMessage({ type: 'error', requestId: event.data.requestId, message: 'Stockfish could not load.' });
+          return;
+        }
+        activeRequest = event.data;
+        candidates = new Map();
+        const level = settings[event.data.difficulty];
+        post('stop');
+        post('setoption name Skill Level value ' + level.skill);
+        post('setoption name MultiPV value ' + level.multiPv);
+        post('position fen ' + event.data.fen);
+        post('go depth ' + level.depth);
+      };
+    `;
+    const workerUrl = URL.createObjectURL(new Blob([workerSource], { type: 'text/javascript' }));
+    const worker = new Worker(workerUrl);
     workerRef.current = worker;
     worker.onmessage = (event: MessageEvent<EngineMessage | { type: 'ready' }>) => {
       if (event.data.type === 'ready') {
         setReady(true);
+        return;
+      }
+      if (event.data.type === 'error' && event.data.requestId === 'init') {
+        setFailed(true);
+        setReady(false);
         return;
       }
       const callback = pendingRef.current.get(event.data.requestId);
@@ -292,7 +367,10 @@ function useStockfish() {
       setFailed(true);
       setReady(false);
     };
-    return () => worker.terminate();
+    return () => {
+      worker.terminate();
+      URL.revokeObjectURL(workerUrl);
+    };
   }, []);
 
   const getBestMove = useCallback(
@@ -310,7 +388,7 @@ function useStockfish() {
             pendingRef.current.delete(requestId);
             resolve({ type: 'error', requestId, message: 'Stockfish timed out.' });
           }
-        }, 9000);
+        }, 5000);
       });
     },
     [failed],
@@ -335,6 +413,7 @@ function useChessGame(config: GameConfig | null, soundEnabled: boolean) {
   const { ready: engineReady, failed: engineFailed, getBestMove } = useStockfish();
   const chessRef = useRef(new Chess());
   const gameIdRef = useRef(crypto.randomUUID());
+  const botRequestRef = useRef<string | null>(null);
   const startedAtRef = useRef(0);
   const [fen, setFen] = useState(STARTING_FEN);
   const [history, setHistory] = useState<Move[]>([]);
@@ -369,6 +448,7 @@ function useChessGame(config: GameConfig | null, soundEnabled: boolean) {
       Object.entries(buildPgnHeaders(nextConfig)).forEach(([key, value]) => chess.setHeader(key, value));
       chessRef.current = chess;
       gameIdRef.current = crypto.randomUUID();
+      botRequestRef.current = null;
       startedAtRef.current = Date.now();
       setFen(chess.fen());
       setHistory([]);
@@ -450,21 +530,24 @@ function useChessGame(config: GameConfig | null, soundEnabled: boolean) {
   );
 
   useEffect(() => {
-    if (!config || config.mode !== 'bot' || !isBotTurn || thinking) return undefined;
+    if (!config || config.mode !== 'bot' || !isBotTurn || botRequestRef.current) return undefined;
     const requestGameId = gameIdRef.current;
     const requestFen = chessRef.current.fen();
     const requestId = `${requestGameId}:${Date.now()}`;
+    botRequestRef.current = requestId;
     setThinking(true);
     const delay = config.difficulty === 'easy' ? 320 : config.difficulty === 'medium' ? 520 : 760;
     const timeout = window.setTimeout(async () => {
       const response = await getBestMove(requestFen, config.difficulty, requestId);
       if (gameIdRef.current !== requestGameId || chessRef.current.fen() !== requestFen) {
+        if (botRequestRef.current === requestId) botRequestRef.current = null;
         setThinking(false);
         return;
       }
       const bestMove = response.type === 'bestmove' ? response.move : fallbackMove(requestFen, config.difficulty);
       const moveText = bestMove ?? fallbackMove(requestFen, config.difficulty);
       if (!moveText) {
+        if (botRequestRef.current === requestId) botRequestRef.current = null;
         setThinking(false);
         return;
       }
@@ -476,10 +559,14 @@ function useChessGame(config: GameConfig | null, soundEnabled: boolean) {
         },
         'bot',
       );
+      if (botRequestRef.current === requestId) botRequestRef.current = null;
       setThinking(false);
     }, delay);
-    return () => window.clearTimeout(timeout);
-  }, [applyMove, config, getBestMove, isBotTurn, thinking]);
+    return () => {
+      window.clearTimeout(timeout);
+      if (botRequestRef.current === requestId) botRequestRef.current = null;
+    };
+  }, [applyMove, config, getBestMove, isBotTurn]);
 
   useEffect(() => {
     if (!config || result) return undefined;
@@ -607,6 +694,7 @@ function AppShell() {
   const [boardTheme, setBoardTheme] = useState<BoardTheme>('classic');
   const [uiTheme, setUiTheme] = useState<UiTheme>('dark');
   const [stats, setStats] = useState<LocalStats>(EMPTY_STATS);
+  const [roomLink, setRoomLink] = useState('');
 
   useEffect(() => {
     setStats(readStorage('chess:stats', EMPTY_STATS));
@@ -623,6 +711,14 @@ function AppShell() {
     document.documentElement.classList.toggle('dark', uiTheme === 'dark');
   }, [uiTheme]);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const room = params.get('room');
+    if (!room) return;
+    setRoomLink(window.location.href);
+    setView('onlineSetup');
+  }, []);
+
   const startBot = () => {
     const playerColor = colorChoice === 'random' ? (Math.random() > 0.5 ? 'white' : 'black') : colorChoice;
     setConfig({ mode: 'bot', difficulty, playerColor, requestedColor: colorChoice, timeControl, autoFlip: false });
@@ -632,6 +728,16 @@ function AppShell() {
   const startLocal = () => {
     setConfig({ mode: 'local', difficulty: 'medium', playerColor: 'white', requestedColor: 'white', timeControl, autoFlip });
     setView('game');
+  };
+
+  const createRoomLink = () => {
+    const roomId = crypto.randomUUID().slice(0, 8);
+    const url = new URL(window.location.href);
+    url.search = '';
+    url.hash = '';
+    url.searchParams.set('room', roomId);
+    setRoomLink(url.toString());
+    void navigator.clipboard?.writeText(url.toString());
   };
 
   useEffect(() => {
@@ -761,6 +867,10 @@ function AppShell() {
           uiTheme={uiTheme}
           onBot={() => setView('botSetup')}
           onLocal={() => setView('localSetup')}
+          onOnline={() => {
+            createRoomLink();
+            setView('onlineSetup');
+          }}
           onStats={() => setView('stats')}
           onSound={() => setSoundEnabled((value) => !value)}
           onBoardTheme={setBoardTheme}
@@ -789,6 +899,14 @@ function AppShell() {
           onStart={startLocal}
         />
       )}
+      {view === 'onlineSetup' && (
+        <OnlineSetupPage
+          roomLink={roomLink}
+          onCreateLink={createRoomLink}
+          onBack={() => setView('home')}
+          onLocalFallback={() => setView('localSetup')}
+        />
+      )}
       {view === 'stats' && <StatsPage stats={stats} onBack={() => setView('home')} />}
       {view === 'game' && config && (
         <GamePage
@@ -812,6 +930,7 @@ function HomePage(props: {
   uiTheme: UiTheme;
   onBot: () => void;
   onLocal: () => void;
+  onOnline: () => void;
   onStats: () => void;
   onSound: () => void;
   onBoardTheme: (theme: BoardTheme) => void;
@@ -834,6 +953,9 @@ function HomePage(props: {
           </Button>
           <Button className="h-12 justify-start px-4 text-base" variant="secondary" onClick={props.onLocal}>
             <Swords /> Local 1 vs 1
+          </Button>
+          <Button className="h-12 justify-start px-4 text-base" variant="outline" onClick={props.onOnline}>
+            <Share2 /> Online 1v1
           </Button>
           <Button className="h-12 justify-start px-4 text-base" variant="outline" disabled>
             <Sparkles /> Training
@@ -937,6 +1059,62 @@ function LocalSetupPage(props: {
       </div>
       <Button className="h-12 text-base" onClick={props.onStart}>
         <Swords /> Start Local Game
+      </Button>
+    </SetupFrame>
+  );
+}
+
+function OnlineSetupPage(props: {
+  roomLink: string;
+  onCreateLink: () => void;
+  onBack: () => void;
+  onLocalFallback: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const copyLink = () => {
+    if (!props.roomLink) props.onCreateLink();
+    const link = props.roomLink || window.location.href;
+    void navigator.clipboard?.writeText(link);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1400);
+  };
+
+  return (
+    <SetupFrame title="Online 1v1" onBack={props.onBack}>
+      <div className="rounded-lg border border-border bg-card p-4">
+        <div className="mb-4 flex items-start gap-3">
+          <span className="grid size-10 shrink-0 place-items-center rounded-md bg-muted">
+            <Share2 className="size-5" />
+          </span>
+          <div>
+            <p className="font-medium">Invite Link</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Share this room link with a friend. Live move sync needs hosted multiplayer storage before remote play is active.
+            </p>
+          </div>
+        </div>
+        <div className="grid gap-2">
+          <div className="min-h-11 overflow-hidden rounded-md border border-border bg-muted px-3 py-2 text-sm text-muted-foreground">
+            {props.roomLink || 'Create a room link to invite another player.'}
+          </div>
+          <div className="grid grid-cols-2 gap-2 max-sm:grid-cols-1">
+            <Button onClick={props.onCreateLink}>
+              <Share2 /> Create Link
+            </Button>
+            <Button variant="outline" onClick={copyLink} disabled={!props.roomLink}>
+              <Copy /> {copied ? 'Copied' : 'Copy Link'}
+            </Button>
+          </div>
+        </div>
+      </div>
+      <div className="rounded-lg border border-border bg-card p-4">
+        <p className="font-medium">What is ready now?</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Same-device local 1v1 is playable today. The room link reserves the flow for remote multiplayer, but both players will need a shared backend before moves sync across PCs.
+        </p>
+      </div>
+      <Button className="h-12 text-base" variant="secondary" onClick={props.onLocalFallback}>
+        <Swords /> Play Same Device
       </Button>
     </SetupFrame>
   );
