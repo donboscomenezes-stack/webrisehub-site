@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/d3-geo": "^3.1.1",
     "@types/topojson-client": "^3.1.5",
+    "chess.js": "^1.4.0",
     "d3-geo": "^3.1.1",
     "gsap": "^3.15.0",
     "html-to-image": "^1.11.13",

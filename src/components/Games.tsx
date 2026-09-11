@@ -32,6 +32,15 @@ const games: Game[] = [
     duration: "1-2 min",
     status: "NEW",
     accent: "orange"
+  },
+  {
+    title: "Chess",
+    category: "Skill",
+    description: "Play a fast chess match against the browser bot or across the same board.",
+    href: "/games/chess",
+    duration: "3-10 min",
+    status: "NEW",
+    accent: "purple"
   }
 ];
 
@@ -45,6 +54,12 @@ function GameVisual({ game }: { game: Game }) {
         <div className="circle-art" aria-hidden="true">
           <span />
           <b />
+        </div>
+      ) : game.title === "Chess" ? (
+        <div className="chess-art" aria-hidden="true">
+          {["♜", "♞", "♝", "♛", "♚", "♟"].map((piece, index) => (
+            <span key={`${piece}-${index}`}>{piece}</span>
+          ))}
         </div>
       ) : (
         <div className="build-art" aria-hidden="true">
