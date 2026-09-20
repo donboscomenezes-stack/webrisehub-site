@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { ArrowLeft, BookOpenText } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Blogs | WebRiseHub",
-  description: "Stories and ideas from WebRiseHub about games, interaction, and digital experiences."
+  description: "Guides, recommendations, and ideas from WebRiseHub about browser games and interactive experiences."
 };
 
 export default function BlogPage() {
@@ -23,26 +23,36 @@ export default function BlogPage() {
               Blogs
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-muted md:text-lg">
-              Ideas on interactive experiences, game design, and building attention people choose to give.
+              Guides and ideas for finding games worth your next break.
             </p>
           </div>
         </section>
 
-        <section className="px-6 py-20 md:py-28" aria-labelledby="blog-empty-title">
-          <div className="mx-auto flex max-w-6xl flex-col items-start border-t border-white/10 pt-12 md:pt-16">
-            <BookOpenText aria-hidden="true" className="h-9 w-9 text-cyan-300" strokeWidth={1.6} />
-            <h2 id="blog-empty-title" className="mt-6 text-2xl font-semibold text-text md:text-3xl">
-              Stories are on the way.
-            </h2>
-            <p className="mt-3 max-w-xl text-base leading-7 text-muted">
-              We are preparing the first WebRiseHub articles. Check back soon.
-            </p>
-            <a
-              href="/#games"
-              className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-cyan-300 transition-colors hover:text-white"
-            >
-              <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-              Browse games
+        <section className="px-6 py-12 md:py-16" aria-label="Latest articles">
+          <div className="mx-auto max-w-6xl">
+            <a className="blog-feature" href="/blog/25-best-browser-games-2026">
+              <div className="blog-feature-image">
+                <img
+                  src="/blog/25-best-browser-games-2026.png"
+                  alt="A colorful collection of browser games surrounding the title 25 Best Browser Games to Play When You're Bored in 2026"
+                />
+              </div>
+
+              <div className="blog-feature-copy">
+                <div className="blog-meta">
+                  <span>Game Guide</span>
+                  <time dateTime="2026-09-20">September 20, 2026</time>
+                  <span>18 min read</span>
+                </div>
+                <h2>25 Best Browser Games to Play When You&apos;re Bored in 2026</h2>
+                <p>
+                  From quick reaction challenges and drawing games to chess, puzzles, multiplayer games,
+                  and relaxing experiences, find your next game without downloading a thing.
+                </p>
+                <strong>
+                  Read article <ArrowRight aria-hidden="true" size={17} />
+                </strong>
+              </div>
             </a>
           </div>
         </section>
