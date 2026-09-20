@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-type GameCategory = "Drawing" | "Skill" | "Casual";
+type GameCategory = "Drawing" | "Skill" | "Reaction" | "Casual";
 
 type Game = {
   title: string;
@@ -11,7 +11,7 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green";
+  accent: "cyan" | "orange" | "purple" | "green" | "red";
 };
 
 const games: Game[] = [
@@ -50,6 +50,15 @@ const games: Game[] = [
     duration: "1-3 min",
     status: "NEW",
     accent: "cyan"
+  },
+  {
+    title: "GETAWAY",
+    category: "Reaction",
+    description: "Thread through traffic, outrun the police, and push your escape score higher.",
+    href: "/games/getaway/index.html",
+    duration: "2-6 min",
+    status: "NEW",
+    accent: "red"
   }
 ];
 
@@ -77,6 +86,14 @@ function GameVisual({ game }: { game: Game }) {
           <span />
           <b>X</b>
           <b>0</b>
+        </div>
+      ) : game.title === "GETAWAY" ? (
+        <div className="getaway-art" aria-hidden="true">
+          <span className="getaway-road" />
+          <span className="getaway-car getaway-car-player" />
+          <span className="getaway-car getaway-car-police" />
+          <i />
+          <i />
         </div>
       ) : (
         <div className="build-art" aria-hidden="true">

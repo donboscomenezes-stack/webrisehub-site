@@ -153,6 +153,13 @@ body > * {
     linear-gradient(135deg, #0d1525, #1f1b3f);
 }
 
+.game-art-red {
+  background:
+    radial-gradient(circle at 28% 32%, rgba(56, 217, 245, 0.2), transparent 28%),
+    radial-gradient(circle at 72% 68%, rgba(255, 77, 77, 0.28), transparent 34%),
+    linear-gradient(145deg, #080c14, #171326);
+}
+
 .build-art {
   position: absolute;
   inset: 0;
@@ -286,6 +293,83 @@ body > * {
   bottom: 40px;
   right: 58px;
   color: #fde68a;
+}
+
+.getaway-art {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.getaway-road {
+  position: absolute;
+  inset: -28px 56px;
+  transform: perspective(220px) rotateX(13deg);
+  border-inline: 3px solid rgba(248, 250, 252, 0.28);
+  background:
+    repeating-linear-gradient(180deg, transparent 0 22px, rgba(248, 250, 252, 0.7) 22px 38px, transparent 38px 62px) 50% 0 / 3px 100% no-repeat,
+    linear-gradient(90deg, #151a24, #252a35 50%, #151a24);
+  box-shadow: 0 0 34px rgba(0, 0, 0, 0.5);
+}
+
+.getaway-car {
+  position: absolute;
+  width: 42px;
+  height: 76px;
+  border: 2px solid rgba(248, 250, 252, 0.3);
+  border-radius: 11px 11px 8px 8px;
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.45);
+}
+
+.getaway-car::before {
+  content: "";
+  position: absolute;
+  inset: 14px 7px 24px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, rgba(190, 231, 255, 0.72), rgba(10, 19, 31, 0.92));
+}
+
+.getaway-car-player {
+  left: calc(50% - 3px);
+  bottom: 16px;
+  transform: rotate(5deg);
+  background: linear-gradient(90deg, #8f111f, #ff334d 50%, #8f111f);
+}
+
+.getaway-car-police {
+  left: calc(50% - 58px);
+  top: 16px;
+  transform: scale(0.78) rotate(-4deg);
+  background: linear-gradient(90deg, #e8edf5 0 35%, #101827 35% 65%, #e8edf5 65%);
+}
+
+.getaway-car-police::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 7px;
+  width: 24px;
+  height: 5px;
+  background: linear-gradient(90deg, #38d9f5 0 50%, #ff4d4d 50%);
+  box-shadow: -8px 0 16px #38d9f5, 8px 0 16px #ff4d4d;
+}
+
+.getaway-art i {
+  position: absolute;
+  top: -24px;
+  width: 2px;
+  height: 96px;
+  transform: rotate(18deg);
+  background: linear-gradient(transparent, rgba(248, 250, 252, 0.58), transparent);
+}
+
+.getaway-art i:nth-of-type(1) {
+  left: 25%;
+}
+
+.getaway-art i:nth-of-type(2) {
+  right: 22%;
+  top: 58px;
 }
 
 .explore-header {
