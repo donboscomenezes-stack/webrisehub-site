@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Don't Touch Red</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="shell" aria-label="Don't Touch Red game">
+      <div class="topbar">
+        <div class="stat">
+          <span>BEST</span>
+          <strong id="bestTime">0.0</strong>
+        </div>
+        <button id="soundButton" class="icon-button" type="button" aria-pressed="true" aria-label="Sound on">
+          <span aria-hidden="true">SOUND</span>
+        </button>
+      </div>
+
+      <section class="stage-wrap">
+        <canvas id="gameCanvas" aria-label="Game arena" role="img"></canvas>
+
+        <div id="startOverlay" class="overlay">
+          <h1>DON'T TOUCH RED</h1>
+          <p>Survive as long as you can.</p>
+          <button id="startButton" type="button">START</button>
+          <small>Press Space to play</small>
+        </div>
+
+        <div id="pauseOverlay" class="overlay compact hidden" aria-live="polite">
+          <h2>PAUSED</h2>
+          <small>Press Space to resume</small>
+        </div>
+
+        <div id="gameOverOverlay" class="overlay hidden" aria-live="polite">
+          <div id="resultTime" class="result-time">0.0</div>
+          <div id="resultMessage" class="result-message"></div>
+          <p id="resultStats">BEST 0.0 · CLOSE CALLS 0</p>
+          <button id="restartButton" type="button">TRY AGAIN</button>
+          <small>Press Space to restart</small>
+        </div>
+      </section>
+
+      <div class="hud-row" aria-live="polite">
+        <div class="score" id="currentTime">0.0</div>
+        <button id="focusButton" class="focus-button" type="button" aria-label="Use Focus">
+          <span>FOCUS</span>
+          <b id="focusPips">●</b>
+        </button>
+      </div>
+
+      <div id="toast" class="toast" aria-live="polite" aria-hidden="true"></div>
+    </main>
+
+    <script src="game.js" type="module"></script>
+  </body>
+</html>

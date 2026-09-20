@@ -372,6 +372,56 @@ body > * {
   top: 58px;
 }
 
+.red-art {
+  position: absolute;
+  inset: 0;
+}
+
+.red-hazard {
+  position: absolute;
+  width: 72px;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #ef4444, #991b1b);
+  box-shadow: 0 0 26px rgba(239, 68, 68, 0.28);
+}
+
+.red-hazard-left {
+  bottom: -10px;
+  left: 18%;
+  height: 112px;
+  transform: rotate(5deg);
+}
+
+.red-hazard-right {
+  right: 15%;
+  top: -14px;
+  height: 126px;
+  transform: rotate(-6deg);
+}
+
+.red-player {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fffaf0;
+  box-shadow: 0 0 10px rgba(255, 250, 240, 0.95), 0 0 32px rgba(255, 250, 240, 0.44);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.red-trail {
+  position: absolute;
+  left: 32%;
+  top: 67%;
+  width: 41%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 250, 240, 0.7), transparent);
+  transform: rotate(-25deg);
+}
+
 .explore-header {
   display: flex;
   align-items: end;

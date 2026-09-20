@@ -59,6 +59,15 @@ const games: Game[] = [
     duration: "2-6 min",
     status: "NEW",
     accent: "red"
+  },
+  {
+    title: "Don't Touch Red",
+    category: "Reaction",
+    description: "Flip your direction, thread past red hazards, and survive as long as you can.",
+    href: "/games/dont-touch-red/index.html",
+    duration: "1-3 min",
+    status: "NEW",
+    accent: "red"
   }
 ];
 
@@ -94,6 +103,13 @@ function GameVisual({ game }: { game: Game }) {
           <span className="getaway-car getaway-car-police" />
           <i />
           <i />
+        </div>
+      ) : game.title === "Don't Touch Red" ? (
+        <div className="red-art" aria-hidden="true">
+          <span className="red-hazard red-hazard-left" />
+          <span className="red-hazard red-hazard-right" />
+          <b className="red-player" />
+          <i className="red-trail" />
         </div>
       ) : (
         <div className="build-art" aria-hidden="true">
