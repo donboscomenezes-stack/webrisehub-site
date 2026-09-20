@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#101113">
+    <title>STACK</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="shell" aria-label="STACK browser game">
+      <canvas id="game" aria-label="STACK play area"></canvas>
+
+      <div class="hud" aria-live="polite">
+        <div class="hud__item">
+          <span>Best</span>
+          <strong id="bestScore">0</strong>
+        </div>
+        <div class="hud__score" id="score">0</div>
+        <button class="sound" id="soundToggle" type="button" aria-pressed="true">
+          Sound
+          <span id="soundState">On</span>
+        </button>
+      </div>
+
+      <section class="panel panel--start is-visible" id="startPanel" aria-labelledby="title">
+        <h1 id="title">STACK</h1>
+        <p>How high can you go?</p>
+        <button id="startButton" type="button">Start</button>
+        <small>Press Space to play</small>
+      </section>
+
+      <section class="panel panel--gameover" id="gameOverPanel" aria-labelledby="gameOverTitle">
+        <h2 id="gameOverTitle">Game Over</h2>
+        <div class="results">
+          <div>
+            <span>Score</span>
+            <strong id="finalScore">0</strong>
+          </div>
+          <div>
+            <span>Best</span>
+            <strong id="finalBest">0</strong>
+          </div>
+          <div>
+            <span>Perfect Streak</span>
+            <strong id="finalPerfect">0</strong>
+          </div>
+          <div>
+            <span>Time</span>
+            <strong id="finalTime">0:00</strong>
+          </div>
+        </div>
+        <p class="share-preview" id="sharePreview">I stacked 0 blocks in 0:00 on STACK.</p>
+        <div class="actions">
+          <button id="shareButton" class="button-secondary" type="button">Share Result</button>
+          <button id="restartButton" type="button">Play Again</button>
+        </div>
+        <small>Press Space to restart</small>
+      </section>
+
+      <div class="toast" id="toast" aria-live="assertive"></div>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>

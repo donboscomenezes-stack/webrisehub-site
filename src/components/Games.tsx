@@ -11,7 +11,7 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow";
 };
 
 const games: Game[] = [
@@ -68,6 +68,15 @@ const games: Game[] = [
     duration: "1-3 min",
     status: "NEW",
     accent: "red"
+  },
+  {
+    title: "STACK",
+    category: "Reaction",
+    description: "Time each drop, trim the misses, and build the tallest colorful tower you can.",
+    href: "/games/stack/index.html",
+    duration: "1-3 min",
+    status: "NEW",
+    accent: "rainbow"
   }
 ];
 
@@ -110,6 +119,14 @@ function GameVisual({ game }: { game: Game }) {
           <span className="red-hazard red-hazard-right" />
           <b className="red-player" />
           <i className="red-trail" />
+        </div>
+      ) : game.title === "STACK" ? (
+        <div className="stack-art" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
         </div>
       ) : (
         <div className="build-art" aria-hidden="true">
