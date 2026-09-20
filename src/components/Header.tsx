@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-[#090d18]/86 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2">
-        <a href="#top" className="flex items-center gap-3" aria-label={`Go to top of ${brand.name}`}>
+        <a href="/" className="flex items-center gap-3" aria-label={`Go to ${brand.name} home`}>
           <div className="flex items-center justify-center">
             <img
               src="/logo.png"
@@ -15,9 +15,16 @@ export default function Header() {
         </a>
 
         <nav className="hidden md:flex items-center gap-7 text-sm text-muted">
-          <a href="#games" className="hover:text-text transition-colors">Games</a>
-          <a href="#advertise" className="hover:text-text transition-colors">Advertise</a>
-          <a href="#contact" className="hover:text-text transition-colors">Contact</a>
+          <a href="/#games" className="hover:text-text transition-colors">Games</a>
+          <a
+            href={links.blog}
+            className="hover:text-text transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Blogs
+          </a>
+          <a href="/#advertise" className="hover:text-text transition-colors">Advertise</a>
         </nav>
 
         <div className="flex items-center gap-3">

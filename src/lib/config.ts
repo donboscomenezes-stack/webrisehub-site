@@ -7,6 +7,7 @@ export const brand = {
 
 // Replace these with your real links later (or set env vars in .env.local)
 export const links = {
+  blog: "/blog",
   bookCall:
     process.env.NEXT_PUBLIC_BOOK_CALL_URL ??
     "https://calendar.google.com/calendar/appointments/schedules/AcZssZ1sXQu80QBDUEoX3otyJ9hgnvcFaZ8K_D3VzKSDIgDTqyatmBAkpmXHoVg7U4WT7sDKZLqdRsg0?gv=true",

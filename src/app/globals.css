@@ -167,6 +167,60 @@ body > * {
     linear-gradient(145deg, #0d1525, #161a2d);
 }
 
+.game-art-lime {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(216, 255, 106, 0.2), transparent 38%),
+    radial-gradient(circle at 78% 20%, rgba(145, 231, 255, 0.14), transparent 30%),
+    linear-gradient(135deg, #08090b, #151a13);
+}
+
+.lock-in-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.lock-in-ring {
+  width: 126px;
+  aspect-ratio: 1;
+  border: 2px solid rgba(248, 250, 252, 0.34);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 13px rgba(255, 255, 255, 0.025),
+    0 0 42px rgba(216, 255, 106, 0.1);
+}
+
+.lock-in-target {
+  position: absolute;
+  width: 14px;
+  height: 35px;
+  border-radius: 5px;
+  background: #d8ff6a;
+  box-shadow: 0 0 18px rgba(216, 255, 106, 0.66);
+  transform: translate(48px, -42px) rotate(48deg);
+}
+
+.lock-in-marker {
+  position: absolute;
+  width: 10px;
+  aspect-ratio: 1;
+  border: 2px solid #08090b;
+  border-radius: 50%;
+  background: #f8fafc;
+  box-shadow: 0 0 14px rgba(248, 250, 252, 0.58);
+  transform: translate(-56px, 22px);
+}
+
+.lock-in-art b {
+  position: absolute;
+  bottom: 18px;
+  color: rgba(248, 250, 252, 0.86);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
 .build-art {
   position: absolute;
   inset: 0;
@@ -637,13 +691,6 @@ body > * {
   color: var(--muted);
   font-size: 15px;
   line-height: 1.6;
-}
-
-.advertise-email {
-  display: inline-flex;
-  margin-top: 18px;
-  color: var(--text);
-  font-weight: 700;
 }
 
 .advertise-cta {

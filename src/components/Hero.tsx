@@ -13,14 +13,6 @@ export default function Hero() {
               {brand.tagline}
             </h1>
 
-            <p className="mt-5 max-w-xl text-[15px] md:text-lg text-muted animate-fade-up anim-delay-2 fade-up">
-              {brand.subtagline}
-            </p>
-
-            <p className="mt-5 max-w-2xl text-base font-semibold text-white animate-fade-up anim-delay-2 fade-up">
-              Advertise with WebRiseHub and put your brand inside experiences people actually enjoy.
-            </p>
-
         </div>
       </div>
 

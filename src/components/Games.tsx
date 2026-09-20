@@ -11,10 +11,19 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime";
 };
 
 const games: Game[] = [
+  {
+    title: "LOCK IN",
+    category: "Reaction",
+    description: "Stop the rotating marker inside the target, build your combo, and survive the speed-up.",
+    href: "/games/lock-in/index.html",
+    duration: "1-3 min",
+    status: "NEW",
+    accent: "lime"
+  },
   {
     title: "Build Life",
     category: "Skill",
@@ -86,7 +95,14 @@ function GameVisual({ game }: { game: Game }) {
   return (
     <div className={`game-art game-art-${game.accent}`}>
       <div className="art-grid" />
-      {game.title === "Circle Game" ? (
+      {game.title === "LOCK IN" ? (
+        <div className="lock-in-art" aria-hidden="true">
+          <span className="lock-in-ring" />
+          <span className="lock-in-target" />
+          <span className="lock-in-marker" />
+          <b>LOCK IN</b>
+        </div>
+      ) : game.title === "Circle Game" ? (
         <div className="circle-art" aria-hidden="true">
           <span />
           <b />
