@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Wild Arena</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <canvas id="game" aria-label="Wild Arena game canvas"></canvas>
+
+    <div id="hud" class="hud hidden">
+      <div class="status-panel">
+        <div class="bar-label"><span id="healthText">100</span><span>HP</span></div>
+        <div class="bar health"><i id="healthBar"></i></div>
+        <div class="bar stamina"><i id="staminaBar"></i></div>
+        <div id="weaponInfo" class="weapon-info">SWORD</div>
+      </div>
+
+      <div id="leaderboard" class="leaderboard"></div>
+      <canvas id="minimap" width="148" height="148" class="minimap"></canvas>
+      <div id="banner" class="banner"></div>
+      <div id="toast" class="toast"></div>
+      <button id="muteButton" class="icon-button" title="Toggle sound" aria-label="Toggle sound">♪</button>
+    </div>
+
+    <div id="mobileControls" class="mobile-controls hidden" aria-hidden="true">
+      <div id="joystick" class="joystick"><i></i></div>
+      <div class="mobile-actions">
+        <button data-action="interact">E</button>
+        <button data-action="block">BLOCK</button>
+        <button data-action="dodge">ROLL</button>
+        <button data-action="attack">HIT</button>
+      </div>
+    </div>
+
+    <div id="overlay" class="overlay">
+      <section class="menu-panel">
+        <h1>WILD ARENA</h1>
+        <p>Fight. Loot. Survive.</p>
+        <input id="playerName" maxlength="12" placeholder="Fighter name" autocomplete="off" />
+        <div class="difficulty" role="group" aria-label="Difficulty">
+          <button data-difficulty="casual">Casual</button>
+          <button data-difficulty="normal" class="selected">Normal</button>
+          <button data-difficulty="brutal">Brutal</button>
+        </div>
+        <button id="startButton" class="primary">Enter Arena</button>
+        <section class="instructions" aria-labelledby="instructionsTitle">
+          <div class="instructions-heading">
+            <h2 id="instructionsTitle">How to Play</h2>
+            <p>Loot stronger gear, outrun the storm, and be the last fighter standing.</p>
+          </div>
+          <div class="instruction-grid">
+            <div><kbd>WASD</kbd><span>Move</span></div>
+            <div><kbd>Mouse</kbd><span>Aim</span></div>
+            <div><kbd>Click</kbd><span>Quick attack</span></div>
+            <div><kbd>Hold Click</kbd><span>Heavy attack</span></div>
+            <div><kbd>Right Click</kbd><span>Block / parry</span></div>
+            <div><kbd>Space</kbd><span>Dodge</span></div>
+            <div><kbd>E</kbd><span>Loot / open</span></div>
+            <div><kbd>Esc</kbd><span>Pause</span></div>
+          </div>
+          <p class="mobile-instructions">On touch screens, use the joystick and action buttons.</p>
+        </section>
+        <div id="records" class="records"></div>
+      </section>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

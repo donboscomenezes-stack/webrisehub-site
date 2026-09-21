@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-type GameCategory = "Drawing" | "Puzzle" | "Skill" | "Reaction" | "Casual";
+type GameCategory = "Action" | "Drawing" | "Puzzle" | "Skill" | "Reaction" | "Casual";
 
 type Game = {
   title: string;
@@ -11,10 +11,19 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild";
 };
 
 const games: Game[] = [
+  {
+    title: "WILD ARENA",
+    category: "Action",
+    description: "Fight rival survivors, loot stronger gear, and outrun the storm to be the last fighter standing.",
+    href: "/games/wild-arena/index.html",
+    duration: "4-10 min",
+    status: "NEW",
+    accent: "wild"
+  },
   {
     title: "CELL RUSH",
     category: "Casual",
@@ -107,13 +116,21 @@ const games: Game[] = [
   }
 ];
 
-const filters = ["All Games", "Drawing", "Puzzle", "Skill", "Reaction", "Casual"];
+const filters = ["All Games", "Action", "Drawing", "Puzzle", "Skill", "Reaction", "Casual"];
 
 function GameVisual({ game }: { game: Game }) {
   return (
     <div className={`game-art game-art-${game.accent}`}>
       <div className="art-grid" />
-      {game.title === "LOCK IN" ? (
+      {game.title === "WILD ARENA" ? (
+        <div className="wild-arena-art" aria-hidden="true">
+          <span className="wild-storm" />
+          <span className="wild-fighter wild-fighter-one" />
+          <span className="wild-fighter wild-fighter-two" />
+          <i className="wild-blade" />
+          <b>LAST ONE STANDING</b>
+        </div>
+      ) : game.title === "LOCK IN" ? (
         <div className="lock-in-art" aria-hidden="true">
           <span className="lock-in-ring" />
           <span className="lock-in-target" />
