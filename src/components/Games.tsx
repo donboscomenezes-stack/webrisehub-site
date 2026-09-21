@@ -16,6 +16,15 @@ type Game = {
 
 const games: Game[] = [
   {
+    title: "CELL RUSH",
+    category: "Casual",
+    description: "Feed on protein bites, outgrow rival cells, and climb to the top of the arena.",
+    href: "/games/cell-rush/index.html",
+    duration: "2-8 min",
+    status: "NEW",
+    accent: "cyan"
+  },
+  {
     title: "WORD LOCK",
     category: "Puzzle",
     description: "Crack a five-letter word in six tries, or take on the shared Daily Word.",
@@ -110,6 +119,15 @@ function GameVisual({ game }: { game: Game }) {
           <span className="lock-in-target" />
           <span className="lock-in-marker" />
           <b>LOCK IN</b>
+        </div>
+      ) : game.title === "CELL RUSH" ? (
+        <div className="cell-rush-art" aria-hidden="true">
+          <span className="cell-rush-player">CELL</span>
+          <span className="cell-rush-rival" />
+          <i className="cell-food cell-food-one" />
+          <i className="cell-food cell-food-two" />
+          <i className="cell-food cell-food-three" />
+          <b>RUSH</b>
         </div>
       ) : game.title === "WORD LOCK" ? (
         <div className="word-lock-art" aria-hidden="true">
