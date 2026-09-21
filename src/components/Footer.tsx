@@ -6,6 +6,12 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
         <div>
           <p className="font-semibold">{brand.name}</p>
+          <a
+            className="mt-1 inline-block text-sm text-muted transition-colors hover:text-text"
+            href="mailto:donbosco.menezes@webrisehub.com"
+          >
+            donbosco.menezes@webrisehub.com
+          </a>
         </div>
 
         <div className="text-sm text-muted flex flex-wrap gap-4">
