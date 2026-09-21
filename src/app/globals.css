@@ -1330,6 +1330,11 @@ body > * {
   transition: border-color 200ms ease, transform 200ms ease;
 }
 
+.blog-list {
+  display: grid;
+  gap: 28px;
+}
+
 .blog-feature:hover {
   transform: translateY(-3px);
   border-color: rgba(56, 217, 245, 0.45);
@@ -1587,6 +1592,20 @@ body > * {
 
 .best-for {
   color: var(--muted);
+}
+
+.game-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0 0 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.game-facts span {
+  display: inline-flex;
+  gap: 5px;
 }
 
 .game-entry h3,

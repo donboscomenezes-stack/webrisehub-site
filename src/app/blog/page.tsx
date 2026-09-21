@@ -29,7 +29,32 @@ export default function BlogPage() {
         </section>
 
         <section className="px-6 py-12 md:py-16" aria-label="Latest articles">
-          <div className="mx-auto max-w-6xl">
+          <div className="blog-list mx-auto max-w-6xl">
+            <a className="blog-feature" href="/blog/15-free-browser-games-no-download">
+              <div className="blog-feature-image">
+                <img
+                  src="/blog/15-free-browser-games-no-download.png"
+                  alt="A laptop showing 15 free browser games that require no download"
+                />
+              </div>
+
+              <div className="blog-feature-copy">
+                <div className="blog-meta">
+                  <span>Game Guide</span>
+                  <time dateTime="2026-09-21">September 21, 2026</time>
+                  <span>13 min read</span>
+                </div>
+                <h2>15 Free Browser Games You Can Play Without Downloading Anything</h2>
+                <p>
+                  Open a tab and start playing. These quick challenges, puzzles, multiplayer games,
+                  and relaxed adventures need no installation.
+                </p>
+                <strong>
+                  Read article <ArrowRight aria-hidden="true" size={17} />
+                </strong>
+              </div>
+            </a>
+
             <a className="blog-feature" href="/blog/25-best-browser-games-2026">
               <div className="blog-feature-image">
                 <img
