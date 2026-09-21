@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-type GameCategory = "Drawing" | "Skill" | "Reaction" | "Casual";
+type GameCategory = "Drawing" | "Puzzle" | "Skill" | "Reaction" | "Casual";
 
 type Game = {
   title: string;
@@ -15,6 +15,15 @@ type Game = {
 };
 
 const games: Game[] = [
+  {
+    title: "WORD LOCK",
+    category: "Puzzle",
+    description: "Crack a five-letter word in six tries, or take on the shared Daily Word.",
+    href: "/games/word-lock/index.html",
+    duration: "2-5 min",
+    status: "NEW",
+    accent: "green"
+  },
   {
     title: "LOCK IN",
     category: "Reaction",
@@ -101,6 +110,12 @@ function GameVisual({ game }: { game: Game }) {
           <span className="lock-in-target" />
           <span className="lock-in-marker" />
           <b>LOCK IN</b>
+        </div>
+      ) : game.title === "WORD LOCK" ? (
+        <div className="word-lock-art" aria-hidden="true">
+          {["W", "O", "R", "D", "S"].map((letter, index) => (
+            <span className={`word-lock-tile word-lock-tile-${index + 1}`} key={letter}>{letter}</span>
+          ))}
         </div>
       ) : game.title === "Circle Game" ? (
         <div className="circle-art" aria-hidden="true">

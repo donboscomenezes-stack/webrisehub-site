@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <title>Word Lock</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Game header">
+        <button class="icon-button" id="helpButton" type="button" aria-label="How to play" title="How to play">?</button>
+        <div class="brand" aria-label="Word Lock">
+          <span class="lock-mark" aria-hidden="true"></span>
+          <div>
+            <h1>WORD LOCK</h1>
+            <p>Crack the word in six tries.</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button" id="statsButton" type="button" aria-label="Stats" title="Stats">▥</button>
+          <button class="icon-button" id="soundButton" type="button" aria-label="Sound off" title="Sound">♪</button>
+          <button class="icon-button" id="themeButton" type="button" aria-label="Toggle theme" title="Theme">◐</button>
+        </div>
+      </header>
+
+      <main class="game-panel">
+        <section class="mode-strip" aria-label="Game mode">
+          <button class="mode-button active" id="quickModeButton" type="button">Quick Play</button>
+          <button class="mode-button" id="dailyModeButton" type="button">Daily Word</button>
+        </section>
+
+        <section class="status-row" aria-live="polite">
+          <div class="pill" id="difficultyPill" role="button" tabindex="0" aria-label="Toggle hard mode">Normal</div>
+          <div class="message" id="message">Ready</div>
+          <div class="pill timer" id="timer">00:00</div>
+        </section>
+
+        <section class="board-wrap" aria-label="Guess board">
+          <div class="board" id="board" role="grid" aria-label="Six guesses of five letters"></div>
+        </section>
+
+        <section class="hint-bar" id="hintBar">
+          <button class="secondary-button" id="hintButton" type="button">Hint</button>
+          <span id="hintText">One hint available in Quick Play.</span>
+        </section>
+
+        <section class="keyboard" id="keyboard" aria-label="On-screen keyboard"></section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="assertive"></div>
+    <canvas class="confetti" id="confettiCanvas" aria-hidden="true"></canvas>
+
+    <dialog class="modal" id="helpModal">
+      <div class="modal-card">
+        <button class="close-button" data-close="helpModal" type="button" aria-label="Close">×</button>
+        <h2>How To Play</h2>
+        <p>Guess the hidden five-letter word in six tries. Each guess must be a valid word.</p>
+        <p>Type five letters with your keyboard, or tap the on-screen letter keys on mobile, then press or tap <strong>Enter</strong> to submit your guess.</p>
+        <div class="examples" aria-label="Tile examples">
+          <div class="example-tile correct" aria-label="Correct position">L<span>✓</span></div>
+          <div class="example-tile present" aria-label="Present but wrong position">O<span>•</span></div>
+          <div class="example-tile absent" aria-label="Not in the word">C<span>×</span></div>
+          <div class="example-tile empty">K</div>
+          <div class="example-tile empty">S</div>
+        </div>
+        <ul class="rule-list">
+          <li><strong>✓</strong> correct letter, correct spot</li>
+          <li><strong>•</strong> letter appears somewhere else</li>
+          <li><strong>×</strong> letter is not in the word</li>
+          <li><strong>Daily #</strong> is the puzzle number; for example, #264 means the 264th Daily Word.</li>
+        </ul>
+      </div>
+    </dialog>
+
+    <dialog class="modal" id="statsModal">
+      <div class="modal-card wide">
+        <button class="close-button" data-close="statsModal" type="button" aria-label="Close">×</button>
+        <h2>Stats</h2>
+        <div class="stats-grid">
+          <section>
+            <h3>Quick Play</h3>
+            <div class="stat-cards" id="quickStats"></div>
+          </section>
+          <section>
+            <h3>Daily Word</h3>
+            <div class="stat-cards" id="dailyStats"></div>
+          </section>
+        </div>
+        <h3>Guess Distribution</h3>
+        <div class="distribution" id="distribution"></div>
+      </div>
+    </dialog>
+
+    <dialog class="modal" id="resultModal">
+      <div class="modal-card result-card">
+        <button class="close-button" data-close="resultModal" type="button" aria-label="Close">×</button>
+        <p class="result-kicker" id="resultKicker">WORD FOUND</p>
+        <h2 id="resultTitle">Nice</h2>
+        <div class="result-meta" id="resultMeta"></div>
+        <div class="share-box" id="shareBox" hidden>
+          <textarea id="shareText" readonly aria-label="Share result"></textarea>
+          <button class="primary-button" id="copyButton" type="button">Copy Result</button>
+        </div>
+        <button class="primary-button" id="playAgainButton" type="button">Play Again</button>
+      </div>
+    </dialog>
+
+    <script src="words.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>

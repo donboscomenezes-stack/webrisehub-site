@@ -221,6 +221,46 @@ body > * {
   letter-spacing: 0.18em;
 }
 
+.word-lock-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transform: rotate(-2deg);
+}
+
+.word-lock-tile {
+  width: clamp(38px, 4.2vw, 52px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.24);
+  border-radius: 6px;
+  background: rgba(10, 16, 26, 0.82);
+  color: #f8fafc;
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 900;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+}
+
+.word-lock-tile-1,
+.word-lock-tile-4 {
+  border-color: #39c785;
+  background: #208c62;
+}
+
+.word-lock-tile-2 {
+  border-color: #e5b94d;
+  background: repeating-linear-gradient(135deg, #9f7728 0 7px, #8d6821 7px 14px);
+}
+
+.word-lock-tile-3,
+.word-lock-tile-5 {
+  color: rgba(248, 250, 252, 0.62);
+}
+
 .build-art {
   position: absolute;
   inset: 0;
