@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Where Am I?</title>
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://tile.openstreetmap.org">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="src/styles.css">
+  </head>
+  <body>
+    <div id="app" class="app">
+      <section id="homeScreen" class="screen home-screen active" aria-labelledby="gameTitle">
+        <div class="home-bg" id="homeBg"></div>
+        <div class="home-shade"></div>
+        <header class="home-top">
+          <button class="ghost-button" id="statsButton" type="button">Stats</button>
+          <button class="ghost-button" id="creditsButton" type="button">Image Credits</button>
+        </header>
+        <main class="home-content">
+          <p class="eyebrow">Geography deduction</p>
+          <h1 id="gameTitle">WHERE AM I?</h1>
+          <p class="tagline">Look around. Read the clues. Make your guess.</p>
+          <div class="home-actions" aria-label="Game modes">
+            <button class="primary-button start-mode" type="button" data-mode="world">Start World Tour</button>
+            <button class="secondary-button start-mode" type="button" data-mode="daily">Daily Journey</button>
+            <button class="secondary-button start-mode" type="button" data-mode="city">City Hunt</button>
+            <button class="secondary-button start-mode" type="button" data-mode="timed">Against the Clock</button>
+            <button class="secondary-button start-mode" type="button" data-mode="country">Country First</button>
+            <button class="secondary-button start-mode" type="button" data-mode="hotCold">Hot &amp; Cold</button>
+            <button class="secondary-button start-mode" type="button" data-mode="scenic">Scenic Expedition</button>
+            <button class="secondary-button start-mode" type="button" data-mode="noHints">No Hints</button>
+          </div>
+          <div class="expedition-filters" aria-label="Expedition filters">
+            <label><span>Category</span><select id="categorySelect"><option value="all">All places</option><option value="city">Cities</option><option value="landmark">Landmarks</option><option value="nature">Nature</option></select></label>
+            <label><span>Region</span><select id="regionSelect"><option value="all">Whole world</option><option value="Europe">Europe</option><option value="Asia">Asia</option><option value="Africa">Africa</option><option value="North America">North America</option><option value="South America">South America</option><option value="Oceania">Oceania</option></select></label>
+          </div>
+          <div class="mode-row" role="group" aria-label="Difficulty">
+            <button class="mode-pill" type="button" data-difficulty="casual">Casual</button>
+            <button class="mode-pill selected" type="button" data-difficulty="explorer">Explorer</button>
+            <button class="mode-pill" type="button" data-difficulty="expert">Expert</button>
+          </div>
+        </main>
+      </section>
+
+      <section id="playScreen" class="screen play-screen" aria-label="Location">
+        <header class="hud">
+          <div>
+            <span id="roundLabel">Round 1 / 5</span>
+            <span id="modeLabel">World Tour</span>
+          </div>
+          <div class="hud-score"><strong id="timerLabel" class="timer-label" hidden>60</strong><strong id="scoreLabel">0 PTS</strong></div>
+        </header>
+        <main class="viewer-wrap">
+          <div class="image-stage" id="imageStage">
+            <img id="locationImage" alt="Real world location to identify" draggable="false">
+            <div class="stage-vignette"></div>
+            <div class="loading" id="imageLoading">Loading location...</div>
+          </div>
+          <div class="viewer-controls" aria-label="Image controls">
+            <button class="icon-button" id="zoomOutButton" type="button" title="Zoom out">-</button>
+            <button class="icon-button" id="zoomInButton" type="button" title="Zoom in">+</button>
+            <button class="icon-button" id="resetViewButton" type="button" title="Reset view">Reset</button>
+            <button class="icon-button" id="expandButton" type="button" title="Expand image">Expand</button>
+          </div>
+          <div class="photo-dock">
+            <span id="photoCounter">Photo 1 / 1</span>
+            <button class="secondary-button reveal-button" id="revealButton" type="button">Reveal wider view</button>
+            <button class="icon-button" id="previousPhotoButton" type="button" title="Previous photo" disabled>&larr;</button>
+            <button class="icon-button" id="nextPhotoButton" type="button" title="Next photo" disabled>&rarr;</button>
+          </div>
+        </main>
+        <footer class="guess-bar">
+          <div class="hint-area">
+            <button class="hint-button" id="hintOneButton" type="button">Hint: Continent</button>
+            <button class="hint-button" id="hintTwoButton" type="button">Hint: Clue</button>
+          </div>
+          <div class="country-choices" id="countryChoices" hidden></div>
+          <button class="primary-button guess-button" id="openMapButton" type="button">Guess Location</button>
+        </footer>
+      </section>
+
+      <section id="resultScreen" class="screen result-screen" aria-label="Round result">
+        <div class="result-map" id="resultMap"></div>
+        <article class="result-panel">
+          <p class="eyebrow" id="resultTone">Great Guess</p>
+          <h2 id="resultPlace">Lisbon, Portugal</h2>
+          <div class="metric-grid">
+            <div>
+              <span>Distance</span>
+              <strong id="distanceLabel">0 km</strong>
+            </div>
+            <div>
+              <span>Score</span>
+              <strong id="roundScoreLabel">0 / 5,000</strong>
+            </div>
+          </div>
+          <div class="clue-list">
+            <h3>What could you have noticed?</h3>
+            <ul id="clueList"></ul>
+          </div>
+          <button class="primary-button" id="nextRoundButton" type="button">Next Round</button>
+        </article>
+      </section>
+
+      <section id="finalScreen" class="screen final-screen" aria-label="Game over">
+        <div class="final-bg" id="finalBg"></div>
+        <div class="home-shade"></div>
+        <main class="final-content">
+          <p class="eyebrow" id="finalMode">World Tour Complete</p>
+          <h2 id="finalScore">0 / 25,000</h2>
+          <p id="finalSummary">A clean run around the world.</p>
+          <div class="round-strip" id="roundStrip"></div>
+          <div class="journey-recap" id="journeyRecap"></div>
+          <div class="home-actions">
+            <button class="primary-button start-mode" type="button" data-mode="world">Play Again</button>
+            <button class="secondary-button" id="shareButton" type="button">Share Result</button>
+            <button class="secondary-button" id="homeButton" type="button">Home</button>
+          </div>
+        </main>
+      </section>
+    </div>
+
+    <div class="map-overlay" id="mapOverlay" aria-hidden="true">
+      <div class="map-shell" role="dialog" aria-modal="true" aria-label="Place your guess">
+        <header class="map-head">
+          <div>
+            <span id="mapRoundLabel">Round 1 / 5</span>
+            <strong>Your Guess</strong>
+          </div>
+          <button class="ghost-button" id="closeMapButton" type="button">Close</button>
+        </header>
+        <div class="map-surface" id="guessMap"></div>
+        <footer class="map-action">
+          <span id="pinStatus">Click the map to place a pin.</span>
+          <button class="primary-button" id="confirmGuessButton" type="button" disabled>Confirm Guess</button>
+        </footer>
+      </div>
+    </div>
+
+    <dialog id="infoDialog" class="info-dialog">
+      <form method="dialog">
+        <button class="close-dialog" aria-label="Close">x</button>
+      </form>
+      <div id="dialogContent"></div>
+    </dialog>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="data/locations.js"></script>
+    <script src="data/expansion.js"></script>
+    <script src="data/image-manifest.js"></script>
+    <script src="src/app.js"></script>
+  </body>
+</html>

@@ -11,10 +11,19 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo";
 };
 
 const games: Game[] = [
+  {
+    title: "WHERE AM I?",
+    category: "Puzzle",
+    description: "Study real-world scenes, read the clues, and pin each mystery location on the map.",
+    href: "/games/where-am-i/index.html",
+    duration: "5-10 min",
+    status: "NEW",
+    accent: "geo"
+  },
   {
     title: "WILD ARENA",
     category: "Action",
@@ -122,7 +131,17 @@ function GameVisual({ game }: { game: Game }) {
   return (
     <div className={`game-art game-art-${game.accent}`}>
       <div className="art-grid" />
-      {game.title === "WILD ARENA" ? (
+      {game.title === "WHERE AM I?" ? (
+        <div className="where-am-i-art" aria-hidden="true">
+          <span className="geo-reticle"><i /></span>
+          <span className="geo-pin geo-pin-one" />
+          <span className="geo-pin geo-pin-two" />
+          <div>
+            <b>WHERE AM I?</b>
+            <small>LOOK · PIN · DISCOVER</small>
+          </div>
+        </div>
+      ) : game.title === "WILD ARENA" ? (
         <div className="wild-arena-art" aria-hidden="true">
           <span className="wild-storm" />
           <span className="wild-fighter wild-fighter-one" />

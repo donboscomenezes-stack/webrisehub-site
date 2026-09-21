@@ -181,6 +181,113 @@ body > * {
     linear-gradient(145deg, #172218, #29351f 52%, #151a13);
 }
 
+.game-art-geo {
+  background:
+    linear-gradient(90deg, rgba(4, 8, 10, 0.9), rgba(4, 8, 10, 0.28)),
+    url("/games/where-am-i/assets/expedition-home.png") center / cover no-repeat;
+}
+
+.game-art-geo .art-grid {
+  opacity: 0.13;
+}
+
+.where-am-i-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 22px;
+}
+
+.where-am-i-art > div {
+  position: relative;
+  z-index: 2;
+}
+
+.where-am-i-art b,
+.where-am-i-art small {
+  display: block;
+}
+
+.where-am-i-art b {
+  color: #f6f1e8;
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.where-am-i-art small {
+  margin-top: 7px;
+  color: #6fe29a;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.geo-reticle {
+  position: absolute;
+  top: 28px;
+  right: 34px;
+  width: 72px;
+  height: 72px;
+  border: 2px solid rgba(246, 241, 232, 0.82);
+  border-radius: 50%;
+  box-shadow: 0 0 0 9px rgba(85, 209, 126, 0.13);
+}
+
+.geo-reticle::before,
+.geo-reticle::after {
+  content: "";
+  position: absolute;
+  background: rgba(246, 241, 232, 0.82);
+}
+
+.geo-reticle::before {
+  top: 50%;
+  left: -11px;
+  width: 92px;
+  height: 2px;
+}
+
+.geo-reticle::after {
+  top: -11px;
+  left: 50%;
+  width: 2px;
+  height: 92px;
+}
+
+.geo-reticle i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d7b35b;
+  transform: translate(-50%, -50%);
+}
+
+.geo-pin {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #07100a;
+  border-radius: 50% 50% 50% 0;
+  background: #55d17e;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  transform: rotate(-45deg);
+}
+
+.geo-pin-one {
+  top: 42px;
+  left: 42%;
+}
+
+.geo-pin-two {
+  top: 92px;
+  left: 57%;
+}
+
 .wild-arena-art {
   position: absolute;
   inset: 0;
