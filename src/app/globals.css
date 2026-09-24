@@ -1615,6 +1615,7 @@ body > * {
 }
 
 .article-body {
+  min-width: 0;
   color: #d7deea;
   font-size: 17px;
   line-height: 1.78;
@@ -1635,6 +1636,7 @@ body > * {
 }
 
 .article-table-wrap {
+  max-width: 100%;
   overflow-x: auto;
   margin: 26px 0;
   border: 1px solid rgba(248, 250, 252, 0.14);
