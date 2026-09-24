@@ -3,6 +3,42 @@ import { ArrowRight } from "lucide-react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
+const articles = [
+  {
+    href: "/blog/10-quick-games-5-minutes",
+    image: "/blog/10-quick-games-5-minutes.png",
+    alt: "Ten quick browser games to play when you have five minutes to spare",
+    dateTime: "2026-09-24",
+    date: "September 24, 2026",
+    readTime: "12 min read",
+    title: "10 Quick Games to Play When You Have 5 Minutes to Spare",
+    description:
+      "Turn a short break into a complete challenge with ten browser games that start quickly and fit into five minutes."
+  },
+  {
+    href: "/blog/15-free-browser-games-no-download",
+    image: "/blog/15-free-browser-games-no-download.png",
+    alt: "A laptop showing 15 free browser games that require no download",
+    dateTime: "2026-09-21",
+    date: "September 21, 2026",
+    readTime: "13 min read",
+    title: "15 Free Browser Games You Can Play Without Downloading Anything",
+    description:
+      "Open a tab and start playing. These quick challenges, puzzles, multiplayer games, and relaxed adventures need no installation."
+  },
+  {
+    href: "/blog/25-best-browser-games-2026",
+    image: "/blog/25-best-browser-games-2026.png",
+    alt: "A colorful collection of the 25 best browser games to play in 2026",
+    dateTime: "2026-09-20",
+    date: "September 20, 2026",
+    readTime: "18 min read",
+    title: "25 Best Browser Games to Play When You're Bored in 2026",
+    description:
+      "Find your next game without downloading a thing, from reaction challenges and puzzles to multiplayer games and relaxed adventures."
+  }
+];
+
 export const metadata: Metadata = {
   title: "Blogs | WebRiseHub",
   description: "Guides, recommendations, and ideas from WebRiseHub about browser games and interactive experiences."
@@ -30,55 +66,26 @@ export default function BlogPage() {
 
         <section className="px-6 py-12 md:py-16" aria-label="Latest articles">
           <div className="blog-list mx-auto max-w-6xl">
-            <a className="blog-feature" href="/blog/15-free-browser-games-no-download">
-              <div className="blog-feature-image">
-                <img
-                  src="/blog/15-free-browser-games-no-download.png"
-                  alt="A laptop showing 15 free browser games that require no download"
-                />
-              </div>
-
-              <div className="blog-feature-copy">
-                <div className="blog-meta">
-                  <span>Game Guide</span>
-                  <time dateTime="2026-09-21">September 21, 2026</time>
-                  <span>13 min read</span>
+            {articles.map((article) => (
+              <a className="blog-feature" href={article.href} key={article.href}>
+                <div className="blog-feature-image">
+                  <img src={article.image} alt={article.alt} />
                 </div>
-                <h2>15 Free Browser Games You Can Play Without Downloading Anything</h2>
-                <p>
-                  Open a tab and start playing. These quick challenges, puzzles, multiplayer games,
-                  and relaxed adventures need no installation.
-                </p>
-                <strong>
-                  Read article <ArrowRight aria-hidden="true" size={17} />
-                </strong>
-              </div>
-            </a>
 
-            <a className="blog-feature" href="/blog/25-best-browser-games-2026">
-              <div className="blog-feature-image">
-                <img
-                  src="/blog/25-best-browser-games-2026.png"
-                  alt="A colorful collection of browser games surrounding the title 25 Best Browser Games to Play When You're Bored in 2026"
-                />
-              </div>
-
-              <div className="blog-feature-copy">
-                <div className="blog-meta">
-                  <span>Game Guide</span>
-                  <time dateTime="2026-09-20">September 20, 2026</time>
-                  <span>18 min read</span>
+                <div className="blog-feature-copy">
+                  <div className="blog-meta">
+                    <span>Game Guide</span>
+                    <time dateTime={article.dateTime}>{article.date}</time>
+                    <span>{article.readTime}</span>
+                  </div>
+                  <h2>{article.title}</h2>
+                  <p>{article.description}</p>
+                  <strong>
+                    Read article <ArrowRight aria-hidden="true" size={17} />
+                  </strong>
                 </div>
-                <h2>25 Best Browser Games to Play When You&apos;re Bored in 2026</h2>
-                <p>
-                  From quick reaction challenges and drawing games to chess, puzzles, multiplayer games,
-                  and relaxing experiences, find your next game without downloading a thing.
-                </p>
-                <strong>
-                  Read article <ArrowRight aria-hidden="true" size={17} />
-                </strong>
-              </div>
-            </a>
+              </a>
+            ))}
           </div>
         </section>
       </main>

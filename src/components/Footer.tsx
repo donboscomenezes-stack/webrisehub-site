@@ -24,7 +24,6 @@ export default function Footer() {
           >
             Blogs
           </a>
-          <a className="hover:text-text" href="/#advertise">Advertise</a>
         </div>
 
         <p className="text-xs text-muted">© {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
