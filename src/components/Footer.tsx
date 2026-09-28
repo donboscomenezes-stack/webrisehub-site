@@ -1,33 +1,12 @@
-import { brand, links } from "@/lib/config";
-
+import Link from "next/link";
+import { links } from "@/lib/config";
+import { categories } from "@/lib/editorial";
 export default function Footer() {
-  return (
-    <footer className="border-t border-white/5 px-6 py-10 reveal">
-      <div className="mx-auto max-w-6xl flex flex-col md:flex-row gap-6 md:items-center md:justify-between">
-        <div>
-          <p className="font-semibold">{brand.name}</p>
-          <a
-            className="mt-1 inline-block text-sm text-muted transition-colors hover:text-text"
-            href="mailto:donbosco.menezes@webrisehub.com"
-          >
-            donbosco.menezes@webrisehub.com
-          </a>
-        </div>
-
-        <div className="text-sm text-muted flex flex-wrap gap-4">
-          <a className="hover:text-text" href="/#games">Games</a>
-          <a
-            className="hover:text-text"
-            href={links.blog}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Blogs
-          </a>
-        </div>
-
-        <p className="text-xs text-muted">© {new Date().getFullYear()} {brand.name}. All rights reserved.</p>
-      </div>
-    </footer>
-  );
+  return <footer className="site-footer"><div className="site-container">
+    <div className="footer-grid"><div className="footer-about"><Link href="/" className="site-brand">WebRise<span className="brand-accent">Hub</span></Link><p>Small breaks. Fresh challenges.<br />Something worth playing.</p><a href={`mailto:${links.email}`}>{links.email}</a></div>
+      <nav aria-label="Explore"><h2>Explore</h2><Link href="/#games">All games</Link><Link href="/blog/">Journal</Link><Link href="/about/">About WebRiseHub</Link><Link href="/contact/">Contact</Link></nav>
+      <nav aria-label="Game categories"><h2>Game categories</h2>{categories.map(c => <Link href={`/categories/${c.slug}/`} key={c.slug}>{c.name} games</Link>)}</nav>
+      <nav aria-label="Legal"><h2>Good to know</h2><Link href="/privacy-policy/">Privacy policy</Link><Link href="/terms/">Terms of use</Link><Link href="/cookie-policy/">Cookie policy</Link><Link href="/advertise/">Advertising disclosure</Link></nav>
+    </div><div className="footer-bottom"><p>© {new Date().getFullYear()} WebRiseHub</p><p>Play directly in your browser.</p><a href="#top">Back to top ↑</a></div>
+  </div></footer>;
 }

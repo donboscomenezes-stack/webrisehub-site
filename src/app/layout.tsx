@@ -1,6 +1,7 @@
 import "./globals.css";
 import "./animations.css";
 import "./scroll-life.css";
+import "./publishing.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 
