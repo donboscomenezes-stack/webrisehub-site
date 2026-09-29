@@ -181,6 +181,112 @@ body > * {
     linear-gradient(145deg, #172218, #29351f 52%, #151a13);
 }
 
+.game-art-explorer {
+  background: linear-gradient(180deg, #5fb4ff 0%, #bfe4ff 58%, #ffe9f3 100%);
+}
+
+.game-art-explorer .art-grid {
+  opacity: 0.08;
+}
+
+.explorer-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 22px;
+  overflow: hidden;
+}
+
+.explorer-art > div {
+  position: relative;
+  z-index: 3;
+}
+
+.explorer-art b,
+.explorer-art small {
+  display: block;
+}
+
+.explorer-art b {
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 3px 0 #e8618f, 0 6px 16px rgba(120, 60, 120, 0.35);
+}
+
+.explorer-art small {
+  margin-top: 8px;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 4px rgba(80, 40, 90, 0.5);
+}
+
+.explorer-sun {
+  position: absolute;
+  top: 22px;
+  right: 30px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fff3c4;
+  box-shadow: 0 0 30px 10px rgba(255, 214, 107, 0.55);
+}
+
+.explorer-hill {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.explorer-hill-back {
+  left: -10%;
+  bottom: -60%;
+  width: 90%;
+  height: 110%;
+  background: #7cc35e;
+}
+
+.explorer-hill-front {
+  right: -20%;
+  bottom: -70%;
+  width: 100%;
+  height: 110%;
+  background: #8fd46a;
+}
+
+.explorer-castle {
+  position: absolute;
+  z-index: 2;
+  right: 30%;
+  bottom: 44%;
+  width: 34px;
+  height: 40px;
+  background: #6b6fc8;
+  clip-path: polygon(0 100%, 0 30%, 15% 30%, 15% 10%, 30% 30%, 40% 30%, 50% 0, 60% 30%, 70% 30%, 85% 10%, 85% 30%, 100% 30%, 100% 100%);
+}
+
+.explorer-spark {
+  position: absolute;
+  z-index: 2;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff8fb8;
+  box-shadow: 0 0 10px 3px rgba(255, 143, 184, 0.6);
+  animation: explorer-twinkle 2.4s ease-in-out infinite;
+}
+
+.explorer-spark-one { top: 40%; left: 22%; }
+.explorer-spark-two { top: 26%; left: 55%; background: #ffd66b; animation-delay: 0.8s; }
+.explorer-spark-three { top: 52%; left: 72%; background: #9be8c4; animation-delay: 1.6s; }
+
+@keyframes explorer-twinkle {
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
 .game-art-geo {
   background:
     linear-gradient(90deg, rgba(4, 8, 10, 0.9), rgba(4, 8, 10, 0.28)),

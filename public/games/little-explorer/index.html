@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Little Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">{ "imports": { "three": "./js/lib/three.module.js" } }</script>
+</head>
+<body>
+<div id="game"></div>
+
+<!-- LOADING -->
+<div id="loading" class="screen">
+  <div class="load-inner">
+    <div class="logo">LITTLE EXPLORER</div>
+    <div class="load-sub">Building your world...</div>
+    <div class="bar"><div id="bar-fill"></div></div>
+    <div id="load-pct">0%</div>
+  </div>
+</div>
+
+<!-- MAIN MENU -->
+<div id="menu" class="screen hidden">
+  <div class="menu-inner">
+    <div class="logo big">LITTLE EXPLORER</div>
+    <div class="menu-sub">A Small 3D Adventure</div>
+    <button class="btn primary" id="btn-play">PLAY</button>
+    <button class="btn" id="btn-howto">HOW TO PLAY</button>
+  </div>
+  <div class="menu-foot">🌸 Explore. Play. Discover. 🌸</div>
+</div>
+
+<!-- HOW TO PLAY -->
+<div id="howto" class="screen hidden overlay">
+  <div class="panel howto-panel">
+    <h1>HOW TO PLAY</h1>
+    <p class="intro"><b>Welcome, Explorer! 🌸</b><br>There is no rush and no way to lose.<br>
+    Explore the world, discover hidden objects, interact with everything you find and see what secrets the village is hiding.</p>
+    <div class="cols">
+      <section>
+        <h2>CONTROLS</h2>
+        <div class="keys">
+          <div class="key"><span class="kc">W A S D</span><span>MOVE</span></div>
+          <div class="key"><span class="kc">MOUSE</span><span>LOOK AROUND</span></div>
+          <div class="key"><span class="kc">SHIFT</span><span>RUN</span></div>
+          <div class="key"><span class="kc">SPACE</span><span>JUMP</span></div>
+          <div class="key"><span class="kc">E</span><span>INTERACT</span></div>
+          <div class="key"><span class="kc">B</span><span>BACKPACK</span></div>
+          <div class="key"><span class="kc">P</span><span>PHOTO / SELFIE</span></div>
+          <div class="key"><span class="kc">ESC</span><span>PAUSE</span></div>
+        </div>
+      </section>
+      <section>
+        <h2>THINGS YOU CAN DO</h2>
+        <div class="dos">
+          <span>🚲 Ride a bicycle</span><span>🛴 Ride a scooter</span><span>🛹 Skate around</span>
+          <span>⚽ Kick a football</span><span>🪁 Fly a kite</span><span>🎠 Use the swings</span>
+          <span>🛝 Go down the slide</span><span>🦆 Feed ducks</span><span>🐱 Pet animals</span>
+          <span>💃 Dance with friends</span><span>🍦 Get ice cream</span><span>📸 Take selfies</span>
+          <span>🌳 Find hidden places</span><span>🎒 Collect treasures</span><span>🏡 Decorate your room</span>
+        </div>
+      </section>
+    </div>
+    <section class="goal">
+      <h2>YOUR GOAL</h2>
+      <p>There is no strict mission. Explore at your own pace. Try to discover:</p>
+      <div class="goal-row"><span>🌸 Flowers</span><span>💎 Crystals</span><span>🧸 Hidden Objects</span><span>🍎 Food</span><span>⭐ Secret Treasures</span></div>
+      <p class="hint">Some discoveries may unlock something unexpected...</p>
+    </section>
+    <div class="foot">Explore. Play. Discover.</div>
+    <button class="btn primary big" id="btn-start">START EXPLORING</button>
+  </div>
+</div>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div id="hud-count">✨ Discoveries <b id="disc-n">0</b> / 20</div>
+  <div id="hud-icons"><span title="Backpack (B)">🎒<i>B</i></span><span title="Selfie (P)">📸<i>P</i></span></div>
+  <div id="prompt" class="hidden"><span class="ek">E</span><span id="prompt-text"></span></div>
+  <div id="toasts"></div>
+  <div id="banner" class="hidden"><div class="b-small" id="banner-small"></div><div class="b-big" id="banner-big"></div></div>
+  <div id="dialog" class="hidden"><div id="dlg-name"></div><div id="dlg-text"></div><div class="dlg-next">E / click ▸</div></div>
+  <div id="clickhint" class="hidden">Click to look around</div>
+</div>
+
+<!-- BACKPACK -->
+<div id="backpack" class="screen overlay hidden">
+  <div class="panel bp-panel">
+    <h1>🎒 BACKPACK</h1>
+    <div id="bp-cats"></div>
+    <h2>Discovered</h2>
+    <div id="bp-items"></div>
+    <h2 id="bp-quest-h">Bag</h2>
+    <div id="bp-quest"></div>
+    <div class="foot small">Press B or ESC to close</div>
+  </div>
+</div>
+
+<!-- PAUSE -->
+<div id="pause" class="screen overlay hidden">
+  <div class="panel small-panel">
+    <h1>PAUSED</h1>
+    <button class="btn primary" id="btn-resume">RESUME</button>
+    <button class="btn" id="btn-p-howto">HOW TO PLAY</button>
+    <button class="btn" id="btn-p-bag">BACKPACK</button>
+    <button class="btn" id="btn-p-menu">MAIN MENU</button>
+  </div>
+</div>
+
+<!-- SELFIE -->
+<div id="selfie" class="hidden">
+  <div class="selfie-frame"></div>
+  <div class="selfie-bar">
+    <button class="btn primary" id="btn-photo">📸 TAKE PHOTO</button>
+    <button class="btn" id="btn-selfie-exit">EXIT SELFIE</button>
+  </div>
+  <div class="selfie-tip">Move the mouse to adjust the angle · scroll to zoom · P to exit</div>
+  <div id="flash"></div>
+</div>
+
+<!-- COMPLETE -->
+<div id="complete" class="screen overlay hidden">
+  <div class="panel small-panel complete-panel">
+    <div class="flower">🌸</div>
+    <h1>TOWN EXPLORER COMPLETE</h1>
+    <p>You discovered the village's hidden secret.</p>
+    <p class="hint">But there may still be more things to find...</p>
+    <button class="btn primary" id="btn-continue">CONTINUE EXPLORING</button>
+    <button class="btn" id="btn-collection">VIEW COLLECTION</button>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

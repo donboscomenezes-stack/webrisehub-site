@@ -11,10 +11,19 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer";
 };
 
 const games: Game[] = [
+  {
+    title: "LITTLE EXPLORER",
+    category: "Casual",
+    description: "Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.",
+    href: "/games/little-explorer/index.html",
+    duration: "10-20 min",
+    status: "NEW",
+    accent: "explorer"
+  },
   {
     title: "WHERE AM I?",
     category: "Puzzle",
@@ -131,7 +140,21 @@ function GameVisual({ game }: { game: Game }) {
   return (
     <div className={`game-art game-art-${game.accent}`}>
       <div className="art-grid" />
-      {game.title === "WHERE AM I?" ? (
+      {game.title === "LITTLE EXPLORER" ? (
+        <div className="explorer-art" aria-hidden="true">
+          <span className="explorer-sun" />
+          <span className="explorer-hill explorer-hill-back" />
+          <span className="explorer-hill explorer-hill-front" />
+          <span className="explorer-castle" />
+          <i className="explorer-spark explorer-spark-one" />
+          <i className="explorer-spark explorer-spark-two" />
+          <i className="explorer-spark explorer-spark-three" />
+          <div>
+            <b>LITTLE EXPLORER</b>
+            <small>EXPLORE · PLAY · DISCOVER</small>
+          </div>
+        </div>
+      ) : game.title === "WHERE AM I?" ? (
         <div className="where-am-i-art" aria-hidden="true">
           <span className="geo-reticle"><i /></span>
           <span className="geo-pin geo-pin-one" />
