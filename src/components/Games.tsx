@@ -11,10 +11,19 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm";
 };
 
 const games: Game[] = [
+  {
+    title: "LET IT GROW",
+    category: "Casual",
+    description: "Drive a getaway run to earn game cash, buy dreamy land, and build cozy farms for free.",
+    href: "/games/let-it-grow/index.html",
+    duration: "10-30 min",
+    status: "NEW",
+    accent: "farm"
+  },
   {
     title: "LITTLE EXPLORER",
     category: "Casual",
@@ -140,7 +149,21 @@ function GameVisual({ game }: { game: Game }) {
   return (
     <div className={`game-art game-art-${game.accent}`}>
       <div className="art-grid" />
-      {game.title === "LITTLE EXPLORER" ? (
+      {game.title === "LET IT GROW" ? (
+        <div className="farm-art" aria-hidden="true">
+          <span className="farm-sun" />
+          <span className="farm-hill farm-hill-back" />
+          <span className="farm-hill farm-hill-front" />
+          <span className="farm-road" />
+          <span className="farm-house" />
+          <span className="farm-tree farm-tree-one" />
+          <span className="farm-tree farm-tree-two" />
+          <div>
+            <b>LET IT GROW</b>
+            <small>DRIVE · EARN · BUILD</small>
+          </div>
+        </div>
+      ) : game.title === "LITTLE EXPLORER" ? (
         <div className="explorer-art" aria-hidden="true">
           <span className="explorer-sun" />
           <span className="explorer-hill explorer-hill-back" />

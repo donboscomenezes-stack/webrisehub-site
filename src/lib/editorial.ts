@@ -15,6 +15,7 @@ export const categories = [
   { slug: "casual", name: "Casual", description: "Low-pressure play and interactive experiments for a different kind of break." },
 ] as const;
 export const games = [
+  { slug: "let-it-grow", title: "Let It Grow", category: "Casual", categories: ["casual", "action"], description: "Drive a getaway run to earn game cash, buy dreamy land, and build cozy farms for free.", duration: "10–30 min", accent: "green", label: "Drive & build" },
   { slug: "little-explorer", title: "Little Explorer", category: "Casual", categories: ["casual"], description: "Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.", duration: "10–20 min", accent: "green", label: "3D exploration" },
   { slug: "where-am-i", title: "Where Am I?", category: "Puzzle", categories: ["puzzle"], description: "Study real-world scenes, use visual clues, and pin each mystery location on the map.", duration: "5–10 min", accent: "purple", label: "Location puzzle" },
   { slug: "wild-arena", title: "Wild Arena", category: "Action", categories: ["action"], description: "Fight rival survivors, collect stronger gear, and stay ahead of the closing storm.", duration: "4–10 min", accent: "orange", label: "Survival action" },
