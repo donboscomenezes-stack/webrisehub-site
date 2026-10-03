@@ -2,6 +2,97 @@ import type { Editorial } from "./editorial";
 export type Article = Editorial & { slug: string; minutes: number; game: string; accent: string; image: string; date: string };
 export const articles: Article[] = [
   {
+    slug: "how-we-built-where-am-i-browser-geography-game",
+    title: "How We Built Where Am I: Designing a Browser Geography Game",
+    eyebrow: "Behind the build",
+    minutes: 8,
+    game: "where-am-i",
+    accent: "purple",
+    image: "/blog/how-we-built-where-am-i.webp",
+    date: "October 5, 2026",
+    description: "A behind-the-scenes look at how we designed Where Am I, a browser-based geography game built around visual clues, observation, and location guessing.",
+    sections: [
+      { id: "introduction", title: "Turning Geography Into a Browser Game", paragraphs: [
+        "Geography games have a simple appeal: show players an unfamiliar place and ask them to figure out where they are. The concept is easy to understand, but building a version that feels fair, fast, and genuinely fun requires more thought than simply putting a location on a screen.",
+        "That was the idea behind Where Am I, a browser geography game designed around observation and deduction. Instead of asking players to recall capitals or identify flags, the game challenges them to study their surroundings, notice useful clues, and make an informed guess.",
+        "We wanted the experience to work directly in the browser with as little friction as possible. No complicated setup. No long tutorial. A player should be able to open the game, understand the challenge almost immediately, and start exploring."
+      ] },
+      { id: "core-game-idea", title: "Starting With a Simple Game Loop", paragraphs: [
+        "The first decision was to keep the core game loop extremely simple. The player is placed in a location, examines the available visual information, decides where they think they are, and submits a guess.",
+        "That simplicity is important. Geography already provides the complexity. Roads, architecture, vegetation, languages, signs, landscapes, and infrastructure can all become clues, so the interface itself does not need to compete for the player's attention.",
+        "A good round creates a small investigation. Players begin with limited information and gradually form a theory about the location."
+      ], bullets: [
+        "Explore the location and look for recognizable details.",
+        "Use environmental and geographic clues to narrow down the possibilities.",
+        "Choose a location based on the evidence available.",
+        "Submit the guess and discover how close the answer was."
+      ] },
+      { id: "designing-the-clues", title: "Making Visual Clues Part of the Gameplay", paragraphs: [
+        "One of the most interesting parts of designing Where Am I was deciding what information players should rely on. The game becomes much more engaging when the answer is not immediately obvious but the location still contains enough information to support a reasonable guess.",
+        "A road sign might reveal a language. Driving direction can eliminate entire groups of countries. Architecture can suggest a region, while mountains, coastlines, vegetation, road markings, and utility poles can provide additional evidence.",
+        "The goal is not to hide the answer completely. It is to give players enough clues to investigate without turning every round into an instant identification."
+      ], bullets: [
+        "Road signs, place names, and visible languages",
+        "Architecture and building styles",
+        "Road markings and driving direction",
+        "Vegetation, terrain, climate, and landscapes",
+        "Vehicles, infrastructure, and street design",
+        "Regional details that become recognizable with experience"
+      ] },
+      { id: "browser-first-design", title: "Designing the Experience for the Browser", paragraphs: [
+        "Building Where Am I as a browser game shaped many of our design decisions. Browser games need to feel immediate. Every unnecessary screen, interaction, or delay increases the chance that a player leaves before completing a round.",
+        "We therefore treated the browser as part of the product design rather than simply the place where the game runs. The interface keeps the location itself at the center of the experience while controls and supporting information remain easy to understand.",
+        "Responsive behavior was equally important. A geography game can be played on a large desktop monitor, a laptop, or a phone, and each screen size changes how much information the player can comfortably inspect. The layout therefore needs to remain usable without overwhelming smaller displays."
+      ], bullets: [
+        "Fast entry into the first round",
+        "Minimal interface around the main geography experience",
+        "Clear controls with predictable interactions",
+        "Responsive layouts for desktop and mobile browsers",
+        "Limited visual distractions while players investigate a location"
+      ] },
+      { id: "location-data", title: "Working With Locations and Geography Data", paragraphs: [
+        "A location-based game depends heavily on the quality of its underlying geographic information. Coordinates may look simple as data, but turning them into a satisfying game requires thinking about how locations are selected, displayed, validated, and evaluated.",
+        "Randomness alone does not necessarily create a good geography game. A technically valid coordinate can still produce an uninteresting or confusing round. Location selection needs to support the gameplay rather than simply provide geographic variety.",
+        "This means considering the balance between recognizable areas and more difficult locations, while avoiding rounds where players have almost no useful information. The objective is variety without sacrificing playability."
+      ] },
+      { id: "guessing-and-feedback", title: "Making Every Guess Feel Meaningful", paragraphs: [
+        "Submitting a guess should not feel like the end of the interaction. It is also the moment when the player learns something.",
+        "Showing the relationship between the guessed location and the actual location turns the result into useful feedback. A player might discover that they correctly identified the country but chose the wrong region, or that a landscape they associated with one part of the world actually belongs somewhere completely different.",
+        "That feedback creates the learning loop behind the game: observe, infer, guess, compare, and remember. Over time, details that once seemed meaningless begin to become recognizable geographic signals."
+      ] },
+      { id: "difficulty", title: "Balancing Challenge and Fairness", paragraphs: [
+        "Difficulty in a geography game is difficult to measure because players arrive with very different levels of knowledge. One person may recognize a country from its road markings while another may need a readable city name before feeling confident.",
+        "Rather than making difficulty depend entirely on obscure locations, we focused on the amount and quality of information available to the player. A challenging location can still feel fair when careful observation reveals useful clues.",
+        "The best rounds sit somewhere between obvious and impossible. Players should occasionally recognize a location immediately, but the most satisfying guesses usually come from combining several smaller clues."
+      ] },
+      { id: "performance", title: "Keeping the Game Fast", paragraphs: [
+        "Performance matters particularly in a game built around exploration. If locations load slowly or interface elements hesitate during interaction, the investigation quickly becomes frustrating.",
+        "We kept the surrounding interface lightweight and treated loading behavior as part of the overall game experience. The goal was to make moving from opening the game to exploring a location and submitting a guess feel continuous.",
+        "This is one of the advantages of building a focused browser game: when the interface stays small and purposeful, more attention can be given to the interaction that actually matters."
+      ] },
+      { id: "what-we-learned", title: "What We Learned While Building Where Am I", paragraphs: [
+        "Building Where Am I reinforced an important lesson about small web games: simple concepts still benefit from careful product decisions. The game does not need dozens of mechanics to create depth because geography itself provides the variation.",
+        "The challenge is deciding what to leave out. Every additional control, rule, or screen has to justify the attention it takes away from exploring the location."
+      ], bullets: [
+        "A simple core loop can create significant replay value when the underlying content varies naturally.",
+        "Good location selection matters as much as the interface.",
+        "Difficulty should come from deduction rather than missing information.",
+        "Fast feedback makes each round more satisfying and educational.",
+        "Browser games benefit from reducing the number of steps between opening the page and actually playing."
+      ] },
+      { id: "why-geography-games-work", title: "Why Geography Games Are So Engaging", paragraphs: [
+        "Geography games sit somewhere between a puzzle and exploration. Players are not simply answering a question; they are gathering evidence from an environment and testing a theory.",
+        "They also change the way players notice everyday details. Road lines, bollards, license plates, utility poles, languages, and building materials can suddenly become meaningful. The more someone plays, the larger their mental library of geographic clues becomes.",
+        "That combination of curiosity, deduction, and discovery is what we wanted Where Am I to capture."
+      ] },
+      { id: "conclusion", title: "Final Thoughts", paragraphs: [
+        "Where Am I started with a straightforward question: can we turn the experience of figuring out an unfamiliar location into a quick browser game?",
+        "The final experience is intentionally simple. Explore what is around you, look for clues, make a guess, and find out how close you were. Behind that loop are decisions about location selection, interface design, performance, difficulty, and feedback that help each round feel worthwhile.",
+        "If you enjoy geography, visual puzzles, or simply testing how much you notice about the world around you, give Where Am I a try."
+      ], links: [{ label: "Play Where Am I", href: "/games/where-am-i/index.html" }] }
+    ]
+  },
+  {
     slug: "10-quick-games-5-minutes", title: "10 Quick Games to Play When You Have 5 Minutes to Spare", eyebrow: "Game guide", minutes: 12, game: "word-lock", accent: "orange", image: "/blog/10-quick-games-5-minutes.png", date: "September 24, 2026",
     description: "Turn a short break into a complete challenge with ten browser games that start quickly and fit into five minutes.",
     sections: [
