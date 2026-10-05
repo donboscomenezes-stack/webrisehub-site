@@ -11,10 +11,19 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm" | "tank";
 };
 
 const games: Game[] = [
+  {
+    title: "TANK ARENA",
+    category: "Action",
+    description: "Fast 3D tank battles from 1v1 to 5v5. Pick your tank and weapon, team up with bots, and win the arena.",
+    href: "/games/tank-arena/index.html",
+    duration: "3-8 min",
+    status: "NEW",
+    accent: "tank"
+  },
   {
     title: "LET IT GROW",
     category: "Casual",
@@ -149,7 +158,18 @@ function GameVisual({ game }: { game: Game }) {
   return (
     <div className={`game-art game-art-${game.accent}`}>
       <div className="art-grid" />
-      {game.title === "LET IT GROW" ? (
+      {game.title === "TANK ARENA" ? (
+        <div className="tank-art" aria-hidden="true">
+          <span className="tank-shell" />
+          <span className="tank-blast" />
+          <span className="tank-unit tank-unit-red"><i /></span>
+          <span className="tank-unit tank-unit-blue"><i /></span>
+          <div>
+            <b>TANK ARENA</b>
+            <small>1V1 TO 5V5 · BOTS · 6 WEAPONS</small>
+          </div>
+        </div>
+      ) : game.title === "LET IT GROW" ? (
         <div className="farm-art" aria-hidden="true">
           <span className="farm-sun" />
           <span className="farm-hill farm-hill-back" />
