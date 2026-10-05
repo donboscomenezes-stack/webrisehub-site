@@ -2,6 +2,118 @@ import type { Editorial } from "./editorial";
 export type Article = Editorial & { slug: string; minutes: number; game: string; accent: string; image: string; date: string };
 export const articles: Article[] = [
   {
+    slug: "how-location-guessing-games-test-your-observation-skills",
+    title: "How Location Guessing Games Test Your Observation Skills",
+    eyebrow: "Game guide",
+    minutes: 8,
+    game: "where-am-i",
+    accent: "purple",
+    image: "/blog/how-location-guessing-games-test-your-observation-skills.webp",
+    date: "October 5, 2026",
+    description: "Location guessing games turn everyday visual details into clues. Discover how these games test observation, pattern recognition, geographical knowledge, and logical reasoning while making you more attentive to the world around you.",
+    sections: [
+      { id: "introduction", title: "Introduction", paragraphs: [
+        "A road sign in the distance, the shape of a utility pole, the markings on a highway, or even the color of the soil can reveal more about a location than you might expect. Location guessing games challenge players to study these small details and use them to determine where in the world they might be.",
+        "What makes these games interesting is that success does not depend on geography knowledge alone. Strong players learn to observe carefully, recognize patterns, compare possibilities, and make logical decisions from incomplete information. In that sense, every round becomes a practical test of attention and visual reasoning.",
+        "The more you play, the more ordinary details begin to stand out. Features that once seemed insignificant can become useful clues, turning a simple guessing game into an exercise in understanding environments, cultures, infrastructure, and landscapes."
+      ] },
+      { id: "observation-matters", title: "Why Observation Matters in Location Guessing Games", paragraphs: [
+        "Location guessing games rarely give you one obvious clue that reveals the answer immediately. Instead, players usually need to combine several pieces of visual information. A language might suggest a group of countries, while road markings, architecture, vegetation, or driving direction help narrow the possibilities further.",
+        "This process rewards deliberate observation. Rather than looking at an image as a whole, experienced players mentally break the scene into smaller pieces and ask what each detail might reveal."
+      ], bullets: [
+        "Road signs can reveal languages, symbols, numbering systems, or regional standards.",
+        "Lane markings and driving direction can help distinguish between countries.",
+        "Architecture may provide clues about climate, history, building materials, and local design.",
+        "Vegetation and terrain can suggest a particular climate or geographical region.",
+        "Utility poles, road barriers, streetlights, and infrastructure can reveal regional patterns.",
+        "Businesses, advertisements, flags, and public signs may provide cultural or linguistic clues."
+      ] },
+      { id: "small-details", title: "Small Details Can Become Powerful Clues", paragraphs: [
+        "One of the biggest lessons location guessing games teach is that useful information can appear almost anywhere. Players naturally notice large landmarks first, but many difficult rounds are solved through details that initially seem unimportant.",
+        "Consider a rural road with no readable signs or recognizable buildings. At first, there may appear to be very little information available. But closer inspection could reveal yellow center lines, distinctive roadside posts, dry vegetation, mountainous terrain, or a particular style of utility pole. Individually, these clues may not provide an answer. Together, they can significantly reduce the number of possible locations.",
+        "This encourages players to move beyond simply seeing what is in front of them. They begin asking why particular features look the way they do and where similar combinations are likely to appear."
+      ] },
+      { id: "pattern-recognition", title: "How Location Games Develop Pattern Recognition", paragraphs: [
+        "Observation becomes much more useful when it is combined with pattern recognition. After playing repeatedly, players begin remembering visual characteristics associated with different regions.",
+        "A certain road design may start to feel familiar. A combination of tropical vegetation and architecture may remind you of previous rounds. Even details such as license plate shapes, bollards, curbs, rooftops, or electrical infrastructure can become recognizable over time.",
+        "This does not mean memorizing every location in the world. Instead, players gradually build a mental library of visual patterns. When a new scene appears, they compare it with patterns they have encountered before and use similarities and differences to form a hypothesis."
+      ], bullets: [
+        "Recognizing recurring road and highway designs.",
+        "Connecting vegetation with climate zones.",
+        "Identifying regional architectural characteristics.",
+        "Comparing writing systems and languages.",
+        "Remembering distinctive infrastructure styles.",
+        "Associating landscapes with particular geographical regions."
+      ] },
+      { id: "reasoning", title: "Observation Is Only the First Step", paragraphs: [
+        "Finding clues is important, but location guessing also requires reasoning. A single clue can often point toward several possible countries or regions, so players need to evaluate how well different pieces of evidence fit together.",
+        "Imagine seeing Spanish text in a scene. That observation alone leaves many possibilities. If the road markings, landscape, architecture, license plates, and vegetation also match patterns commonly associated with a particular region, the guess becomes much stronger.",
+        "Good players therefore avoid relying too heavily on one clue. They build their answer from multiple observations and eliminate possibilities that conflict with the overall scene."
+      ], bullets: [
+        "What does this clue tell me with reasonable confidence?",
+        "Which locations match several clues at the same time?",
+        "Is there another detail that supports or contradicts my first guess?",
+        "Am I recognizing a genuine pattern or simply making an assumption?",
+        "What additional clue would help me narrow the location further?"
+      ] },
+      { id: "geography-knowledge", title: "Building Geographical Knowledge Through Play", paragraphs: [
+        "Location guessing games can also encourage players to learn geography naturally. Instead of studying countries as isolated names on a map, players encounter them through landscapes, cities, languages, roads, architecture, and everyday environments.",
+        "Over time, players may become more familiar with mountain ranges, climate zones, regional languages, transportation systems, urban layouts, and differences between neighboring countries.",
+        "Because this knowledge is connected to visual experiences, it can be easier to remember. A player might forget a geographical fact learned from a list but remember it after using the same information to solve a difficult location."
+      ] },
+      { id: "attention-to-detail", title: "Training Your Attention to Detail", paragraphs: [
+        "Modern digital experiences often encourage quick scanning. Location guessing games reward the opposite behavior. Taking a few extra seconds to inspect a scene can completely change the quality of a guess.",
+        "Players learn to scan images systematically instead of randomly. They may begin with obvious information such as language and road signs before moving toward environmental and infrastructural clues.",
+        "This habit can make the game feel increasingly strategic. Instead of immediately choosing the first location that comes to mind, players collect evidence and make a more considered decision."
+      ], bullets: [
+        "Check for readable text, languages, domain names, and place names.",
+        "Look at which side of the road vehicles use.",
+        "Study lane markings, signs, bollards, and road surfaces.",
+        "Observe architecture, roofs, fences, and building materials.",
+        "Examine vegetation, weather, terrain, and soil.",
+        "Look for flags, businesses, transportation, and cultural details.",
+        "Combine several clues before committing to a final guess."
+      ] },
+      { id: "common-mistakes", title: "Common Observation Mistakes Players Make", paragraphs: [
+        "Location guessing games can expose weaknesses in the way we interpret visual information. One common mistake is confirmation bias: deciding on a country early and then paying attention only to clues that support that choice.",
+        "Another mistake is relying on stereotypes. A landscape or building style may resemble what you associate with a particular country, but similar environments can exist thousands of kilometers apart.",
+        "Strong observation means remaining willing to change your answer when new evidence appears. The goal is not to prove your first impression correct; it is to find the location that best explains the available clues."
+      ], bullets: [
+        "Guessing too quickly from one obvious clue.",
+        "Ignoring details that contradict an initial assumption.",
+        "Confusing similar languages or writing systems.",
+        "Relying too heavily on famous landmarks.",
+        "Assuming similar climates always indicate nearby countries.",
+        "Overlooking ordinary infrastructure that may provide stronger evidence."
+      ] },
+      { id: "improve-skills", title: "How to Improve Your Location Guessing Skills", paragraphs: [
+        "Improvement comes from developing a repeatable observation process. Instead of trying to memorize thousands of isolated facts, focus on learning categories of clues and understanding how they work together.",
+        "After each round, consider which clues were useful and which assumptions led you in the wrong direction. Reviewing mistakes can be especially valuable because it helps you recognize similar situations more accurately in future games."
+      ], bullets: [
+        "Scan the entire scene before making your first guess.",
+        "Separate strong evidence from weak assumptions.",
+        "Learn common road signs and driving conventions.",
+        "Pay attention to languages without relying on language alone.",
+        "Compare climate, vegetation, and terrain together.",
+        "Remember distinctive infrastructure when you encounter it.",
+        "Review incorrect guesses and identify the clues you missed.",
+        "Practice narrowing down the continent or region before choosing an exact location."
+      ] },
+      { id: "beyond-geography", title: "Skills That Go Beyond Geography", paragraphs: [
+        "The appeal of location guessing games extends beyond learning where places are on a map. They encourage a broader set of cognitive skills, including visual attention, memory, pattern recognition, evidence evaluation, and decision-making under uncertainty.",
+        "Players constantly work with incomplete information. They rarely know everything about a scene, yet they still need to make the best possible decision from the evidence available. That combination of observation and reasoning is what makes each round challenging.",
+        "It also explains why experienced players often approach scenes differently from beginners. They are not necessarily seeing more objects; they have learned which details deserve attention and how those details relate to one another."
+      ] },
+      { id: "conclusion", title: "Final Thoughts", paragraphs: [
+        "Location guessing games transform ordinary streets, landscapes, buildings, and signs into visual puzzles. What begins as a simple challenge to identify a place quickly becomes an exercise in noticing details, recognizing patterns, testing assumptions, and reasoning from limited evidence.",
+        "With practice, players learn that almost every scene contains useful information. A road marking, tree, rooftop, sign, utility pole, or distant mountain can become part of the answer.",
+        "That is what makes location guessing games so engaging: they encourage you to look more carefully at the world and discover how much information can be hidden in plain sight."
+      ], links: [
+        { label: "Play Where Am I?, our location guessing game", href: "/games/where-am-i/index.html" }
+      ] }
+    ]
+  },
+  {
     slug: "how-we-built-where-am-i-browser-geography-game",
     title: "How We Built Where Am I: Designing a Browser Geography Game",
     eyebrow: "Behind the build",
