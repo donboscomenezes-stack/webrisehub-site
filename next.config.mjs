@@ -16,6 +16,7 @@ const basePath = normalizedBasePath === "/" ? "" : normalizedBasePath;
 const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig = {
+  trailingSlash: true,
   // Use static export for Cloudflare Pages only in production builds.
   ...(isProd ? { output: "export" } : {}),
   ...(basePath ? { basePath, assetPrefix: basePath } : {})

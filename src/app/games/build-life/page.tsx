@@ -1,5 +1,6 @@
 import ScrollLife from "@/components/build-life/ScrollLife";
-
-export default function BuildLifePage() {
-  return <ScrollLife />;
-}
+import StructuredData, { Breadcrumbs } from "@/components/StructuredData";
+import { games, pageMetadata, siteUrl, gamePath } from "@/lib/editorial";
+const game = games.find(g => g.slug === "build-life")!;
+export const metadata = pageMetadata(`${game.title} – ${game.label}`, game.description, "/games/build-life/");
+export default function GamePage() { return <><StructuredData data={{ "@context": "https://schema.org", "@type": "WebApplication", name: game.title, description: game.description, url: `${siteUrl}/games/build-life/`, applicationCategory: "LifestyleApplication", operatingSystem: "Web browser", isAccessibleForFree: true }} /><Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Games", path: "/games/" }, { name: game.title, path: "/games/build-life/" }]} /><ScrollLife /><section className="site-container home-section"><h2>About {game.title}</h2><p>{game.description}</p><h2>How to explore</h2><p>Set your daily phone-hours estimate, begin the experience and scroll through the comparisons. Try a different estimate to see how weekly, yearly and decade totals change.</p><p><a href="/categories/casual/">Explore related games</a> · <a href="/games/">All games</a></p><h2>Related games</h2><p>{games.filter(g => g.slug !== game.slug && (g.categories as readonly string[]).some(category => (game.categories as readonly string[]).includes(category))).slice(0, 3).map(g => <a key={g.slug} href={gamePath(g.slug)} style={{ marginRight: "1rem" }}>{g.title}</a>)}</p></section></>; }

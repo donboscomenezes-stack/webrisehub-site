@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/StructuredData";
 import type { Metadata } from "next";
 import { ArrowLeft, ArrowRight, Clock3 } from "lucide-react";
 import Footer from "@/components/Footer";
@@ -7,11 +8,11 @@ const title = "10 Quick Games to Play When You Have 5 Minutes to Spare";
 const description =
   "Discover 10 quick browser games you can start immediately and enjoy in a five-minute break, from word puzzles and strategy to reflex challenges.";
 const publishedAt = "2026-09-24";
-const canonicalUrl = "https://webrisehub.com/blog/10-quick-games-5-minutes";
+const canonicalUrl = "https://webrisehub.com/blog/10-quick-games-5-minutes/";
 const imageUrl = "https://webrisehub.com/blog/10-quick-games-5-minutes.png";
 
 export const metadata: Metadata = {
-  title,
+  title: `${title} | WebRiseHub`,
   description,
   alternates: { canonical: canonicalUrl },
   openGraph: {
@@ -207,7 +208,7 @@ export default function QuickGamesArticle() {
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header /><Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: title, path: new URL(canonicalUrl).pathname }]} />
       <main>
         <article className="article-shell">
           <header className="article-header">

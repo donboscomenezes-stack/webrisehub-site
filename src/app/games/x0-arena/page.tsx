@@ -1,5 +1,6 @@
 import X0Arena from "@/components/x0/X0Arena";
-
-export default function X0ArenaPage() {
-  return <X0Arena />;
-}
+import StructuredData, { Breadcrumbs } from "@/components/StructuredData";
+import { games, pageMetadata, siteUrl, gamePath } from "@/lib/editorial";
+const game = games.find(g => g.slug === "x0-arena")!;
+export const metadata = pageMetadata(`${game.title} – ${game.label}`, game.description, "/games/x0-arena/");
+export default function GamePage() { return <><StructuredData data={{ "@context": "https://schema.org", "@type": "VideoGame", name: game.title, description: game.description, url: `${siteUrl}/games/x0-arena/`, gamePlatform: "Web browser", genre: game.category, isAccessibleForFree: true }} /><Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Games", path: "/games/" }, { name: game.title, path: "/games/x0-arena/" }]} /><X0Arena /><section className="site-container home-section"><h2>About {game.title}</h2><p>{game.description}</p><h2>How to play</h2><p>Choose a bot level or play locally. Place your mark on the board and try to complete a line before your opponent.</p><p><a href="/categories/casual/">Explore related games</a> · <a href="/games/">All games</a></p><h2>Related games</h2><p>{games.filter(g => g.slug !== game.slug && (g.categories as readonly string[]).some(category => (game.categories as readonly string[]).includes(category))).slice(0, 3).map(g => <a key={g.slug} href={gamePath(g.slug)} style={{ marginRight: "1rem" }}>{g.title}</a>)}</p></section></>; }

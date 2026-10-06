@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import GameVisual from "@/components/GameVisual";
 
 type GameCategory = "Action" | "Drawing" | "Puzzle" | "Skill" | "Reaction" | "Casual";
 
@@ -19,7 +20,7 @@ const games: Game[] = [
     title: "TANK ARENA",
     category: "Action",
     description: "Fast 3D tank battles from 1v1 to 5v5. Pick your tank and weapon, team up with bots, and win the arena.",
-    href: "/games/tank-arena/index.html",
+    href: "/games/tank-arena/",
     duration: "3-8 min",
     status: "NEW",
     accent: "tank"
@@ -28,7 +29,7 @@ const games: Game[] = [
     title: "LET IT GROW",
     category: "Casual",
     description: "Drive a getaway run to earn game cash, buy dreamy land, and build cozy farms for free.",
-    href: "/games/let-it-grow/index.html",
+    href: "/games/let-it-grow/",
     duration: "10-30 min",
     status: "NEW",
     accent: "farm"
@@ -37,7 +38,7 @@ const games: Game[] = [
     title: "LITTLE EXPLORER",
     category: "Casual",
     description: "Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.",
-    href: "/games/little-explorer/index.html",
+    href: "/games/little-explorer/",
     duration: "10-20 min",
     status: "NEW",
     accent: "explorer"
@@ -46,7 +47,7 @@ const games: Game[] = [
     title: "WHERE AM I?",
     category: "Puzzle",
     description: "Study real-world scenes, read the clues, and pin each mystery location on the map.",
-    href: "/games/where-am-i/index.html",
+    href: "/games/where-am-i/",
     duration: "5-10 min",
     status: "NEW",
     accent: "geo"
@@ -55,7 +56,7 @@ const games: Game[] = [
     title: "WILD ARENA",
     category: "Action",
     description: "Fight rival survivors, loot stronger gear, and outrun the storm to be the last fighter standing.",
-    href: "/games/wild-arena/index.html",
+    href: "/games/wild-arena/",
     duration: "4-10 min",
     status: "NEW",
     accent: "wild"
@@ -64,7 +65,7 @@ const games: Game[] = [
     title: "CELL RUSH",
     category: "Casual",
     description: "Feed on protein bites, outgrow rival cells, and climb to the top of the arena.",
-    href: "/games/cell-rush/index.html",
+    href: "/games/cell-rush/",
     duration: "2-8 min",
     status: "NEW",
     accent: "cyan"
@@ -73,7 +74,7 @@ const games: Game[] = [
     title: "WORD LOCK",
     category: "Puzzle",
     description: "Crack a five-letter word in six tries, or take on the shared Daily Word.",
-    href: "/games/word-lock/index.html",
+    href: "/games/word-lock/",
     duration: "2-5 min",
     status: "NEW",
     accent: "green"
@@ -82,7 +83,7 @@ const games: Game[] = [
     title: "LOCK IN",
     category: "Reaction",
     description: "Stop the rotating marker inside the target, build your combo, and survive the speed-up.",
-    href: "/games/lock-in/index.html",
+    href: "/games/lock-in/",
     duration: "1-3 min",
     status: "NEW",
     accent: "lime"
@@ -91,7 +92,7 @@ const games: Game[] = [
     title: "Build Life",
     category: "Skill",
     description: "Scroll through an interactive life experiment and see how small habits add up.",
-    href: "/games/build-life",
+    href: "/games/build-life/",
     duration: "4-6 min",
     status: "FEATURED",
     accent: "green"
@@ -100,7 +101,7 @@ const games: Game[] = [
     title: "Circle Game",
     category: "Drawing",
     description: "Draw the cleanest circle you can and get scored instantly.",
-    href: "/games/circel/index.html",
+    href: "/games/circel/",
     duration: "1-2 min",
     status: "NEW",
     accent: "orange"
@@ -109,7 +110,7 @@ const games: Game[] = [
     title: "Chess",
     category: "Skill",
     description: "Play a fast chess match against the browser bot or across the same board.",
-    href: "/games/chess",
+    href: "/games/chess/",
     duration: "3-10 min",
     status: "NEW",
     accent: "purple"
@@ -118,7 +119,7 @@ const games: Game[] = [
     title: "X0 Arena",
     category: "Casual",
     description: "Play a 3D Tic-Tac-Toe match with bot levels, shapes, and character pieces.",
-    href: "/games/x0-arena",
+    href: "/games/x0-arena/",
     duration: "1-3 min",
     status: "NEW",
     accent: "cyan"
@@ -127,7 +128,7 @@ const games: Game[] = [
     title: "GETAWAY",
     category: "Reaction",
     description: "Thread through traffic, outrun the police, and push your escape score higher.",
-    href: "/games/getaway/index.html",
+    href: "/games/getaway/",
     duration: "2-6 min",
     status: "NEW",
     accent: "red"
@@ -136,7 +137,7 @@ const games: Game[] = [
     title: "Don't Touch Red",
     category: "Reaction",
     description: "Flip your direction, thread past red hazards, and survive as long as you can.",
-    href: "/games/dont-touch-red/index.html",
+    href: "/games/dont-touch-red/",
     duration: "1-3 min",
     status: "NEW",
     accent: "red"
@@ -145,7 +146,7 @@ const games: Game[] = [
     title: "STACK",
     category: "Reaction",
     description: "Time each drop, trim the misses, and build the tallest colorful tower you can.",
-    href: "/games/stack/index.html",
+    href: "/games/stack/",
     duration: "1-3 min",
     status: "NEW",
     accent: "rainbow"
@@ -153,142 +154,6 @@ const games: Game[] = [
 ];
 
 const filters = ["All Games", "Action", "Drawing", "Puzzle", "Skill", "Reaction", "Casual"];
-
-function GameVisual({ game }: { game: Game }) {
-  return (
-    <div className={`game-art game-art-${game.accent}`}>
-      <div className="art-grid" />
-      {game.title === "TANK ARENA" ? (
-        <div className="tank-art" aria-hidden="true">
-          <span className="tank-shell" />
-          <span className="tank-blast" />
-          <span className="tank-unit tank-unit-red"><i /></span>
-          <span className="tank-unit tank-unit-blue"><i /></span>
-          <div>
-            <b>TANK ARENA</b>
-            <small>1V1 TO 5V5 · BOTS · 6 WEAPONS</small>
-          </div>
-        </div>
-      ) : game.title === "LET IT GROW" ? (
-        <div className="farm-art" aria-hidden="true">
-          <span className="farm-sun" />
-          <span className="farm-hill farm-hill-back" />
-          <span className="farm-hill farm-hill-front" />
-          <span className="farm-road" />
-          <span className="farm-house" />
-          <span className="farm-tree farm-tree-one" />
-          <span className="farm-tree farm-tree-two" />
-          <div>
-            <b>LET IT GROW</b>
-            <small>DRIVE · EARN · BUILD</small>
-          </div>
-        </div>
-      ) : game.title === "LITTLE EXPLORER" ? (
-        <div className="explorer-art" aria-hidden="true">
-          <span className="explorer-sun" />
-          <span className="explorer-hill explorer-hill-back" />
-          <span className="explorer-hill explorer-hill-front" />
-          <span className="explorer-castle" />
-          <i className="explorer-spark explorer-spark-one" />
-          <i className="explorer-spark explorer-spark-two" />
-          <i className="explorer-spark explorer-spark-three" />
-          <div>
-            <b>LITTLE EXPLORER</b>
-            <small>EXPLORE · PLAY · DISCOVER</small>
-          </div>
-        </div>
-      ) : game.title === "WHERE AM I?" ? (
-        <div className="where-am-i-art" aria-hidden="true">
-          <span className="geo-reticle"><i /></span>
-          <span className="geo-pin geo-pin-one" />
-          <span className="geo-pin geo-pin-two" />
-          <div>
-            <b>WHERE AM I?</b>
-            <small>LOOK · PIN · DISCOVER</small>
-          </div>
-        </div>
-      ) : game.title === "WILD ARENA" ? (
-        <div className="wild-arena-art" aria-hidden="true">
-          <span className="wild-storm" />
-          <span className="wild-fighter wild-fighter-one" />
-          <span className="wild-fighter wild-fighter-two" />
-          <i className="wild-blade" />
-          <b>LAST ONE STANDING</b>
-        </div>
-      ) : game.title === "LOCK IN" ? (
-        <div className="lock-in-art" aria-hidden="true">
-          <span className="lock-in-ring" />
-          <span className="lock-in-target" />
-          <span className="lock-in-marker" />
-          <b>LOCK IN</b>
-        </div>
-      ) : game.title === "CELL RUSH" ? (
-        <div className="cell-rush-art" aria-hidden="true">
-          <span className="cell-rush-player">CELL</span>
-          <span className="cell-rush-rival" />
-          <i className="cell-food cell-food-one" />
-          <i className="cell-food cell-food-two" />
-          <i className="cell-food cell-food-three" />
-          <b>RUSH</b>
-        </div>
-      ) : game.title === "WORD LOCK" ? (
-        <div className="word-lock-art" aria-hidden="true">
-          {["W", "O", "R", "D", "S"].map((letter, index) => (
-            <span className={`word-lock-tile word-lock-tile-${index + 1}`} key={letter}>{letter}</span>
-          ))}
-        </div>
-      ) : game.title === "Circle Game" ? (
-        <div className="circle-art" aria-hidden="true">
-          <span />
-          <b />
-        </div>
-      ) : game.title === "Chess" ? (
-        <div className="chess-art" aria-hidden="true">
-          {["♜", "♞", "♝", "♛", "♚", "♟"].map((piece, index) => (
-            <span key={`${piece}-${index}`}>{piece}</span>
-          ))}
-        </div>
-      ) : game.title === "X0 Arena" ? (
-        <div className="x0-art" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <b>X</b>
-          <b>0</b>
-        </div>
-      ) : game.title === "GETAWAY" ? (
-        <div className="getaway-art" aria-hidden="true">
-          <span className="getaway-road" />
-          <span className="getaway-car getaway-car-player" />
-          <span className="getaway-car getaway-car-police" />
-          <i />
-          <i />
-        </div>
-      ) : game.title === "Don't Touch Red" ? (
-        <div className="red-art" aria-hidden="true">
-          <span className="red-hazard red-hazard-left" />
-          <span className="red-hazard red-hazard-right" />
-          <b className="red-player" />
-          <i className="red-trail" />
-        </div>
-      ) : game.title === "STACK" ? (
-        <div className="stack-art" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-      ) : (
-        <div className="build-art" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-      )}
-    </div>
-  );
-}
 
 function StandardGameCard({ game }: { game: Game }) {
   return (

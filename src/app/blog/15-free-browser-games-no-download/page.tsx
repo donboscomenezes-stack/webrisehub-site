@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/StructuredData";
 import type { Metadata } from "next";
 import { ArrowLeft, ArrowRight, Clock3 } from "lucide-react";
 import Footer from "@/components/Footer";
@@ -7,11 +8,11 @@ const title = "15 Free Browser Games You Can Play Without Downloading Anything";
 const description =
   "Play 15 free browser games with no download required, from quick WebRiseHub challenges to puzzles, multiplayer games, and relaxed RPGs.";
 const publishedAt = "2026-09-21";
-const canonicalUrl = "https://webrisehub.com/blog/15-free-browser-games-no-download";
+const canonicalUrl = "https://webrisehub.com/blog/15-free-browser-games-no-download/";
 const imageUrl = "https://webrisehub.com/blog/15-free-browser-games-no-download.png";
 
 export const metadata: Metadata = {
-  title,
+  title: `${title} | WebRiseHub`,
   description,
   alternates: { canonical: canonicalUrl },
   openGraph: {
@@ -263,7 +264,7 @@ export default function FreeBrowserGamesArticle() {
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header /><Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: title, path: new URL(canonicalUrl).pathname }]} />
       <main>
         <article className="article-shell">
           <header className="article-header">

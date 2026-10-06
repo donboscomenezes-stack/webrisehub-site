@@ -1,0 +1,13 @@
+{
+  "name": "WebRiseHub",
+  "short_name": "WebRiseHub",
+  "start_url": "/",
+  "display": "browser",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "477x305",
+      "type": "image/png"
+    }
+  ]
+}

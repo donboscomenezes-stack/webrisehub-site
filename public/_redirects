@@ -1,0 +1,4 @@
+# Cloudflare Pages: preserve links to the previously broken Circle Game alias.
+/games/circle-game /games/circel/ 301
+/games/circle-game/ /games/circel/ 301
+/games/circle-game/index.html /games/circel/ 301

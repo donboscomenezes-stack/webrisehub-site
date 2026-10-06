@@ -5,17 +5,13 @@ import "./publishing.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 
-const siteUrlRaw = (process.env.NEXT_PUBLIC_SITE_URL || "https://webrisehub.com").trim();
-const siteUrl = siteUrlRaw.startsWith("http://") || siteUrlRaw.startsWith("https://")
-  ? siteUrlRaw
-  : `https://${siteUrlRaw}`;
+import { siteUrl, pageMetadata } from "@/lib/editorial";
 const googleAnalyticsId = "G-3N44VQVMDX";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "WebRiseHub — Where Players Engage. Brands Rise.",
-  description:
-    "Interactive games designed to attract attention, keep players coming back, and place brands inside experiences people enjoy."
+  ...pageMetadata("WebRiseHub – Free Browser Games | Play Online, No Downloads", "Play free browser games on WebRiseHub. Discover puzzle, action, drawing, reaction, skill and casual games you can play instantly with no downloads or account required.", "/"),
+  manifest: "/manifest.webmanifest"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

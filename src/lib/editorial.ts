@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://webrisehub.com").replace(/\/$/, "");
+export const siteUrl = "https://webrisehub.com";
 export const updated = "September 26, 2026";
 export type ContentSection = { id: string; title: string; paragraphs?: string[]; bullets?: string[]; steps?: string[]; links?: { label: string; href: string }[] };
 export type Editorial = { title: string; description: string; eyebrow: string; sections: ContentSection[] };
 export function pageMetadata(title: string, description: string, path: string): Metadata {
-  return { title, description, alternates: { canonical: path }, openGraph: { title: `${title} | WebRiseHub`, description, url: path, siteName: "WebRiseHub", type: "website" } };
+  const brandedTitle = title.includes("WebRiseHub") ? title : `${title} | WebRiseHub`;
+  return { title: brandedTitle, description, alternates: { canonical: `${siteUrl}${path}` },
+    openGraph: { title: brandedTitle, description, url: `${siteUrl}${path}`, siteName: "WebRiseHub", type: "website", images: [{ url: "/social-preview.png", width: 1200, height: 630, alt: "WebRiseHub — free browser games" }] },
+    twitter: { card: "summary_large_image", title: brandedTitle, description, images: ["/social-preview.png"] } };
 }
+export function gamePath(slug: string) { return `/games/${slug === "circle-game" ? "circel" : slug}/`; }
 export const categories = [
   { slug: "action", name: "Action", description: "Fast arena and driving games where movement and decisions matter." },
   { slug: "drawing", name: "Drawing", description: "Freehand challenges that reward observation, control, and another try." },
@@ -15,21 +19,21 @@ export const categories = [
   { slug: "casual", name: "Casual", description: "Low-pressure play and interactive experiments for a different kind of break." },
 ] as const;
 export const games = [
-  { slug: "tank-arena", title: "Tank Arena", category: "Action", categories: ["action"], description: "Fast 3D tank battles from 1v1 to 5v5. Pick your tank and weapon, team up with bots, and win the arena.", duration: "3–8 min", accent: "orange", label: "Tank battles" },
-  { slug: "let-it-grow", title: "Let It Grow", category: "Casual", categories: ["casual", "action"], description: "Drive a getaway run to earn game cash, buy dreamy land, and build cozy farms for free.", duration: "10–30 min", accent: "green", label: "Drive & build" },
-  { slug: "little-explorer", title: "Little Explorer", category: "Casual", categories: ["casual"], description: "Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.", duration: "10–20 min", accent: "green", label: "3D exploration" },
-  { slug: "where-am-i", title: "Where Am I?", category: "Puzzle", categories: ["puzzle"], description: "Study real-world scenes, use visual clues, and pin each mystery location on the map.", duration: "5–10 min", accent: "purple", label: "Location puzzle" },
-  { slug: "wild-arena", title: "Wild Arena", category: "Action", categories: ["action"], description: "Fight rival survivors, collect stronger gear, and stay ahead of the closing storm.", duration: "4–10 min", accent: "orange", label: "Survival action" },
-  { slug: "cell-rush", title: "Cell Rush", category: "Casual", categories: ["casual", "action"], description: "Collect protein, grow your cell, and outmaneuver rivals in a fast arena.", duration: "2–8 min", accent: "green", label: "Arena game" },
-  { slug: "word-lock", title: "Word Lock", category: "Puzzle", categories: ["puzzle"], description: "Solve a five-letter word in six attempts or play the shared daily challenge.", duration: "2–5 min", accent: "purple", label: "Word puzzle" },
-  { slug: "lock-in", title: "Lock In", category: "Reaction", categories: ["reaction", "skill"], description: "Stop the moving marker inside the target and protect your growing combo.", duration: "1–3 min", accent: "green", label: "Timing challenge" },
+  { slug: "tank-arena", title: "Tank Arena", category: "Action", categories: ["action"], description: "Fast 3D tank battles from 1v1 to 5v5. Pick your tank and weapon, team up with bots, and win the arena.", duration: "3–8 min", accent: "tank", label: "Tank battles" },
+  { slug: "let-it-grow", title: "Let It Grow", category: "Casual", categories: ["casual", "action"], description: "Drive a getaway run to earn game cash, buy dreamy land, and build cozy farms for free.", duration: "10–30 min", accent: "farm", label: "Drive & build" },
+  { slug: "little-explorer", title: "Little Explorer", category: "Casual", categories: ["casual"], description: "Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.", duration: "10–20 min", accent: "explorer", label: "3D exploration" },
+  { slug: "where-am-i", title: "Where Am I?", category: "Puzzle", categories: ["puzzle"], description: "Study real-world scenes, use visual clues, and pin each mystery location on the map.", duration: "5–10 min", accent: "geo", label: "Location puzzle" },
+  { slug: "wild-arena", title: "Wild Arena", category: "Action", categories: ["action"], description: "Fight rival survivors, collect stronger gear, and stay ahead of the closing storm.", duration: "4–10 min", accent: "wild", label: "Survival action" },
+  { slug: "cell-rush", title: "Cell Rush", category: "Casual", categories: ["casual", "action"], description: "Collect protein, grow your cell, and outmaneuver rivals in a fast arena.", duration: "2–8 min", accent: "cyan", label: "Arena game" },
+  { slug: "word-lock", title: "Word Lock", category: "Puzzle", categories: ["puzzle"], description: "Solve a five-letter word in six attempts or play the shared daily challenge.", duration: "2–5 min", accent: "green", label: "Word puzzle" },
+  { slug: "lock-in", title: "Lock In", category: "Reaction", categories: ["reaction", "skill"], description: "Stop the moving marker inside the target and protect your growing combo.", duration: "1–3 min", accent: "lime", label: "Timing challenge" },
   { slug: "circle-game", title: "Circle Game", category: "Drawing", categories: ["drawing", "skill", "casual"], description: "A circle is just the beginning. Recreate 15 shapes and discover how close your drawing really is.", duration: "1–2 min", accent: "orange", label: "Drawing challenge" },
   { slug: "build-life", title: "Build Life", category: "Casual", categories: ["casual"], description: "Turn a daily screen-time estimate into an interactive journey through days, years, and possibilities.", duration: "4–6 min", accent: "green", label: "Interactive experiment" },
   { slug: "chess", title: "Chess", category: "Skill", categories: ["skill"], description: "Play a complete chess match against the browser bot or across the same board.", duration: "3–10 min", accent: "purple", label: "Strategy game" },
-  { slug: "x0-arena", title: "X0 Arena", category: "Casual", categories: ["casual", "skill"], description: "Play 3D tic-tac-toe with bot levels, shapes, and character pieces.", duration: "1–3 min", accent: "orange", label: "3D board game" },
-  { slug: "getaway", title: "Getaway", category: "Reaction", categories: ["reaction", "action"], description: "Weave through traffic, outrun the police, and push your escape score higher.", duration: "2–6 min", accent: "orange", label: "Driving challenge" },
-  { slug: "dont-touch-red", title: "Don't Touch Red", category: "Reaction", categories: ["reaction"], description: "Reverse direction, avoid red hazards, and survive for as long as possible.", duration: "1–3 min", accent: "purple", label: "Reaction challenge" },
-  { slug: "stack", title: "Stack", category: "Reaction", categories: ["reaction", "skill"], description: "Time every drop and build the tallest colorful tower you can.", duration: "1–3 min", accent: "green", label: "Stacking challenge" },
+  { slug: "x0-arena", title: "X0 Arena", category: "Casual", categories: ["casual", "skill"], description: "Play 3D tic-tac-toe with bot levels, shapes, and character pieces.", duration: "1–3 min", accent: "cyan", label: "3D board game" },
+  { slug: "getaway", title: "Getaway", category: "Reaction", categories: ["reaction", "action"], description: "Weave through traffic, outrun the police, and push your escape score higher.", duration: "2–6 min", accent: "red", label: "Driving challenge" },
+  { slug: "dont-touch-red", title: "Don't Touch Red", category: "Reaction", categories: ["reaction"], description: "Reverse direction, avoid red hazards, and survive for as long as possible.", duration: "1–3 min", accent: "red", label: "Reaction challenge" },
+  { slug: "stack", title: "Stack", category: "Reaction", categories: ["reaction", "skill"], description: "Time every drop and build the tallest colorful tower you can.", duration: "1–3 min", accent: "rainbow", label: "Stacking challenge" },
 ] as const;
 export type Game = typeof games[number];
 export const guides: Record<string, Editorial & { faqs: { question: string; answer: string }[] }> = {

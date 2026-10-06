@@ -1,12 +1,13 @@
+import StructuredData from "@/components/StructuredData";
 import Link from "next/link";
 import SiteShell from "@/components/SiteShell";
 import Hero from "@/components/Hero";
 import Games from "@/components/Games";
 import JournalCards from "@/components/JournalCards";
 import { pageMetadata } from "@/lib/editorial";
-export const metadata = pageMetadata("Free Browser Games & Interactive Experiences", "Play free drawing challenges and interactive experiments on WebRiseHub. Start in your browser with no downloads or account, and explore practical game guides.", "/");
+export const metadata = pageMetadata("WebRiseHub – Free Browser Games | Play Online, No Downloads", "Play free browser games on WebRiseHub. Discover puzzle, action, drawing, reaction, skill and casual games you can play instantly with no downloads or account required.", "/");
 export default function HomePage() {
-  return <SiteShell><Hero />
+  return <SiteShell><StructuredData data={{ "@context": "https://schema.org", "@graph": [{ "@type": "WebSite", "@id": "https://webrisehub.com/#website", name: "WebRiseHub", alternateName: "Web Rise Hub", url: "https://webrisehub.com/", publisher: { "@id": "https://webrisehub.com/#organization" } }, { "@type": "Organization", "@id": "https://webrisehub.com/#organization", name: "WebRiseHub", url: "https://webrisehub.com/", logo: "https://webrisehub.com/logo.png" }] }} /><Hero />
     <Games />
     <section className="why-band"><div className="site-container"><div className="section-heading"><div><p className="eyebrow-label">Less setup. More play.</p><h2>Made for your next break.</h2></div></div><div className="benefits-grid">
       {[["01", "Free to explore", "Open a game and start playing. No purchase or account is needed for the current collection."], ["02", "No installation", "Everything runs in your browser. Choose an experience and go straight to its play area."], ["03", "A clear starting point", "Read actual controls, scoring explanations, and useful tips on every game page."], ["04", "Play your way", "Use a mouse or supported touchscreen. Each guide explains its device and input requirements."]].map(([n,t,d]) => <div className="benefit" key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></div>)}

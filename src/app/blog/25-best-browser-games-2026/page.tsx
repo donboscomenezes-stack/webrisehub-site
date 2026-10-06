@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@/components/StructuredData";
 import type { Metadata } from "next";
 import { ArrowLeft, ArrowRight, Clock3 } from "lucide-react";
 import Footer from "@/components/Footer";
@@ -7,11 +8,11 @@ const title = "25 Best Browser Games to Play When You're Bored in 2026";
 const description =
   "Discover 25 browser games for quick breaks, strategy sessions, multiplayer competition, relaxing play, and everything in between.";
 const publishedAt = "2026-09-20";
-const canonicalUrl = "https://webrisehub.com/blog/25-best-browser-games-2026";
+const canonicalUrl = "https://webrisehub.com/blog/25-best-browser-games-2026/";
 const imageUrl = "https://webrisehub.com/blog/25-best-browser-games-2026.png";
 
 export const metadata: Metadata = {
-  title,
+  title: `${title} | WebRiseHub`,
   description,
   alternates: { canonical: canonicalUrl },
   openGraph: {
@@ -390,7 +391,7 @@ export default function BrowserGamesArticle() {
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header /><Breadcrumbs items={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: title, path: new URL(canonicalUrl).pathname }]} />
       <main>
         <article className="article-shell">
           <header className="article-header">

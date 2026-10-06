@@ -3,11 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Little Explorer</title>
+<title>Little Explorer – 3D exploration | WebRiseHub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script type="importmap">{ "imports": { "three": "./js/lib/three.module.js" } }</script>
+
+<meta name="description" content="Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.">
+<link rel="canonical" href="https://webrisehub.com/games/little-explorer/">
+<meta property="og:title" content="Little Explorer – 3D exploration | WebRiseHub">
+<meta property="og:description" content="Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.">
+<meta property="og:url" content="https://webrisehub.com/games/little-explorer/">
+<meta property="og:site_name" content="WebRiseHub">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://webrisehub.com/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Little Explorer – 3D exploration | WebRiseHub">
+<meta name="twitter:description" content="Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.">
+<meta name="twitter:image" content="https://webrisehub.com/social-preview.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "Little Explorer", "description": "Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden.", "url": "https://webrisehub.com/games/little-explorer/", "gamePlatform": "Web browser", "genre": "Casual", "isAccessibleForFree": true}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://webrisehub.com/"}, {"@type": "ListItem", "position": 2, "name": "Games", "item": "https://webrisehub.com/games/"}, {"@type": "ListItem", "position": 3, "name": "Little Explorer", "item": "https://webrisehub.com/games/little-explorer/"}]}</script>
 </head>
 <body>
 <div id="game"></div>
@@ -36,7 +51,7 @@
 <!-- HOW TO PLAY -->
 <div id="howto" class="screen hidden overlay">
   <div class="panel howto-panel">
-    <h1>HOW TO PLAY</h1>
+    <h2>HOW TO PLAY</h2>
     <p class="intro"><b>Welcome, Explorer! 🌸</b><br>There is no rush and no way to lose.<br>
     Explore the world, discover hidden objects, interact with everything you find and see what secrets the village is hiding.</p>
     <div class="cols">
@@ -89,7 +104,7 @@
 <!-- BACKPACK -->
 <div id="backpack" class="screen overlay hidden">
   <div class="panel bp-panel">
-    <h1>🎒 BACKPACK</h1>
+    <h2>🎒 BACKPACK</h2>
     <div id="bp-cats"></div>
     <h2>Discovered</h2>
     <div id="bp-items"></div>
@@ -102,7 +117,7 @@
 <!-- PAUSE -->
 <div id="pause" class="screen overlay hidden">
   <div class="panel small-panel">
-    <h1>PAUSED</h1>
+    <h2>PAUSED</h2>
     <button class="btn primary" id="btn-resume">RESUME</button>
     <button class="btn" id="btn-p-howto">HOW TO PLAY</button>
     <button class="btn" id="btn-p-bag">BACKPACK</button>
@@ -125,7 +140,7 @@
 <div id="complete" class="screen overlay hidden">
   <div class="panel small-panel complete-panel">
     <div class="flower">🌸</div>
-    <h1>TOWN EXPLORER COMPLETE</h1>
+    <h2>TOWN EXPLORER COMPLETE</h2>
     <p>You discovered the village's hidden secret.</p>
     <p class="hint">But there may still be more things to find...</p>
     <button class="btn primary" id="btn-continue">CONTINUE EXPLORING</button>
@@ -134,5 +149,6 @@
 </div>
 
 <script type="module" src="js/main.js"></script>
+<details class="webrisehub-game-info" style="position:fixed;bottom:8px;right:8px;z-index:100;max-width:min(420px,calc(100vw - 16px));max-height:50vh;overflow:auto;padding:8px 12px;border-radius:8px;background:#101916;color:white;font:14px/1.6 system-ui"><summary><h1 style="display:inline;font:inherit;margin:0">Little Explorer</h1> · About Little Explorer · WebRiseHub</summary><p>Explore a cozy 3D fantasy village, ride bikes, befriend a cat, and unlock the Hidden Garden. Play free in your browser without downloads or an account.</p><h2>How to play</h2><p>Use WASD to move, the mouse to look, Shift to run, Space to jump and E to interact. Explore the village and discover its hidden objects.</p><h2>Explore more games</h2><p><a style="color:#b8f365" href="/categories/casual/">Casual games</a> · <a style="color:#b8f365" href="/games/">All games</a> · <a style="color:#b8f365" href="/games/let-it-grow/">Let It Grow</a> · <a style="color:#b8f365" href="/games/cell-rush/">Cell Rush</a> · <a style="color:#b8f365" href="/games/build-life/">Build Life</a></p></details>
 </body>
 </html>
