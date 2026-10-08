@@ -1,6 +1,13 @@
 import type { Editorial } from "./editorial";
+import geographyGuide from "./geography-guide.json";
 export type Article = Editorial & { slug: string; minutes: number; game: string; accent: string; image: string; date: string; heroImage?: boolean; imageAlt?: string };
 export const articles: Article[] = [
+  {
+    ...geographyGuide,
+    game: "where-am-i",
+    heroImage: true,
+    imageAlt: "Geography guessing game guide featuring a globe, location pins, a compass, and visual map clues.",
+  },
 {
   "slug": "how-circle-game-calculates-drawing-accuracy",
   "title": "How the Circle Game Calculates Drawing Accuracy",
