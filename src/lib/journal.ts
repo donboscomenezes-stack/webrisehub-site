@@ -1,7 +1,13 @@
 import type { Editorial } from "./editorial";
 import geographyGuide from "./geography-guide.json";
+import wildArenaGuide from "./wild-arena-guide.json";
 export type Article = Editorial & { slug: string; minutes: number; game: string; accent: string; image: string; date: string; heroImage?: boolean; imageAlt?: string };
 export const articles: Article[] = [
+  {
+    ...wildArenaGuide,
+    heroImage: true,
+    imageAlt: "Wild Arena survival game illustration showing a wilderness campsite, explorer, campfire, and crafting inventory.",
+  },
   {
     ...geographyGuide,
     game: "where-am-i",
