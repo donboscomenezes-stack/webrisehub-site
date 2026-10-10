@@ -12,10 +12,19 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm" | "tank";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm" | "tank" | "firefight";
 };
 
 const games: Game[] = [
+  {
+    title: "FIREFIGHT",
+    category: "Action",
+    description: "Realistic 3D shooter. Battle bots across five big maps, from a fortified outpost to a neon city at night.",
+    href: "/games/firefight/",
+    duration: "5-10 min",
+    status: "NEW",
+    accent: "firefight"
+  },
   {
     title: "TANK ARENA",
     category: "Action",

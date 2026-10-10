@@ -3,7 +3,15 @@ export default function GameVisual({ game }: { game: { title: string; accent: st
   return (
     <div className={`game-art game-art-${game.accent}`} aria-hidden="true">
       <div className="art-grid" />
-      {title === "TANK ARENA" ? (
+      {title === "FIREFIGHT" ? (
+        <div className="firefight-art" aria-hidden="true">
+          <span className="firefight-shot" />
+          <div>
+            <b>FIREFIGHT</b>
+            <small>3D SHOOTER · 5 MAPS · UP TO 16 PLAYERS</small>
+          </div>
+        </div>
+      ) : title === "TANK ARENA" ? (
         <div className="tank-art" aria-hidden="true">
           <span className="tank-shell" />
           <span className="tank-blast" />
