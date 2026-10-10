@@ -4,6 +4,121 @@ import wildArenaGuide from "./wild-arena-guide.json";
 export type Article = Editorial & { slug: string; minutes: number; game: string; accent: string; image: string; date: string; heroImage?: boolean; imageAlt?: string };
 export const articles: Article[] = [
   {
+    slug: "firefight-beginners-guide",
+    title: "Firefight Beginner's Guide: Maps, Weapons and Tips to Win Your First Match",
+    eyebrow: "Game guide",
+    minutes: 8,
+    game: "firefight",
+    accent: "orange",
+    image: "/blog/firefight-beginners-guide.webp",
+    heroImage: true,
+    imageAlt: "Firefight gameplay: a soldier with a rifle on a lamp-lit street in the Neon District map at dusk.",
+    date: "October 10, 2026",
+    description:
+      "New to Firefight? Learn the controls, pick the right weapon for each map, and use cover, crouching and jumping to win your first match against bots.",
+    sections: [
+      {
+        id: "introduction",
+        title: "What is Firefight?",
+        paragraphs: [
+          "Firefight is a free 3D shooter that runs in your browser. There is nothing to download and no account to create: open the page, pick your settings and you are in a match within seconds.",
+          "Every match is a free-for-all against bots. You choose how many players join (from 2 up to 16), how hard the bots are, and whether the match ends at a kill target or when the timer runs out. It is a quick way to get the feel of a real shooter in a five- or ten-minute break."
+        ]
+      },
+      {
+        id: "controls",
+        title: "The Controls You Need to Know",
+        paragraphs: [
+          "Firefight uses the standard shooter layout, so if you have played a PC shooter before, you will feel at home. Click the game window to capture the mouse, then:"
+        ],
+        bullets: [
+          "W, A, S, D to move and the mouse to look and aim",
+          "Left click to fire and right click to aim down the sights",
+          "Shift to sprint, Space to jump and hold C to crouch",
+          "R to reload and E to pick up a weapon dropped by a defeated player",
+          "1 and 2 to switch between your main weapon and your pistol",
+          "V to switch to first-person view and Q to swap the camera to your other shoulder",
+          "Hold Tab to see the scoreboard and press H to show or hide the controls card"
+        ]
+      },
+      {
+        id: "weapons",
+        title: "Choosing Your Weapon",
+        paragraphs: [
+          "Before each match you pick a main weapon, and every loadout also carries a pistol. You are not locked in: you can change your main weapon every time you respawn, so feel free to experiment."
+        ],
+        bullets: [
+          "AK Rifle: the all-rounder. Good at every range but with strong recoil, so fire in short bursts.",
+          "SMG: very fast fire and quicker movement. Deadly up close, weak at range.",
+          "Shotgun: eight pellets per shot that can eliminate in one or two hits at close range. Perfect for alleys and buildings.",
+          "Marksman Rifle: semi-automatic and precise. Two hits eliminate, so aim down the sights and take your time.",
+          "Sniper Rifle: huge damage but slow, and inaccurate on the move. Stop, aim and steady your shot."
+        ]
+      },
+      {
+        id: "maps",
+        title: "The Five Maps",
+        paragraphs: [
+          "Firefight has five maps of different sizes. When you pick a map, the player count adjusts to suit it, or you can choose Random Map and let the game decide."
+        ],
+        bullets: [
+          "Scrapyard (Small, 2–4 players): a cramped junkyard of containers, wrecks and tyre piles. Fast, close-quarters fights.",
+          "Outpost (Medium, 4–8 players): a fortified camp around an abandoned tank, with sandbag rings, watchtowers and four ways in.",
+          "Depot (Large, 6–10 players): a freight depot with rows of containers, warehouses, a central plaza and a park. Long lanes and tight alleys.",
+          "Riverside (Huge, 6–12 players): a valley split by a river, with two towns, farmland and forests joined by a bridge and two fords. Great for sniping.",
+          "Neon District (Huge, 8–16 players): a city at dusk with avenues, alleys, courtyards and a plaza around a neon tower. Close fights in the blocks and long lanes down the streets."
+        ]
+      },
+      {
+        id: "cover-and-movement",
+        title: "Use Cover, Crouching and Jumping",
+        paragraphs: [
+          "The biggest jump in skill comes from using the environment. Low walls, sandbags and crates are real cover: crouch behind them and bullets from the other side cannot reach you. Crouching also tightens your aim, so it is a good habit before taking a long shot.",
+          "Space lets you jump over fences, crates and sandbags, which opens up shortcuts and lets you escape a bad fight. You cannot jump over water, though, so on Riverside plan your crossings at the bridge and the fords."
+        ],
+        bullets: [
+          "Peek, shoot, and drop back behind cover instead of standing in the open",
+          "Swap shoulders with Q when cover is on your other side, so the camera can see around it",
+          "Sprint between cover points, not across open ground while enemies are watching"
+        ]
+      },
+      {
+        id: "pickups",
+        title: "Health Packs, Barrels and Dropped Weapons",
+        paragraphs: [
+          "You start with 150 health. Health packs are scattered around every map; walk over one to heal when you are hurt rather than pushing into the next fight.",
+          "Red explosive barrels are a weapon of their own. Shoot one when an enemy is standing nearby and the blast does the work for you, but keep your own distance. When you defeat someone, their weapon drops on the ground: press E to pick it up if it suits the situation better than yours."
+        ]
+      },
+      {
+        id: "tips",
+        title: "Quick Tips for Your First Win",
+        paragraphs: [
+          "Start with Easy bots and a smaller map to learn the controls, then move up to Normal and Hard once you are landing your shots."
+        ],
+        bullets: [
+          "Watch the hit markers: they confirm when your shots connect, so you know whether to keep firing or reposition",
+          "Reload behind cover, never in the middle of a fight",
+          "Switch to your pistol (2) when your main weapon runs dry at close range; it is faster than reloading",
+          "You get a few seconds of spawn protection after respawning; use them to reach cover",
+          "Try first-person view (V) for precise aiming, and third person for seeing around corners"
+        ]
+      },
+      {
+        id: "conclusion",
+        title: "Final Thoughts",
+        paragraphs: [
+          "Firefight is easy to start and hard to master. Learn one weapon well, use cover every time, and keep an eye out for health packs and barrels, and you will be topping the scoreboard in no time.",
+          "Ready to try it? Jump into a match. It's free, it runs in your browser, and the first match takes seconds to start."
+        ],
+        links: [
+          { label: "Play Firefight", href: "/games/firefight/" },
+          { label: "Read more game guides", href: "/blog/" }
+        ]
+      }
+    ]
+  },
+  {
     ...wildArenaGuide,
     heroImage: true,
     imageAlt: "Wild Arena survival game illustration showing a wilderness campsite, explorer, campfire, and crafting inventory.",
