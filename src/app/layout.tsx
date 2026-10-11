@@ -44,6 +44,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
         <Script src={`${basePath}/animations.js`} strategy="afterInteractive" />
+        <Script id="offline-support" strategy="afterInteractive">
+          {`if ("serviceWorker" in navigator && location.hostname !== "localhost") {
+            navigator.serviceWorker.register("${basePath}/sw.js").catch(function () {});
+          }`}
+        </Script>
       </body>
     </html>
   );
