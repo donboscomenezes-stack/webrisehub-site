@@ -1,9 +1,9 @@
 // WebRiseHub offline support. Pages are fetched from the network first (so visitors
 // always get the latest version when online) and saved as they are visited; when
-// offline, saved pages are shown, and anything never visited shows /offline.html.
+// offline, saved pages are shown, and anything never visited shows /offline.
 // Games with their own service worker (e.g. /games/firefight/) are controlled by it.
-const CACHE = "wrh-v1";
-const PRECACHE = ["/", "/games/", "/blog/", "/offline.html", "/logo.png", "/icon.png", "/games/firefight-card.jpg"];
+const CACHE = "wrh-v2";
+const PRECACHE = ["/", "/games/", "/blog/", "/offline", "/logo.png", "/icon.png", "/games/firefight-card.jpg"];
 const MAX_BYTES = 8 * 1024 * 1024; // don't save very large single files
 
 self.addEventListener("install", (event) => {
@@ -18,7 +18,7 @@ self.addEventListener("activate", (event) => {
 });
 
 async function save(req, res) {
-  if (!res || !res.ok || res.type !== "basic") return;
+  if (!res || !res.ok || res.redirected || res.type !== "basic") return;
   const len = Number(res.headers.get("content-length") || 0);
   if (len > MAX_BYTES) return;
   const c = await caches.open(CACHE);
@@ -41,7 +41,7 @@ self.addEventListener("fetch", (event) => {
       } catch {
         return (await caches.match(req, { ignoreSearch: true }))
           || (await caches.match(url.pathname.endsWith("/") ? url.pathname + "index.html" : url.pathname + "/"))
-          || (await caches.match("/offline.html"));
+          || (await caches.match("/offline"));
       }
     })());
     return;
