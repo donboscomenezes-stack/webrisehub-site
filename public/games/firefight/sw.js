@@ -2,7 +2,7 @@
 // Precaches every file of the build so the solo game works fully offline after
 // the first visit. Paths are relative to this file, so hosting under any
 // sub-path (e.g. /game/) works.
-const VERSION = 'aba571433b5a';
+const VERSION = 'd77e8080f245';
 const PRECACHE = [
  "./",
  "assets/audio-game/music-high.mp3",
@@ -120,7 +120,7 @@ const PRECACHE = [
  "build/barlow-vietnamese-600-normal--rM-LJkj.woff",
  "build/barlow-vietnamese-600-normal-gKnznvH6.woff2",
  "build/index-D1_cGoOP.css",
- "build/index-Dg8Vjl75.js",
+ "build/index-D79OEWat.js",
  "icons/icon-192.png",
  "icons/icon-512.png",
  "manifest.webmanifest"
