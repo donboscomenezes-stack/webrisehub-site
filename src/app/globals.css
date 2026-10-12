@@ -181,68 +181,6 @@ body > * {
     linear-gradient(145deg, #172218, #29351f 52%, #151a13);
 }
 
-.game-art-garden {
-  background: #4d6b34;
-}
-
-.game-art-garden .art-grid {
-  display: none;
-}
-
-.garden-art {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  padding: 20px;
-  overflow: hidden;
-}
-
-.garden-shot {
-  position: absolute;
-  inset: 0;
-  background: url("/games/my-garden-card.jpg") center 45% / cover no-repeat;
-  transition: transform 0.5s ease;
-}
-
-.garden-shot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(20, 30, 14, 0) 40%, rgba(20, 30, 14, 0.82) 100%);
-}
-
-.standard-game-card:hover .garden-shot {
-  transform: scale(1.05);
-}
-
-.garden-art > div {
-  position: relative;
-  z-index: 2;
-}
-
-.garden-art b,
-.garden-art small {
-  display: block;
-}
-
-.garden-art b {
-  color: #fffaf0;
-  font-size: 28px;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: 0.06em;
-  text-shadow: 0 2px 0 #5f7d5a, 0 6px 18px rgba(0, 0, 0, 0.55);
-}
-
-.garden-art small {
-  margin-top: 8px;
-  color: #f3d58a;
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-}
-
 .game-art-firefight {
   background: #0b0d12;
 }

@@ -12,19 +12,10 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm" | "tank" | "firefight" | "garden";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm" | "tank" | "firefight";
 };
 
 const games: Game[] = [
-  {
-    title: "MY GARDEN",
-    category: "Casual",
-    description: "Build a cozy 3D garden farm. Plant pumpkins, watch your farmer tend them, harvest for coins, and decorate. Works offline.",
-    href: "/games/my-garden/",
-    duration: "10-30 min",
-    status: "NEW",
-    accent: "garden"
-  },
   {
     title: "FIREFIGHT",
     category: "Action",

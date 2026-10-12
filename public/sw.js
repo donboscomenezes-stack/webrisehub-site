@@ -1,9 +1,9 @@
 // WebRiseHub offline support. Pages are fetched from the network first (so visitors
 // always get the latest version when online) and saved as they are visited; when
 // offline, saved pages are shown, and anything never visited shows /offline.
-// Games with their own service worker (e.g. /games/firefight/, /games/my-garden/) are controlled by it.
-const CACHE = "wrh-v3";
-const PRECACHE = ["/", "/games/", "/blog/", "/offline", "/logo.png", "/icon.png", "/games/firefight-card.jpg", "/games/my-garden-card.jpg"];
+// Games with their own service worker (e.g. /games/firefight/) are controlled by it.
+const CACHE = "wrh-v4";
+const PRECACHE = ["/", "/games/", "/blog/", "/offline", "/logo.png", "/icon.png", "/games/firefight-card.jpg"];
 const MAX_BYTES = 8 * 1024 * 1024; // don't save very large single files
 
 self.addEventListener("install", (event) => {
