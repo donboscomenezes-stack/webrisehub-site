@@ -181,6 +181,68 @@ body > * {
     linear-gradient(145deg, #172218, #29351f 52%, #151a13);
 }
 
+.game-art-webrisefarm {
+  background: #6cbf48;
+}
+
+.game-art-webrisefarm .art-grid {
+  display: none;
+}
+
+.wfarm-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.wfarm-shot {
+  position: absolute;
+  inset: 0;
+  background: url("/games/webrise-farm-card.jpg") center 45% / cover no-repeat;
+  transition: transform 0.5s ease;
+}
+
+.wfarm-shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(30, 50, 15, 0) 42%, rgba(30, 45, 15, 0.8) 100%);
+}
+
+.standard-game-card:hover .wfarm-shot {
+  transform: scale(1.05);
+}
+
+.wfarm-art > div {
+  position: relative;
+  z-index: 2;
+}
+
+.wfarm-art b,
+.wfarm-art small {
+  display: block;
+}
+
+.wfarm-art b {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-shadow: 0 3px 0 #e88a1a, 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.wfarm-art small {
+  margin-top: 8px;
+  color: #ffe27a;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
 .game-art-firefight {
   background: #0b0d12;
 }

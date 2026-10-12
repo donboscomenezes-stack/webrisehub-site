@@ -3,7 +3,15 @@ export default function GameVisual({ game }: { game: { title: string; accent: st
   return (
     <div className={`game-art game-art-${game.accent}`} aria-hidden="true">
       <div className="art-grid" />
-      {title === "FIREFIGHT" ? (
+      {title === "WEBRISE FARM" ? (
+        <div className="wfarm-art" aria-hidden="true">
+          <span className="wfarm-shot" />
+          <div>
+            <b>WEBRISE FARM</b>
+            <small>COZY 3D FARM · GROW · SHARE A PHOTO</small>
+          </div>
+        </div>
+      ) : title === "FIREFIGHT" ? (
         <div className="firefight-art" aria-hidden="true">
           <span className="firefight-shot" />
           <div>

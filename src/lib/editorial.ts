@@ -19,6 +19,7 @@ export const categories = [
   { slug: "casual", name: "Casual", description: "Low-pressure play and interactive experiments for a different kind of break." },
 ] as const;
 export const games = [
+  { slug: "webrise-farm", title: "Webrise Farm", category: "Casual", categories: ["casual"], description: "Grow crops, raise animals and decorate a cozy 3D farm while your farmers do the work. Snap a photo postcard to share. Works offline.", duration: "10–20 min", accent: "green", label: "Cozy 3D farm" },
   { slug: "firefight", title: "Firefight", category: "Action", categories: ["action"], description: "Realistic 3D shooter. Battle bots across five big maps, from a fortified outpost to a neon city at night.", duration: "5–10 min", accent: "firefight", label: "3D shooter" },
   { slug: "tank-arena", title: "Tank Arena", category: "Action", categories: ["action"], description: "Fast 3D tank battles from 1v1 to 5v5. Pick your tank and weapon, team up with bots, and win the arena.", duration: "3–8 min", accent: "tank", label: "Tank battles" },
   { slug: "let-it-grow", title: "Let It Grow", category: "Casual", categories: ["casual", "action"], description: "Drive a getaway run to earn game cash, buy dreamy land, and build cozy farms for free.", duration: "10–30 min", accent: "farm", label: "Drive & build" },

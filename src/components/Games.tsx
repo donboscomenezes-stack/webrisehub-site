@@ -12,10 +12,19 @@ type Game = {
   href: string;
   duration: string;
   status?: "NEW" | "FEATURED" | "POPULAR";
-  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm" | "tank" | "firefight";
+  accent: "cyan" | "orange" | "purple" | "green" | "red" | "rainbow" | "lime" | "wild" | "geo" | "explorer" | "farm" | "tank" | "firefight" | "webrisefarm";
 };
 
 const games: Game[] = [
+  {
+    title: "WEBRISE FARM",
+    category: "Casual",
+    description: "Grow crops, raise animals and decorate a cozy 3D farm while your farmers do the work. Snap a photo postcard to share. Works offline.",
+    href: "/games/webrise-farm/",
+    duration: "10-20 min",
+    status: "NEW",
+    accent: "webrisefarm"
+  },
   {
     title: "FIREFIGHT",
     category: "Action",

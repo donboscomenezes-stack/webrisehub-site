@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#8fd65a">
+<title>Webrise Farm — A Cozy Little Farm</title>
+<meta name="description" content="Grow crops, raise animals and decorate your own cozy 3D farm in your browser. No sign-up, nothing saved — just snap a photo of your farm and share it!">
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Webrise Farm">
+<script type="importmap">{ "imports": { "three": "./js/lib/three.module.js" } }</script>
+</head>
+<body>
+<div id="game"></div>
+
+<div id="loading"><div class="sun">🌻</div><p>Growing your farm…</p></div>
+
+<!-- TITLE -->
+<div id="title">
+  <div class="title-card">
+    <div class="logo"><span>🌻</span> Webrise Farm</div>
+    <div class="sub">a cozy little farm</div>
+    <label class="name-label" for="farm-input">Name your farm</label>
+    <input id="farm-input" maxlength="26" placeholder="My Little Farm" autocomplete="off">
+    <button id="start-btn" class="primary big">Start Farming 🌱</button>
+    <ul class="perks"><li>🌾 Grow crops</li><li>🐔 Raise animals</li><li>🌷 Decorate</li><li>📸 Share a photo</li></ul>
+    <p class="note">No sign-up · nothing saved · your farm lives in this tab</p>
+    <p class="note tag" id="tag-line"></p>
+  </div>
+</div>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div id="badge">
+    <div class="lvl"><span id="lvl-n">1</span></div>
+    <div class="bi"><div id="farm-name">My Little Farm</div><div class="xp"><div id="xp-fill"></div><span id="xp-text"></span></div></div>
+  </div>
+  <div id="topright">
+    <div id="coins">🪙 <span id="coin-n">0</span></div>
+    <button class="round" id="btn-center" title="Center view">🎯</button>
+    <button class="round" id="btn-sound" title="Sound">🔊</button>
+    <button class="round" id="btn-help" title="How to play">❓</button>
+  </div>
+  <div id="side">
+    <button class="sbtn" id="btn-orders"><span>📋</span><small>Orders</small><i id="orders-badge" class="badge hidden">0</i></button>
+    <button class="sbtn" id="btn-barn"><span>🏠</span><small>Barn</small><i id="barn-badge" class="badge hidden">0</i></button>
+    <button class="sbtn" id="btn-shop"><span>🛒</span><small>Shop</small></button>
+    <button class="sbtn photo" id="btn-photo"><span>📸</span><small>Photo</small></button>
+  </div>
+  <div id="hint" class="hidden"></div>
+  <div id="mini-hint"></div>
+  <div id="toasts"></div>
+  <div id="floats"></div>
+  <div id="seedtray" class="hidden"></div>
+  <div id="toolbar"></div>
+  <div id="jobs" class="hidden"></div>
+  <div id="placebar" class="hidden">
+    <span id="place-name"></span><span id="place-cost"></span>
+    <button id="place-rotate">↻ Rotate</button><button id="place-done" class="primary">Done</button>
+  </div>
+</div>
+
+<!-- PANELS -->
+<div id="overlay" class="hidden"></div>
+
+<!-- PHOTO MODE -->
+<div id="photo-ui" class="hidden">
+  <div id="ph-frame"></div>
+  <div class="ph-top"><span>📸 Photo Mode <small>drag to move · pinch / scroll to zoom</small></span><button id="ph-close" class="round">✕</button></div>
+  <div class="ph-bottom">
+    <div class="ph-rows">
+      <div class="ph-row"><b>Angle</b><button data-o="angle" data-v="hero">Hero</button><button data-o="angle" data-v="iso">Classic</button><button data-o="angle" data-v="low">Low</button><button data-o="angle" data-v="top">Top</button></div>
+      <div class="ph-row"><b>Time</b><button data-o="time" data-v="live">Now</button><button data-o="time" data-v="day">☀️</button><button data-o="time" data-v="golden">🌇</button><button data-o="time" data-v="sunset">🌅</button><button data-o="time" data-v="night">🌙</button></div>
+      <div class="ph-row"><b>Look</b><button data-o="filter" data-v="natural">Natural</button><button data-o="filter" data-v="vivid">Vivid</button><button data-o="filter" data-v="warm">Warm</button><button data-o="filter" data-v="pastel">Pastel</button><button data-o="filter" data-v="retro">Retro</button></div>
+      <div class="ph-row"><b>Frame</b><button data-o="frame" data-v="postcard">Postcard</button><button data-o="frame" data-v="clean">Clean</button></div>
+    </div>
+    <button id="ph-shoot" title="Take photo"><span></span></button>
+  </div>
+  <div id="ph-flash"></div>
+</div>
+<div id="photo-result" class="hidden">
+  <div class="pr-card">
+    <img id="pr-img" alt="Your farm photo">
+    <div class="pr-side">
+      <h2>Looking lovely! 🌻</h2>
+      <ol class="steps"><li>Save or share your photo</li><li>Post it on Instagram</li><li>Tag <b class="ig">@webrisehub</b> so we can see your farm 💛</li></ol>
+      <button id="pr-share" class="primary">📤 Share</button>
+      <button id="pr-save" class="primary">⬇️ Save photo</button>
+      <button id="pr-copy">📋 Copy caption</button>
+      <p id="pr-caption"></p>
+      <div class="pr-row"><button id="pr-retake" class="ghost">Retake</button><button id="pr-done" class="ghost">Back to farm</button></div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

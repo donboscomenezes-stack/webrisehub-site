@@ -2,8 +2,8 @@
 // always get the latest version when online) and saved as they are visited; when
 // offline, saved pages are shown, and anything never visited shows /offline.
 // Games with their own service worker (e.g. /games/firefight/) are controlled by it.
-const CACHE = "wrh-v4";
-const PRECACHE = ["/", "/games/", "/blog/", "/offline", "/logo.png", "/icon.png", "/games/firefight-card.jpg"];
+const CACHE = "wrh-v5";
+const PRECACHE = ["/", "/games/", "/blog/", "/offline", "/logo.png", "/icon.png", "/games/firefight-card.jpg", "/games/webrise-farm-card.jpg"];
 const MAX_BYTES = 8 * 1024 * 1024; // don't save very large single files
 
 self.addEventListener("install", (event) => {
