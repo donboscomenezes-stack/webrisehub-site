@@ -4,6 +4,224 @@ import wildArenaGuide from "./wild-arena-guide.json";
 export type Article = Editorial & { slug: string; minutes: number; game: string; accent: string; image: string; date: string; heroImage?: boolean; imageAlt?: string };
 export const articles: Article[] = [
   {
+  slug: "how-we-build-browser-games-at-webrisehub",
+  title: "How We Build Browser Games at WebRiseHub: From Idea to Instant Play",
+  eyebrow: "Behind the games",
+  minutes: 9,
+  game: "webrise-farm",
+  accent: "purple",
+  image: "/blog/how-we-build-browser-games-at-webrisehub.webp",
+  date: "October 15, 2026",
+  heroImage: true,
+  imageAlt: "How WebRiseHub builds browser games: idea, design, development, testing, and launch, illustrated with WebRise Farm.",
+
+  description:
+    "Go behind the scenes at WebRiseHub and see how we design, build, test, and launch browser games that players can start instantly without downloads or complicated setup.",
+
+  sections: [
+    {
+      id: "introduction",
+      title: "Building Games for the Browser",
+      paragraphs: [
+        "Browser games have one advantage we love: almost anyone can open a link and start playing. There is no large download, no installation process, and no need to wait for an update before jumping into a game.",
+        "That simplicity for the player does not necessarily mean simplicity behind the scenes. A good browser game still needs responsive controls, clear objectives, reliable game logic, optimized assets, thoughtful progression, and enough personality to make someone want to keep playing.",
+        "At WebRiseHub, our goal is to create lightweight browser games that are easy to enter but still feel like complete experiences. Some are designed for a quick five-minute session. Others give players progression, exploration, building, competition, or reasons to return.",
+        "This is how we take a browser game from an early idea to something you can actually play."
+      ]
+    },
+    {
+      id: "start-with-gameplay",
+      title: "1. We Start With the Gameplay, Not the Technology",
+      paragraphs: [
+        "Before thinking about frameworks, animations, menus, or visual effects, we try to answer a much simpler question: what will the player actually do?",
+        "A browser game needs a clear gameplay loop. The player should understand the basic objective quickly and have a reason to perform the next action.",
+        "For a farming game, that loop might involve earning resources, growing the farm, unlocking new possibilities, and deciding what to build next. In a shooting game, the loop could revolve around movement, combat, survival, scoring, and trying to improve the previous result.",
+        "If the core loop is not enjoyable, adding more features rarely fixes the problem. That is why we try to make the basic interaction work before expanding the game around it."
+      ],
+      bullets: [
+        "What does the player do in the first 30 seconds?",
+        "What makes the player want to continue?",
+        "Is the objective understandable without a long tutorial?",
+        "What creates progression or replay value?",
+        "Can the idea work well inside a web browser?"
+      ]
+    },
+    {
+      id: "browser-first",
+      title: "2. We Design Browser-First Experiences",
+      paragraphs: [
+        "A browser game is different from a traditional downloadable PC or console game. Players may arrive from Google, social media, a shared link, or another page on WebRiseHub. That means the distance between discovering a game and actually playing it should be as short as possible.",
+        "We therefore think about the browser from the beginning rather than building a traditional game and treating the web version as an afterthought.",
+        "Loading time matters. Controls matter. Screen size matters. Performance matters. Even the number of steps between opening the page and reaching gameplay matters.",
+        "The ideal experience is simple: open the game, understand what to do, and start playing."
+      ],
+      bullets: [
+        "Fast initial loading",
+        "Clear keyboard, mouse, or touch controls",
+        "Responsive layouts for supported screen sizes",
+        "Minimal interruptions before gameplay",
+        "Readable interfaces and obvious actions",
+        "Performance that remains stable during active gameplay"
+      ]
+    },
+    {
+      id: "prototype",
+      title: "3. We Build the Core Game Loop First",
+      paragraphs: [
+        "Our early versions are not supposed to look finished. They exist to answer whether the game is actually fun.",
+        "We first build the systems that make the idea playable. Depending on the game, that might mean character movement, collisions, shooting, farming actions, resource collection, scoring, timers, enemy behavior, or basic progression.",
+        "At this stage, temporary graphics can be perfectly useful. A beautiful menu does not matter much if movement feels awkward or the main mechanic becomes boring after two minutes.",
+        "Once the core loop works, we have something much more valuable than a concept: we have a playable prototype."
+      ]
+    },
+    {
+      id: "javascript-html5",
+      title: "4. We Use Web Technologies to Make Games Instantly Accessible",
+      paragraphs: [
+        "Modern web technologies make it possible to create surprisingly capable games that run directly inside a browser. HTML5, CSS, and JavaScript can handle interfaces, game logic, animation, input, audio, progression, and many of the systems needed for lightweight web games.",
+        "The exact technical approach depends on the game. A simple puzzle does not need the same architecture as a larger simulation or action game.",
+        "What matters to us is not using technology simply because it is fashionable. We choose an approach based on what the game actually needs and what will give players a reliable experience in the browser.",
+        "Keeping browser game development focused also helps us avoid unnecessary complexity that can increase loading times or make a small game harder to maintain."
+      ],
+      bullets: [
+        "HTML5 for browser-based game experiences",
+        "JavaScript for gameplay logic and interactions",
+        "CSS for interfaces, menus, and responsive presentation",
+        "Canvas and other browser rendering capabilities when appropriate",
+        "Local browser storage for suitable game data and preferences",
+        "Optimized visual and audio assets to reduce unnecessary loading"
+      ]
+    },
+    {
+      id: "no-signup",
+      title: "5. We Try to Remove Friction Before the Fun Starts",
+      paragraphs: [
+        "One of the ideas behind WebRiseHub is that playing a small web game should not feel like applying for an account.",
+        "For games that do not need an online identity or server-side profile, we prefer to avoid forcing players through unnecessary registration before they can experience the game.",
+        "That creates a very different first interaction. Instead of landing on a game and immediately seeing a form, the player can discover how the game works first.",
+        "Some game concepts may eventually require accounts for features such as synchronized progress, persistent multiplayer identities, competitive rankings, or cross-device data. But when an account is not necessary for the experience, we would rather keep the path to gameplay short."
+      ]
+    },
+    {
+      id: "game-systems",
+      title: "6. We Build Systems That Make Simple Games Feel Deeper",
+      paragraphs: [
+        "The first mechanic gets someone into a game. The surrounding systems are often what make them stay.",
+        "Once the main gameplay feels right, we look at ways to create meaningful progression without turning the experience into a collection of unnecessary features.",
+        "This can include resources, unlocks, upgrades, new environments, increasing difficulty, customization, achievements, different modes, or changing objectives.",
+        "The important part is that each system should support the central experience. More features do not automatically create a better game."
+      ],
+      bullets: [
+        "Progression and unlocks",
+        "Scores and personal challenges",
+        "Resource and currency systems",
+        "Customization",
+        "Different game modes",
+        "Increasing difficulty",
+        "Rewards for exploration or experimentation"
+      ]
+    },
+    {
+      id: "visual-design",
+      title: "7. We Give Every Game Its Own Visual Identity",
+      paragraphs: [
+        "Gameplay comes first, but presentation changes how a game feels from the moment it loads.",
+        "We work on environments, interfaces, typography, animation, feedback, icons, characters, and small visual details that make the experience easier to understand and more enjoyable to interact with.",
+        "Visual feedback is particularly important in games. When a player collects something, scores a point, takes damage, completes an objective, or unlocks an item, the game should communicate that action clearly.",
+        "The aim is not simply to add more effects. It is to make every interaction feel intentional."
+      ]
+    },
+    {
+      id: "performance",
+      title: "8. We Optimize for Browser Performance",
+      paragraphs: [
+        "A browser game cannot be enjoyable if the browser struggles to run it.",
+        "Performance is therefore part of development rather than something we only consider at the end. Images, audio, animations, scripts, game objects, and rendering decisions can all affect how quickly a game loads and how smoothly it runs.",
+        "We try to keep assets appropriate for their actual use, avoid unnecessary processing, and test gameplay under realistic conditions.",
+        "This matters particularly for players using laptops, older hardware, mobile devices, or slower internet connections. A game does not need to push a device to its limits to be entertaining."
+      ],
+      bullets: [
+        "Compressing and resizing game assets",
+        "Avoiding unnecessarily large files",
+        "Reducing expensive operations inside the game loop",
+        "Loading resources only when they are needed where practical",
+        "Testing frame rate during demanding gameplay",
+        "Checking loading behavior on different connections and devices"
+      ]
+    },
+    {
+      id: "testing",
+      title: "9. We Test the Small Things Players Notice Immediately",
+      paragraphs: [
+        "Game testing is more than checking whether the page opens.",
+        "A game can technically work and still feel frustrating. A collision box might be slightly wrong. A button may be difficult to use on a smaller display. An enemy might become stuck. Progress might fail to save. A player may find a completely unexpected way to break a level.",
+        "We test both functionality and experience because players notice these problems much faster than developers sometimes expect.",
+        "We also keep asking a simple question during testing: if we landed on this game for the first time, would we understand what to do?"
+      ],
+      bullets: [
+        "Gameplay and control testing",
+        "Collision and physics behavior",
+        "Scoring and progression logic",
+        "Save and reset behavior where applicable",
+        "Different screen sizes",
+        "Browser compatibility",
+        "Loading and performance",
+        "Edge cases and unexpected player actions"
+      ]
+    },
+    {
+      id: "launch",
+      title: "10. Launch Is Not the End of Development",
+      paragraphs: [
+        "Publishing the game is one milestone, not necessarily the finish line.",
+        "Once real players interact with a game, they often reveal things that internal testing never could. They may use mechanics differently, discover confusing areas, find bugs, or enjoy a feature we originally considered minor.",
+        "That feedback can influence what happens next: balancing difficulty, improving instructions, fixing problems, optimizing performance, adding content, or deciding which game ideas deserve to become larger experiences.",
+        "Web games are particularly useful in this respect because updates can be delivered directly through the website instead of requiring every player to install a new version manually."
+      ]
+    },
+    {
+      id: "why-browser-games",
+      title: "Why We Like Building Browser Games",
+      paragraphs: [
+        "There is something refreshing about a game that starts with a link.",
+        "Browser games make it possible to experiment with ideas without asking players to commit to a download first. Someone can discover a game, play for a few minutes, send it to a friend, and return later from the same browser.",
+        "For us, that accessibility creates room to experiment. We can build farming games, action games, puzzles, casual experiences, and ideas that do not fit neatly into a single category.",
+        "Not every game needs hundreds of hours of content. Sometimes a game only needs one good idea executed well."
+      ]
+    },
+    {
+      id: "future",
+      title: "What We Want to Build Next",
+      paragraphs: [
+        "WebRiseHub is still growing, and so is the type of browser games we want to explore.",
+        "We are interested in deeper progression systems, smarter computer-controlled opponents, competitive modes, creative sandbox mechanics, new casual game concepts, and experiences that give players reasons to come back without creating unnecessary barriers.",
+        "Most importantly, we want WebRiseHub to become a place where you can discover something interesting and start playing it immediately.",
+        "Every new game gives us another opportunity to experiment, learn, and make the next one better."
+      ]
+    },
+    {
+      id: "conclusion",
+      title: "Play a WebRiseHub Game",
+      paragraphs: [
+        "Building a browser game involves much more than putting graphics on a webpage. It starts with a gameplay idea, becomes a prototype, grows through game systems and visual design, and improves through optimization and testing.",
+        "Our philosophy is straightforward: make games easy to access, enjoyable to understand, and worth spending time with.",
+        "If you want to see that approach in action, start with WebRise Farm. Build your farm, grow crops, raise animals, decorate your space, and see what you can create directly from your browser.",
+        "And keep exploring WebRiseHub. We are only getting started."
+      ],
+      links: [
+        {
+          label: "Play WebRise Farm",
+          href: "/games/webrise-farm/"
+        },
+        {
+          label: "Explore More Browser Games",
+          href: "/games/"
+        }
+      ]
+    }
+  ]
+},
+  {
     slug: "firefight-beginners-guide",
     title: "Firefight Beginner's Guide: Maps, Weapons and Tips to Win Your First Match",
     eyebrow: "Game guide",
