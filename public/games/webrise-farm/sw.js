@@ -1,6 +1,6 @@
 // Offline support: on the first visit every game file is cached, so the farm keeps
 // working with no internet. Bump VERSION whenever you change any game file.
-const VERSION = 'webrise-farm-v1';
+const VERSION = 'webrise-farm-v2';
 const FILES = [
   './',
   'fonts/fredoka-latin-400-normal.woff2',

@@ -75,8 +75,27 @@ seedFarm();
 /* ---------------- title screen ---------------- */
 G.cam.set({ target: new THREE.Vector3(0, 0, -2), yaw: 0.2, pitch: 0.5, dist: 58 }, true);
 $('tag-line').textContent = `Snap a photo of your farm & tag ${BRAND.instagram}`;
+// Full screen (hides the browser's address bar on Android / desktop; iPhone Safari doesn't allow it)
+const fsEl = document.documentElement;
+const canFull = !!(fsEl.requestFullscreen || fsEl.webkitRequestFullscreen);
+const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+G.toggleFullscreen = (on = !isFull()) => {
+  try {
+    if (on) (fsEl.requestFullscreen ? fsEl.requestFullscreen({ navigationUI: 'hide' }) : fsEl.webkitRequestFullscreen())?.catch?.(() => {});
+    else (document.exitFullscreen || document.webkitExitFullscreen)?.call(document)?.catch?.(() => {});
+  } catch (e) { }
+};
+if (canFull) {
+  $('btn-full').classList.remove('hidden');
+  $('btn-full').onclick = () => G.toggleFullscreen();
+  const sync = () => { $('btn-full').textContent = isFull() ? '🗗' : '⛶'; setTimeout(G.resize, 120); };
+  document.addEventListener('fullscreenchange', sync); document.addEventListener('webkitfullscreenchange', sync);
+}
+// re-fit after the phone is rotated (some browsers report the new size a moment late)
+addEventListener('orientationchange', () => setTimeout(G.resize, 250));
 $('start-btn').onclick = () => {
   G.audio.unlock();
+  if (mobile && canFull) G.toggleFullscreen(true);
   const n = $('farm-input').value.trim();
   G.ui.setFarmName(n || 'My Little Farm');
   $('title').classList.add('leaving');

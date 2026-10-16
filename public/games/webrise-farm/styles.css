@@ -213,6 +213,39 @@ button:disabled { filter: grayscale(.9) opacity(.55); cursor: default; }
 .pr-row button { flex: 1; }
 
 /* responsive */
+html, body { height: 100dvh; }
+/* phones in landscape: short screens get a compact HUD so nothing is cut off */
+@media (max-height: 520px) {
+  #badge { top: calc(6px + env(safe-area-inset-top)); left: calc(8px + env(safe-area-inset-left)); padding: 3px 12px 3px 3px; }
+  .lvl { width: 34px; height: 34px; } .lvl span { font-size: 17px; }
+  #farm-name { font-size: 13px; } .xp { width: 110px; height: 11px; } #xp-text { font-size: 8px; }
+  #topright { top: calc(6px + env(safe-area-inset-top)); right: calc(84px + env(safe-area-inset-right)); gap: 6px; }
+  #coins { font-size: 15px; padding: 6px 12px; min-width: 0; }
+  .round { width: 34px; height: 34px; font-size: 16px; }
+  #btn-center, #btn-help { display: none; }
+  #side { top: calc(6px + env(safe-area-inset-top)); right: calc(8px + env(safe-area-inset-right)); bottom: auto; transform: none; gap: 6px; }
+  .sbtn { width: 64px; height: calc((100dvh - 12px - 18px) / 4); max-height: 64px; min-height: 44px; border-radius: 16px; flex-direction: row; gap: 4px; }
+  .sbtn span { font-size: 20px; } .sbtn small { font-size: 10px; display: none; }
+  #toolbar { bottom: calc(6px + env(safe-area-inset-bottom)); padding: 4px; gap: 2px; border-radius: 20px; }
+  .tool { width: 52px; height: 48px; border-radius: 14px; } .tool .ti { font-size: 22px; } .tool .tl { font-size: 9px; }
+  .tool.active { transform: translateY(-2px); }
+  #seedtray { bottom: calc(62px + env(safe-area-inset-bottom)); padding: 5px; }
+  .seed { width: 66px; padding: 3px; } .seed .si { font-size: 20px; } .seed .sn { font-size: 11px; } .seed .sc { font-size: 9px; }
+  #jobs, #seedtray:not(.hidden) ~ #jobs { left: calc(8px + env(safe-area-inset-left)); transform: none; bottom: calc(10px + env(safe-area-inset-bottom)); font-size: 12px; padding: 5px 10px; }
+  #seedtray:not(.hidden) ~ #jobs { display: none; }
+  #hint { top: calc(50px + env(safe-area-inset-top)); width: min(480px, 60vw); font-size: 13px; padding: 7px 36px 7px 12px; }
+  #toasts { top: calc(100px + env(safe-area-inset-top)); }
+  #mini-hint { bottom: calc(64px + env(safe-area-inset-bottom)); }
+  .title-card { padding: 14px 20px; } .logo { font-size: 30px; } .sub { margin-bottom: 8px; } .perks { display: none; }
+  #farm-input { padding: 8px 12px; margin-bottom: 10px; font-size: 17px; } .big { font-size: 18px; padding: 10px 24px; }
+  .panel { max-height: calc(100dvh - 16px); } #overlay { padding: 8px; }
+  .ph-top { height: 40px; font-size: 15px; } .ph-top small { display: none; }
+  .ph-bottom { flex-direction: row; padding: 4px 10px calc(4px + env(safe-area-inset-bottom)); gap: 12px; }
+  .ph-rows { grid-template-columns: auto auto; gap: 4px 14px; }
+  .ph-row b { width: 36px; font-size: 10px; } .ph-row button { padding: 4px 9px; font-size: 12px; }
+  #ph-shoot { width: 60px; height: 60px; } #ph-shoot span { width: 46px; height: 46px; }
+  .pr-card { flex-direction: row; } #pr-img { height: calc(100dvh - 60px); width: auto; } .pr-side { width: 260px; gap: 6px; } .steps { display: none; }
+}
 @media (max-width: 700px) {
   .tool { width: 50px; height: 56px; border-radius: 16px; }
   .tool .ti { font-size: 24px; }

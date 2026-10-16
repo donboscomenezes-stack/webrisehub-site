@@ -78,7 +78,8 @@ export class Photo {
   // size the live canvas to exactly the photo's aspect so the preview matches the export
   layout() {
     if (G.mode !== 'photo') return;
-    const top = 64, bottom = innerWidth < 700 ? 210 : 150, pad = 12;
+    const short = innerHeight < 520;
+    const top = short ? 42 : 64, bottom = short ? 86 : innerWidth < 700 ? 210 : 150, pad = short ? 6 : 12;
     const aw = innerWidth - pad * 2, ah = innerHeight - top - bottom;
     const a = this.aspect();
     let w = aw, hh = aw / a; if (hh > ah) { hh = ah; w = ah * a; }
