@@ -5,7 +5,14 @@ import EditorialContent from "@/components/EditorialContent";
 import { articles, articleDate } from "@/lib/journal";
 import { pageMetadata, gamePath, siteUrl } from "@/lib/editorial";
 export const dynamicParams = false;
-export function generateStaticParams() { return articles.map(a => ({ slug: a.slug })); }
+// Dedicated article routes own their exports. Generating the same paths here can
+// overwrite those pages with registry content during a static export.
+const dedicatedArticleSlugs = new Set([
+  "10-quick-games-5-minutes",
+  "15-free-browser-games-no-download",
+  "25-best-browser-games-2026",
+]);
+export function generateStaticParams() { return articles.filter(a => !dedicatedArticleSlugs.has(a.slug)).map(a => ({ slug: a.slug })); }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params; const a = articles.find(a => a.slug === slug); if (!a) return {};
   const meta = pageMetadata(a.title, a.description, `/blog/${slug}/`);

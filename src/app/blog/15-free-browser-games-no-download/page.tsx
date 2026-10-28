@@ -92,7 +92,7 @@ const games: GameEntry[] = [
       "Enter your average daily phone usage and the experience turns those hours into weeks, months, and years. Then experiment with reclaiming that time for reading, exercise, travel, learning, sleep, or other people.",
       "It is part game, part interactive experiment, and part reminder to put your phone down occasionally."
     ],
-    href: "/games/build-life",
+    href: "/games/build-life/",
     actionLabel: "Try Build Life"
   },
   {
@@ -118,7 +118,7 @@ const games: GameEntry[] = [
       "WebRiseHub's browser chess game lets you challenge the computer or play locally with another person. Beginners can practice basic patterns, while experienced players can test openings, tactics, and plans.",
       "It works equally well for a five-minute match or a longer strategic session."
     ],
-    href: "/games/chess",
+    href: "/games/chess/",
     actionLabel: "Play Chess"
   },
   {
@@ -131,7 +131,7 @@ const games: GameEntry[] = [
       "Play X versus 0 and create a winning line before your opponent can block it. The rules are instantly familiar, but each short match still asks you to think one move ahead.",
       "Because rounds are so quick, it is an ideal choice when you only have a minute or two."
     ],
-    href: "/games/x0-arena",
+    href: "/games/x0-arena/",
     actionLabel: "Play X0 Arena"
   },
   {
@@ -358,7 +358,7 @@ export default function FreeBrowserGamesArticle() {
                 <h2>Ready to Play?</h2>
                 <p>You do not need a huge library or an expensive gaming PC to have fun. Sometimes all you need is a browser and a few spare minutes.</p>
                 <p><strong>Pick a game. Start playing. See how high you can score.</strong></p>
-                <a className="article-final-cta" href="/#games">Explore free browser games <ArrowRight size={18} /></a>
+                <a className="article-final-cta" href="/games/">Explore free browser games <ArrowRight size={18} /></a>
               </section>
             </div>
           </div>

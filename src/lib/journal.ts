@@ -1023,24 +1023,175 @@ export const articles: Article[] = [
     ]
   },
   {
-    slug: "10-quick-games-5-minutes", title: "10 Quick Games to Play When You Have 5 Minutes to Spare", eyebrow: "Game guide", minutes: 12, game: "word-lock", accent: "orange", image: "/blog/10-quick-games-5-minutes.png", date: "September 24, 2026",
+    slug: "10-quick-games-5-minutes", title: "10 Quick Browser Games to Play in 5 Minutes", eyebrow: "Game guide", minutes: 12, game: "word-lock", accent: "orange", image: "/blog/10-quick-games-5-minutes.png", date: "September 24, 2026",
     description: "Turn a short break into a complete challenge with ten browser games that start quickly and fit into five minutes.",
     sections: [
-      { id: "observe", title: "Look at the empty space, too", paragraphs: ["When a circle looks wrong, the line is not always the problem. A shape can be smooth but stretched, or round but much smaller than the reference. Before drawing, look at the width and height of the target and how much empty space surrounds it. Imagine the top, bottom, left, and right edges of a box around the circle. Those four points give you a plan for the stroke.", "In Circle Game, Keep reference visible leaves a small version of the target on screen. Use it when learning proportions. Drawing from memory is a different challenge; there is no need to combine both challenges on every attempt."] },
-      { id: "steady", title: "Aim for a deliberate stroke", paragraphs: ["Choose a starting point that feels comfortable and move around the imagined center. If you pause to correct every tiny wobble, it is easy to create a thick patch or a sharp corner. Try a comfortable, continuous movement, then inspect the result before deciding what needs work.", "The game has no speed bonus. The timer shows elapsed time, while the score comes from similarity, size, position, and outline. Rushing the last quarter of the circle will not earn extra points. On a touchscreen, make sure your drawing hand is not obscuring the point where the line should close."] },
-      { id: "feedback", title: "Treat the result as four pieces of feedback", paragraphs: ["Read the individual measures before replaying. A low position result suggests that the drawing is off-center. A low size result suggests that you have covered too much or too little of the board. Shape and outline results point toward the silhouette and how closely the line follows the reference.", "The comparison overlay aligns normalized drawings, so it is useful for inspecting proportions and outline differences. It does not replace the size and position measures, which evaluate different aspects of the original drawing. The overall score gives shape similarity the largest weight, but improving a weak supporting measure can still make a visible difference."] },
-      { id: "practice", title: "Change one variable at a time", bullets: ["Repeat the same shape with roughly the same brush size.", "Choose one target: more even proportions, better centering, or a closer scale.", "Use Undo for a stray stroke and Clear for a fresh attempt.", "Compare the metric you were trying to improve, not only the total.", "Switch to a square or triangle when you want a different challenge."], paragraphs: ["Your best is saved per shape in this browser, so you can return to a familiar target later. The score is a guide to this particular matching task, not a judgment of your creativity. A few focused attempts are usually more interesting than endlessly chasing one percentage."], links: [{ label: "Try Circle Game", href: "/games/circel/" }] },
-    ],
+      {
+            "id": "quick-picks",
+            "title": "Choose your next game",
+            "paragraphs": [
+                  "Choose a short word puzzle, timing challenge or arcade run. Session lengths depend on your pace; chess and survival runs can go beyond five minutes."
+            ]
+      },
+      {
+            "id": "word-lock",
+            "title": "Word Lock",
+            "paragraphs": [
+                  "Guess a five-letter word in six attempts, with Quick Play and Daily Word."
+            ],
+            "links": [
+                  {
+                        "label": "Play Word Lock",
+                        "href": "/games/word-lock/"
+                  }
+            ]
+      },
+      {
+            "id": "lock-in",
+            "title": "Lock In",
+            "paragraphs": [
+                  "Stop the marker in the target and try to maintain your combo."
+            ],
+            "links": [
+                  {
+                        "label": "Play Lock In",
+                        "href": "/games/lock-in/"
+                  }
+            ]
+      },
+      {
+            "id": "circle-game",
+            "title": "Circle Game",
+            "paragraphs": [
+                  "Draw a shape and compare its proportions, position, size and outline."
+            ],
+            "links": [
+                  {
+                        "label": "Play Circle Game",
+                        "href": "/games/circel/"
+                  }
+            ]
+      },
+      {
+            "id": "x0-arena",
+            "title": "X0 Arena",
+            "paragraphs": [
+                  "Play 3D tic-tac-toe against a bot or another person locally."
+            ],
+            "links": [
+                  {
+                        "label": "Play X0 Arena",
+                        "href": "/games/x0-arena/"
+                  }
+            ]
+      },
+      {
+            "id": "stack",
+            "title": "Stack",
+            "paragraphs": [
+                  "Time each drop to build a taller tower."
+            ],
+            "links": [
+                  {
+                        "label": "Play Stack",
+                        "href": "/games/stack/"
+                  }
+            ]
+      },
+      {
+            "id": "dont-touch-red",
+            "title": "Don't Touch Red",
+            "paragraphs": [
+                  "Change direction and avoid red hazards for as long as you can."
+            ],
+            "links": [
+                  {
+                        "label": "Play Don't Touch Red",
+                        "href": "/games/dont-touch-red/"
+                  }
+            ]
+      },
+      {
+            "id": "getaway",
+            "title": "Getaway",
+            "paragraphs": [
+                  "Steer through traffic and try to extend your escape."
+            ],
+            "links": [
+                  {
+                        "label": "Play Getaway",
+                        "href": "/games/getaway/"
+                  }
+            ]
+      },
+      {
+            "id": "cell-rush",
+            "title": "Cell Rush",
+            "paragraphs": [
+                  "Collect protein, grow and survive against rival cells."
+            ],
+            "links": [
+                  {
+                        "label": "Play Cell Rush",
+                        "href": "/games/cell-rush/"
+                  }
+            ]
+      },
+      {
+            "id": "chess",
+            "title": "Chess",
+            "paragraphs": [
+                  "Play the browser bot or share a board locally; a full match may outlast a short break."
+            ],
+            "links": [
+                  {
+                        "label": "Play Chess",
+                        "href": "/games/chess/"
+                  }
+            ]
+      },
+      {
+            "id": "build-life",
+            "title": "Build Life",
+            "paragraphs": [
+                  "Explore an interactive screen-time experiment rather than a competitive score challenge."
+            ],
+            "links": [
+                  {
+                        "label": "Play Build Life",
+                        "href": "/games/build-life/"
+                  }
+            ]
+      }
+],
+
   },
   {
     slug: "15-free-browser-games-no-download", title: "15 Free Browser Games You Can Play Without Downloading Anything", eyebrow: "Game guide", minutes: 13, game: "cell-rush", accent: "green", image: "/blog/15-free-browser-games-no-download.png", date: "September 21, 2026",
     description: "Open a tab and start playing. These quick challenges, puzzles, multiplayer games, and relaxed adventures need no installation.",
     sections: [
-      { id: "scale", title: "Small numbers become easier to see", paragraphs: ["An hour is familiar. A decade is harder to picture. Build Life connects those scales by multiplying the daily phone-time estimate you choose across longer periods. One hour per day becomes seven hours per week and 365 hours over a 365-day year. Converting that annual total into full 24-hour days gives about 15.2 days.", "At four hours a day, the annual total is 1,460 hours. Across ten years, that is 14,600 hours, or about 1.67 years when expressed as continuous 24-hour time. This does not mean you spend entire calendar years doing nothing else; it is another unit for the same accumulated hours."] },
-      { id: "assumptions", title: "Every comparison has assumptions", paragraphs: ["The experiment also expresses time as movies, books, workdays, and other activities. Those comparisons use fixed durations. A movie is modeled as 2.1 hours, a book as six hours, and a workday as eight hours. Real films, books, and working schedules vary, so these numbers are reference points rather than precise forecasts.", "There is another limitation: time is not perfectly interchangeable. Ten spare minutes during a commute are different from a clear afternoon. A visual comparison can help you notice scale without implying that every minute on a phone could have become reading, travel, or concentrated practice."] },
-      { id: "context", title: "Put your estimate in context", paragraphs: ["Phone time can include directions, work, conversations, photos, and entertainment. The experiment does not classify any of it. It also does not connect to your device’s usage report. The input is your estimate, and the output is arithmetic based on that estimate.", "Try comparing nearby settings rather than jumping from one extreme to another. Reducing an estimate by half an hour per day changes the annual total by 182.5 hours. That is a concrete comparison you can inspect without claiming that one number is right for everyone."] },
-      { id: "explore", title: "Use the scenes to ask a better question", paragraphs: ["The day planner, calendar, and longer-term views invite you to imagine alternatives. Instead of asking whether your total is good or bad, ask which parts of it feel worthwhile and which parts you would personally choose differently. The page cannot answer that for you.", "You can explore freely without an account. Inputs remain in the current session and reset when the page reloads. Save a result card if you want a record of one scenario, and review the numbers before sharing it. The experiment is a prompt for reflection, not a measurement service or a personalized recommendation."], links: [{ label: "Explore Build Life", href: "/games/build-life/" }] },
-    ],
+      {
+            "id": "quick-picks",
+            "title": "Choose your next game",
+            "paragraphs": [
+                  "Browser games run in the page without installing a separate app. Choose by controls and device support, and keep an internet connection available unless offline behavior has been verified."
+            ]
+      },
+      {
+            "id": "guide",
+            "title": "The no-download games guide",
+            "paragraphs": [
+                  "The full guide compares fifteen choices, with direct play links and practical advice on choosing a game."
+            ],
+            "links": [
+                  {
+                        "label": "Read the 15-game guide",
+                        "href": "/blog/15-free-browser-games-no-download/"
+                  }
+            ]
+      }
+],
+
   },
   {
     slug: "25-best-browser-games-2026", title: "25 Best Browser Games to Play When You're Bored in 2026", eyebrow: "Game guide", minutes: 18, game: "where-am-i", accent: "purple", image: "/blog/25-best-browser-games-2026.png", date: "September 20, 2026",

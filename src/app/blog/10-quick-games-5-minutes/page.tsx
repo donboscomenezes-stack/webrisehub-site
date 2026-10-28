@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Clock3 } from "lucide-react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
-const title = "10 Quick Games to Play When You Have 5 Minutes to Spare";
+const title = "10 Quick Browser Games to Play in 5 Minutes";
 const description =
   "Discover 10 quick browser games you can start immediately and enjoy in a five-minute break, from word puzzles and strategy to reflex challenges.";
 const publishedAt = "2026-09-24";
@@ -84,7 +84,7 @@ const games: QuickGame[] = [
     name: "X0 Arena",
     bestFor: "Quick strategy",
     time: "1-3 min",
-    href: "/games/x0-arena",
+    href: "/games/x0-arena/",
     intro: [
       "Tic-Tac-Toe is one of the simplest games ever made, which is exactly why it works when time is limited.",
       "X0 Arena gives the familiar game a 3D presentation. Play against a bot at different difficulty levels or challenge another person, with several character and piece styles to choose from."
@@ -149,7 +149,7 @@ const games: QuickGame[] = [
     name: "Chess",
     bestFor: "Strategy",
     time: "3-10 min",
-    href: "/games/chess",
+    href: "/games/chess/",
     intro: [
       "Chess might not sound like a five-minute game, but it can be. A fast match gives you something very different from most casual browser games.",
       "On WebRiseHub, you can challenge the computer or play locally with another person."
@@ -162,7 +162,7 @@ const games: QuickGame[] = [
     name: "Build Life",
     bestFor: "Interactive experience",
     time: "4-6 min",
-    href: "/games/build-life",
+    href: "/games/build-life/",
     intro: [
       "Build Life is more of an interactive experiment than a traditional arcade game.",
       "Enter how much time you spend on your phone each day and see what it adds up to across a week, a year, or even a decade. Then explore what reclaimed time could become, from books and exercise to travel and learning."
@@ -215,7 +215,7 @@ export default function QuickGamesArticle() {
             <a className="article-back" href="/blog"><ArrowLeft size={16} /> All articles</a>
             <p className="article-kicker">Game Guide</p>
             <h1>{title}</h1>
-            <p className="article-deck">Five minutes is enough for a satisfying challenge. These games start quickly, finish cleanly, and fit the small gaps in your day.</p>
+            <p className="article-deck">Pick a word puzzle, drawing attempt or arcade run for a short break. Times are rough guides: a good survival run or a chess match can last longer than five minutes.</p>
             <div className="article-byline">
               <span>By WebRiseHub</span>
               <time dateTime={publishedAt}>September 24, 2026</time>
@@ -314,7 +314,7 @@ export default function QuickGamesArticle() {
                 <h2>Make Those Five Minutes Count</h2>
                 <p>You do not need an entire evening to enjoy a game. Solve one Word Lock puzzle, draw a nearly perfect circle, chase a better Stack score, escape traffic in Getaway, or test your reactions in Lock In.</p>
                 <p>The best quick games let you jump in, have fun, and leave whenever you are ready. Next time you have five minutes to spare, skip the endless scrolling and play a round.</p>
-                <a className="article-final-cta" href="/#games">Explore all games <ArrowRight size={18} /></a>
+                <a className="article-final-cta" href="/games/">Explore all games <ArrowRight size={18} /></a>
               </section>
             </div>
           </div>

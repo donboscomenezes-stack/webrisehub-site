@@ -2,9 +2,12 @@
 // Precaches every file of the build so the solo game works fully offline after
 // the first visit. Paths are relative to this file, so hosting under any
 // sub-path (e.g. /game/) works.
-const VERSION = 'd77e8080f245';
+const VERSION = 'd77e8080f245-chat-3ade1cb95985';
 const PRECACHE = [
  "./",
+ "chat/core.mjs",
+ "chat/chat.mjs",
+ "chat/chat.css",
  "assets/audio-game/music-high.mp3",
  "assets/audio-game/music-low.mp3",
  "assets/audio-game/music-menu.mp3",
