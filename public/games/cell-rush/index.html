@@ -27,20 +27,28 @@
       <canvas id="gameCanvas"></canvas>
 
       <section id="startScreen" class="screen active" aria-labelledby="title">
-        <div class="brand-mark" aria-hidden="true"></div>
-        <h1 id="title">CELL RUSH</h1>
-        <p class="tagline">Eat. Grow. Survive.</p>
-        <label class="name-label" for="playerName">Name</label>
-        <input id="playerName" maxlength="10" autocomplete="off" placeholder="YOU" aria-label="Player name">
-        <button id="playButton" class="primary">PLAY</button>
-        <p class="hint">Mouse, arrow keys, or WASD. Use the thumb stick on mobile.</p>
+        <h1 id="title">Cell Rush</h1>
+        <p class="tagline">Grow your cell and climb the arena ranks.</p>
+        <label class="name-label" for="playerName">Player name</label>
+        <input id="playerName" maxlength="10" autocomplete="off" placeholder="Optional">
+        <label class="name-label mode-label" for="gameMode">Game mode</label>
+        <select id="gameMode">
+          <option value="crown">Crown Hold</option>
+          <option value="score">Score Attack · 90 seconds</option>
+        </select>
+        <p id="modeHint" class="hint">Reach #1 and defend it for 30 seconds.</p>
+        <button id="playButton" class="primary">Enter arena</button>
+        <p class="hint">Move with the mouse, WASD, arrow keys, or touch stick. Space activates Rush. E activates Overdrive at 650 mass.</p>
+        <button id="offlineButton" class="secondary" type="button" hidden>Save for offline play</button>
+        <p id="offlineStatus" class="offline-status" role="status"></p>
       </section>
 
       <section id="gameOverScreen" class="screen" aria-labelledby="gameOverTitle">
-        <h2 id="gameOverTitle">GAME OVER</h2>
+        <h2 id="gameOverTitle">Run complete</h2>
         <div id="finalScore" class="final-score">0</div>
         <div id="statsGrid" class="stats-grid"></div>
-        <button id="againButton" class="primary">PLAY AGAIN</button>
+        <button id="againButton" class="primary">Play again</button>
+        <button id="menuButton" class="secondary" type="button">Choose mode</button>
       </section>
 
       <section id="pauseScreen" class="screen compact" aria-live="polite">
@@ -48,11 +56,12 @@
         <p>Tab hidden. You are safe.</p>
       </section>
 
-      <div id="hud" class="hud" aria-live="polite">
+      <div id="hud" class="hud">
         <div class="score-card">
           <div><span>Score</span><strong id="scoreText">0</strong></div>
           <div><span>Mass</span><strong id="massText">0</strong></div>
           <div><span>Rank</span><strong id="rankText">#1</strong></div>
+          <div id="magnetStatus" hidden><span>Magnet</span><strong id="magnetTimer"></strong></div>
         </div>
         <div class="leaderboard" aria-label="Leaderboard">
           <h2>Top Cells</h2>
@@ -62,14 +71,25 @@
       </div>
 
       <div id="toastLayer" class="toast-layer" aria-live="polite"></div>
+      <div id="objectiveText" class="objective"></div>
       <div id="joystick" class="joystick" aria-label="Movement joystick">
         <div class="joystick-arrows" aria-hidden="true"><span>▲</span><span>◀</span><span>▶</span><span>▼</span></div>
         <div id="joystickThumb" class="joystick-thumb"></div>
       </div>
-      <button id="soundButton" class="icon-button" type="button" aria-pressed="true" aria-label="Toggle sound">♪</button>
+      <div class="audio-controls" role="group" aria-label="Game audio">
+        <button id="soundButton" class="icon-button" type="button" aria-pressed="true">Effects</button>
+        <button id="musicButton" class="icon-button" type="button" aria-pressed="true">Music</button>
+      </div>
+      <button id="rushButton" class="rush-button" type="button" aria-keyshortcuts="Space">
+        <span>Rush</span><span id="rushStatus">Ready</span>
+      </button>
+      <button id="overdriveButton" class="rush-button overdrive-button" type="button" aria-keyshortcuts="E" aria-label="Overdrive, costs 8 percent mass" hidden>
+        <span>Overdrive</span><span>−8%</span>
+      </button>
       <div id="minimap" class="minimap" aria-hidden="true"><canvas id="miniCanvas"></canvas></div>
     </main>
     <script src="./game.js"></script>
+    <script src="./offline.js"></script>
   <details class="webrisehub-game-info" style="position:fixed;bottom:8px;right:8px;z-index:100;max-width:min(420px,calc(100vw - 16px));max-height:50vh;overflow:auto;padding:8px 12px;border-radius:8px;background:#101916;color:white;font:14px/1.6 system-ui"><summary>About Cell Rush · WebRiseHub</summary><p>Collect protein, grow your cell, and outmaneuver rivals in a fast arena. Play free in your browser without downloads or an account.</p><h2>How to play</h2><p>Move with your mouse, arrow keys or WASD; on mobile use the thumb stick. Collect protein to grow and avoid larger rivals.</p><h2>Explore more games</h2><p><a style="color:#b8f365" href="/categories/casual/">Casual games</a> · <a style="color:#b8f365" href="/games/">All games</a> · <a style="color:#b8f365" href="/games/let-it-grow/">Let It Grow</a> · <a style="color:#b8f365" href="/games/little-explorer/">Little Explorer</a> · <a style="color:#b8f365" href="/games/build-life/">Build Life</a></p></details>
 </body>
 </html>

@@ -23,6 +23,16 @@ const CONFIG = {
   initialMass: 120,
   minBotMass: 78,
   maxDt: 0.04,
+  rushDuration: 1.8,
+  rushCooldown: 7,
+  magnetDuration: 8,
+  magnetReach: 250,
+  magnetSpeed: 430,
+  crownDuration: 30,
+  scoreAttackDuration: 90,
+  overdriveMass: 650,
+  overdriveCost: 0.08,
+  rivalMass: 850,
 };
 
 const BOT_NAMES = ["NOVA", "BLOB", "PIXEL", "MILO", "ZEN", "BYTE", "ORBIT", "NEXO", "ACE", "LUNA", "ION", "VEX", "KAI", "JUNO", "MICA", "SOL"];
@@ -83,50 +93,132 @@ class SpatialHash {
   }
 }
 
+// Four bars of A minor, each with a bass note, a pad voicing and a sparse motif.
+const MUSIC_BARS = [
+  { bass: 45, pad: [57, 60, 64, 71], lead: [72, null, null, 76, null, 71, null, 69] },
+  { bass: 41, pad: [57, 60, 64, 65], lead: [null, 72, null, 76, null, null, 77, null] },
+  { bass: 48, pad: [55, 60, 64, 67], lead: [76, null, 79, null, null, 74, null, 72] },
+  { bass: 43, pad: [55, 59, 62, 69], lead: [71, null, null, 74, null, 69, null, null] },
+];
+const MUSIC_STEP = 60 / 112 / 2;
+const noteFrequency = (note) => 440 * 2 ** ((note - 69) / 12);
+
 class AudioManager {
   constructor() {
     this.enabled = localStorage.getItem("cellRush.sound") !== "off";
+    this.musicEnabled = localStorage.getItem("cellRush.music") !== "off";
     this.ctx = null;
     this.lastPellet = 0;
+    this.mix = null;
+    this.musicMix = null;
+    this.musicStep = 0;
+    this.nextMusicNote = 0;
   }
 
   unlock() {
-    if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (this.ctx.state === "suspended") this.ctx.resume();
+    if (!this.enabled && !this.musicEnabled) return;
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    if (!this.ctx) {
+      this.ctx = new AudioContext();
+      this.mix = this.ctx.createGain();
+      this.mix.gain.value = this.enabled ? 0.45 : 0;
+      this.mix.connect(this.ctx.destination);
+    }
+    if (this.ctx.state === "suspended") this.ctx.resume().catch(() => {});
   }
 
   setEnabled(value) {
     this.enabled = value;
     localStorage.setItem("cellRush.sound", value ? "on" : "off");
+    if (this.mix) this.mix.gain.setTargetAtTime(value ? 0.45 : 0, this.ctx.currentTime, 0.015);
+  }
+
+  setMusicEnabled(value) {
+    this.musicEnabled = value;
+    localStorage.setItem("cellRush.music", value ? "on" : "off");
+    if (!value) this.stopMusic();
+  }
+
+  stopMusic() {
+    if (!this.musicMix) return;
+    const mix = this.musicMix;
+    mix.gain.setTargetAtTime(0, this.ctx.currentTime, 0.025);
+    setTimeout(() => mix.disconnect(), 150);
+    this.musicMix = null;
+  }
+
+  updateMusic() {
+    if (!this.musicEnabled || this.ctx?.state !== "running") return;
+    const now = this.ctx.currentTime;
+    if (!this.musicMix) {
+      this.musicMix = this.ctx.createGain();
+      this.musicMix.gain.value = 0.38;
+      this.musicMix.connect(this.ctx.destination);
+      this.nextMusicNote = now + 0.04;
+    }
+    // Recover gracefully from a delayed frame without replaying missed notes.
+    if (this.nextMusicNote < now) this.nextMusicNote = now + 0.015;
+    while (this.nextMusicNote < now + 0.12) {
+      const beat = this.musicStep % 8;
+      const { bass, pad, lead } = MUSIC_BARS[Math.floor(this.musicStep / 8)];
+      const time = this.nextMusicNote;
+      const mix = this.musicMix;
+      if (beat === 0) {
+        for (const note of pad) this.voice(time, noteFrequency(note), noteFrequency(note), 2.12, 0.032, mix, 0.35);
+      }
+      if (beat === 0 || beat === 3 || beat === 6) {
+        const pitch = noteFrequency(beat === 6 ? bass + 12 : bass);
+        this.voice(time, pitch, pitch, 0.24, 0.16, mix, 0.035, "triangle");
+      }
+      if (beat % 2 === 0) this.voice(time, 110, 47, 0.14, 0.095, mix, 0.012);
+      if (lead[beat] !== null) {
+        const pitch = noteFrequency(lead[beat]);
+        this.voice(time, pitch, pitch, 0.48, 0.055, mix, 0.028);
+        this.voice(time + MUSIC_STEP, pitch, pitch, 0.33, 0.017, mix, 0.025);
+      }
+      this.musicStep = (this.musicStep + 1) % (MUSIC_BARS.length * 8);
+      this.nextMusicNote += MUSIC_STEP;
+    }
   }
 
   blip(type) {
     if (!this.enabled) return;
-    this.unlock();
-    if (!this.ctx) return;
+    if (this.ctx?.state !== "running") return;
     const now = this.ctx.currentTime;
-    if (type === "pellet" && now - this.lastPellet < 0.055) return;
+    if (type === "pellet" && now - this.lastPellet < 0.105) return;
     if (type === "pellet") this.lastPellet = now;
     const table = {
-      pellet: [360, 0.025, 0.018],
-      gold: [640, 0.08, 0.045],
-      eat: [170, 0.14, 0.08],
-      power: [520, 0.12, 0.06],
-      danger: [110, 0.1, 0.04],
-      death: [72, 0.25, 0.09],
-      record: [760, 0.2, 0.06],
+      pellet: [[390, 230, 0.045, 0.025, 0]],
+      gold: [[440, 440, 0.13, 0.07, 0], [659, 659, 0.18, 0.045, 0.055]],
+      eat: [[155, 70, 0.23, 0.15, 0], [310, 210, 0.095, 0.05, 0.025]],
+      power: [[262, 392, 0.14, 0.07, 0], [392, 523, 0.18, 0.045, 0.05]],
+      rush: [[100, 225, 0.22, 0.12, 0], [230, 350, 0.18, 0.035, 0.025]],
+      overdrive: [[65, 230, 0.36, 0.15, 0], [130, 375, 0.28, 0.06, 0.04]],
+      magnet: [[349, 440, 0.25, 0.065, 0], [523, 587, 0.28, 0.055, 0.055]],
+      danger: [[145, 115, 0.16, 0.045, 0]],
+      death: [[220, 98, 0.46, 0.12, 0], [330, 146, 0.32, 0.065, 0.055]],
+      rival: [[98, 98, 0.28, 0.11, 0], [147, 145, 0.38, 0.08, 0.14]],
+      record: [[392, 392, 0.2, 0.07, 0], [494, 494, 0.24, 0.08, 0.09], [587, 587, 0.32, 0.075, 0.18]],
     };
-    const [freq, dur, gain] = table[type] || table.pellet;
-    const osc = this.ctx.createOscillator();
-    const g = this.ctx.createGain();
-    osc.type = type === "death" ? "sawtooth" : "sine";
-    osc.frequency.setValueAtTime(freq, now);
-    osc.frequency.exponentialRampToValueAtTime(Math.max(45, freq * 0.72), now + dur);
-    g.gain.setValueAtTime(gain, now);
-    g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
-    osc.connect(g).connect(this.ctx.destination);
-    osc.start(now);
-    osc.stop(now + dur + 0.02);
+    for (const [from, to, duration, level, delay] of table[type] || table.pellet) {
+      this.voice(now + delay, from, to, duration, level, this.mix, Math.min(0.03, duration / 4));
+    }
+  }
+
+  voice(start, from, to, duration, level, mix, attack, wave = "sine") {
+    const end = start + duration;
+    const oscillator = this.ctx.createOscillator();
+    const envelope = this.ctx.createGain();
+    oscillator.type = wave;
+    oscillator.frequency.setValueAtTime(from, start);
+    oscillator.frequency.exponentialRampToValueAtTime(to, end);
+    envelope.gain.setValueAtTime(0.0001, start);
+    envelope.gain.exponentialRampToValueAtTime(level, start + attack);
+    envelope.gain.exponentialRampToValueAtTime(0.0001, end);
+    oscillator.connect(envelope).connect(mix);
+    oscillator.start(start);
+    oscillator.stop(end);
   }
 }
 
@@ -136,8 +228,14 @@ class StorageManager {
     this.records = JSON.parse(localStorage.getItem(this.key) || "{}");
   }
 
-  save(stats) {
+  save(stats, mode, won) {
     const before = JSON.stringify(this.records);
+    if (mode === "score") {
+      this.records.scoreAttackBest = Math.max(this.records.scoreAttackBest || 0, stats.score);
+      localStorage.setItem(this.key, JSON.stringify(this.records));
+      return before !== JSON.stringify(this.records);
+    }
+    if (won) this.records.crownWins = (this.records.crownWins || 0) + 1;
     this.records.bestScore = Math.max(this.records.bestScore || 0, stats.score);
     this.records.largestMass = Math.max(this.records.largestMass || 0, stats.maxMass);
     this.records.mostCells = Math.max(this.records.mostCells || 0, stats.cellsEaten);
@@ -310,6 +408,10 @@ class Cell {
     this.alive = true;
     this.wobble = rand(0, TAU);
     this.boostTime = 0;
+    this.rushTime = 0;
+    this.overdrive = false;
+    this.rushCooldown = 0;
+    this.magnetTime = 0;
     this.shieldTime = 0;
     this.stunTime = 0;
     this.decisionTimer = 0;
@@ -328,13 +430,18 @@ class Cell {
   }
 
   speed() {
-    const base = 340 / (1 + Math.sqrt(this.mass) * 0.035);
+    const base = 265 - 120 * this.mass / (this.mass + 400);
+    if (this.rushTime > 0) return base * (this.overdrive ? 2.55 : 1.8);
     const boost = this.boostTime > 0 ? 1.52 : 1;
-    return clamp(base * boost, 58, 270);
+    return base * boost;
   }
 
   update(dt, world) {
     this.boostTime = Math.max(0, this.boostTime - dt);
+    this.rushTime = Math.max(0, this.rushTime - dt);
+    if (this.rushTime === 0) this.overdrive = false;
+    this.rushCooldown = Math.max(0, this.rushCooldown - dt);
+    this.magnetTime = Math.max(0, this.magnetTime - dt);
     this.shieldTime = Math.max(0, this.shieldTime - dt);
     this.stunTime = Math.max(0, this.stunTime - dt);
     this.displayMass = lerp(this.displayMass, this.mass, 1 - Math.exp(-dt * 8));
@@ -344,11 +451,12 @@ class Cell {
     const dx = this.target.x - this.x;
     const dy = this.target.y - this.y;
     const dist = Math.hypot(dx, dy) || 1;
-    const desire = clamp(dist / 240, 0, 1);
+    const desire = clamp(dist / (this.player ? 120 : 240), 0, 1);
     const maxSpeed = this.speed() * desire * (this.stunTime > 0 ? 0.36 : 1);
     const desiredVx = (dx / dist) * maxSpeed;
     const desiredVy = (dy / dist) * maxSpeed;
-    const inertia = 1 - Math.exp(-dt * clamp(7 - Math.sqrt(this.mass) * 0.045, 2.2, 7));
+    const response = this.rushTime > 0 ? 11 : 7 - 2.5 * this.mass / (this.mass + 550);
+    const inertia = 1 - Math.exp(-dt * response);
     this.vx = lerp(this.vx, desiredVx, inertia);
     this.vy = lerp(this.vy, desiredVy, inertia);
     this.x += this.vx * dt;
@@ -375,6 +483,14 @@ class BotAI {
       const edgeNudge = this.edgeVector(bot, world);
       bot.target = { x: bot.x + dx * 2.2 + edgeNudge.x, y: bot.y + dy * 2.2 + edgeNudge.y };
       bot.state = "FLEE";
+      return;
+    }
+
+    const crownGold = this.nearest(bot, world.powerups.filter((pickup) =>
+      pickup.crownGold && distSq(bot, pickup) < scan * scan));
+    if (crownGold) {
+      bot.target = crownGold;
+      bot.state = "FEED";
       return;
     }
 
@@ -494,6 +610,7 @@ class World {
       this.food.push(this.createFood(this.player.x + Math.cos(a) * d, this.player.y + Math.sin(a) * d));
     }
     this.powerups.push(this.createPowerup("gold", this.player.x + 420, this.player.y - 160));
+    this.powerups.push(this.createPowerup("magnet", this.player.x - 330, this.player.y + 130));
   }
 
   createFood(x = rand(60, this.size - 60), y = rand(60, this.size - 60)) {
@@ -513,11 +630,12 @@ class World {
     };
   }
 
-  createPowerup(type = pick(["speed", "shield", "gold"]), x = rand(160, this.size - 160), y = rand(160, this.size - 160)) {
+  createPowerup(type, x = rand(160, this.size - 160), y = rand(160, this.size - 160)) {
     const meta = {
       speed: { r: 10, color: "#60a5fa", value: 5 },
       shield: { r: 11, color: "#a78bfa", value: 4 },
       gold: { r: 12, color: "#f6c453", value: 12 },
+      magnet: { r: 12, color: "#82dcca", value: 4 },
     }[type];
     return { x, y, type, ...meta, pulse: rand(0, TAU) };
   }
@@ -564,6 +682,35 @@ class World {
     return bot;
   }
 
+  spawnRival(mass) {
+    const { x, y } = this.player;
+    const angle = Math.atan2(this.size / 2 - y, this.size / 2 - x) + rand(-0.7, 0.7);
+    const distance = Math.max(740, this.player.radius * 3);
+    const rival = new Cell({
+      x: clamp(x + Math.cos(angle) * distance, 240, this.size - 240),
+      y: clamp(y + Math.sin(angle) * distance, 240, this.size - 240),
+      mass,
+      name: "APEX",
+      color: "#ef8d70",
+      personality: "HUNTER",
+    });
+    rival.rival = true;
+    rival.decisionTimer = 0;
+    this.bots.push(rival);
+    this.cells.push(rival);
+  }
+
+  spawnCrownGold() {
+    const angle = rand(0, TAU);
+    const distance = this.player.radius + rand(215, 365);
+    const x = clamp(this.player.x + Math.cos(angle) * distance, 40, this.size - 40);
+    const y = clamp(this.player.y + Math.sin(angle) * distance, 40, this.size - 40);
+    const pickup = this.createPowerup("gold", x, y);
+    pickup.crownGold = true;
+    pickup.life = 9;
+    this.powerups.push(pickup);
+  }
+
   update(dt) {
     const player = this.player;
     const movement = this.game.input.movement();
@@ -580,12 +727,35 @@ class World {
     }
 
     for (const cell of this.cells) cell.update(dt, this);
-    this.handleFood(dt);
     this.handlePowerups(dt);
+    this.attractFood(dt);
+    this.handleFood();
     this.handleHazards(dt);
     this.handleCellConsumption();
     this.replenish(dt);
     this.cells = [this.player, ...this.bots].filter((c) => c.alive);
+  }
+
+  attractFood(dt) {
+    const targets = new Map();
+    for (const cell of this.cells) {
+      if (cell.magnetTime <= 0) continue;
+      const reach = cell.radius + CONFIG.magnetReach;
+      for (const food of this.foodHash.query(cell.x, cell.y, reach)) {
+        const distanceSquared = distSq(food, cell);
+        if (distanceSquared > reach * reach || distanceSquared === 0) continue;
+        const current = targets.get(food);
+        if (!current || distanceSquared < current.distanceSquared) {
+          targets.set(food, { cell, distanceSquared });
+        }
+      }
+    }
+    for (const [food, { cell, distanceSquared }] of targets) {
+      const fraction = Math.min(1, CONFIG.magnetSpeed * dt / Math.sqrt(distanceSquared));
+      food.x = lerp(food.x, cell.x, fraction);
+      food.y = lerp(food.y, cell.y, fraction);
+    }
+    if (targets.size > 0) this.foodHash.rebuild(this.food);
   }
 
   handleFood() {
@@ -618,17 +788,27 @@ class World {
 
   handlePowerups(dt) {
     for (const p of this.powerups) {
+      if (p.crownGold) {
+        p.life -= dt;
+        if (p.life <= 0) {
+          p.dead = true;
+          continue;
+        }
+      }
       p.pulse += dt * 4;
       for (const cell of this.cells) {
         const d = cell.radius + p.r;
         if (distSq(cell, p) < d * d) {
           p.dead = true;
-          if (p.type === "speed") cell.boostTime = Math.max(cell.boostTime, 2.1);
+          if (p.type === "speed") cell.boostTime = Math.max(cell.boostTime, 3.2);
+          if (p.type === "magnet") cell.magnetTime = CONFIG.magnetDuration;
           if (p.type === "shield") cell.shieldTime = Math.max(cell.shieldTime, 2.8);
-          if (p.type === "gold") cell.addMass(cell.player ? 24 : 16);
+          if (p.type === "gold") cell.addMass(p.crownGold ? (cell.player ? 55 : 85) : (cell.player ? 24 : 16));
           if (cell.player) {
-            this.game.audio.blip(p.type === "gold" ? "gold" : "power");
-            this.game.toast(p.type === "speed" ? "SPEED" : p.type === "shield" ? "SHIELD" : "BONUS +120");
+            if (p.type === "speed") cell.rushCooldown = 0;
+            this.game.audio.blip(p.type === "gold" || p.type === "magnet" ? p.type : "power");
+            const pickupLabel = { speed: "SPEED · RUSH RECHARGED", shield: "SHIELD", gold: "BONUS +120", magnet: "FOOD MAGNET" };
+            this.game.toast(pickupLabel[p.type]);
             this.game.stats.score += p.type === "gold" ? 120 : 35;
             this.game.particles.burst(p.x, p.y, p.color, 18, 160);
           }
@@ -689,11 +869,14 @@ class World {
       this.game.stats.cellsEaten++;
       this.game.stats.streak++;
       const points = Math.round(small.mass * 9);
-      this.game.stats.score += points;
+      const multiplier = this.game.mode === "score" ? Math.min(4, this.game.stats.streak) : 1;
+      this.game.stats.bestCombo = Math.max(this.game.stats.bestCombo || 1, multiplier);
+      this.game.stats.score += points * multiplier;
       this.game.stats.lastEatAt = this.game.elapsed;
       this.game.camera.bump(small.mass > 300 ? 0.9 : 0.45);
       this.game.audio.blip("eat");
-      this.game.toast(small.mass > 300 ? `DEVOUR +${points}` : `${this.game.stats.streak} EATS`);
+      this.game.toast(multiplier > 1 ? `${multiplier}× COMBO · +${format(points * multiplier)}` :
+        small.mass > 300 ? `DEVOUR +${points}` : `${this.game.stats.streak} EATS`);
     } else if (small.player) {
       this.game.killPlayer(big);
     }
@@ -709,7 +892,7 @@ class World {
     this.foodHash.rebuild(this.food);
     this.specialTimer -= dt;
     if (this.specialTimer <= 0 && this.powerups.length < 5) {
-      this.powerups.push(this.createPowerup(Math.random() < 0.48 ? "gold" : Math.random() < 0.72 ? "speed" : "shield"));
+      this.powerups.push(this.createPowerup(pick(["gold", "gold", "speed", "shield", "magnet"])));
       this.specialTimer = rand(5, 10);
     }
     if (this.respawnQueue > 0 && Math.random() < dt * 1.2) {
@@ -738,7 +921,7 @@ class UIManager {
       .filter((c) => c.alive)
       .sort((a, b) => b.mass - a.mass);
     const playerRank = ranked.indexOf(player) + 1;
-    this.game.stats.bestRank = Math.min(this.game.stats.bestRank, playerRank || 99);
+    if (playerRank) this.game.stats.bestRank = Math.min(this.game.stats.bestRank, playerRank);
     this.scoreText.textContent = format(this.game.stats.score);
     this.massText.textContent = format(player.mass);
     this.rankText.textContent = `#${playerRank}`;
@@ -747,11 +930,16 @@ class UIManager {
       const li = document.createElement("li");
       const row = document.createElement("div");
       row.className = "row";
-      row.innerHTML = `<span>${cell.name}</span><strong>${format(cell.score)}</strong>`;
+      const name = document.createElement("span");
+      name.textContent = cell.name;
+      const mass = document.createElement("strong");
+      mass.textContent = format(cell.mass);
+      row.append(name, mass);
       li.appendChild(row);
       this.leaderboardList.appendChild(li);
     }
     this.outside.textContent = playerRank > 5 ? `${player.name} - #${playerRank}` : "";
+    return playerRank;
   }
 
   showGameOver(records, isRecord) {
@@ -762,8 +950,8 @@ class UIManager {
       ["Cells Eaten", format(s.cellsEaten)],
       ["Best Rank", `#${s.bestRank}`],
       ["Survived", this.formatTime(s.survival)],
-      ["Best Score", format(records.bestScore || s.score)],
-      ["Longest", this.formatTime(records.longestSurvival || s.survival)],
+      ["Best Score", format((this.game.mode === "score" ? records.scoreAttackBest : records.bestScore) || s.score)],
+      this.game.mode === "score" ? ["Best Combo", `${s.bestCombo || 1}×`] : ["Crown Wins", format(records.crownWins || 0)],
     ];
     this.statsGrid.innerHTML = fields.map(([label, value]) => `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`).join("");
     if (isRecord) this.game.toast("NEW RECORD");
@@ -791,7 +979,9 @@ class Renderer {
     ctx.scale(camera.zoom * this.game.dpr, camera.zoom * this.game.dpr);
     ctx.translate(-camera.x, -camera.y);
     this.drawArena(ctx, world);
-    this.drawFood(ctx, world.food);
+    const halfWidth = canvas.width / (2 * camera.zoom * this.game.dpr);
+    const halfHeight = canvas.height / (2 * camera.zoom * this.game.dpr);
+    this.drawFood(ctx, world.food, camera, halfWidth, halfHeight);
     this.drawPowerups(ctx, world.powerups);
     this.drawHazards(ctx, world.hazards);
     this.game.particles.render(ctx);
@@ -826,8 +1016,9 @@ class Renderer {
     ctx.strokeRect(8, 8, world.size - 16, world.size - 16);
   }
 
-  drawFood(ctx, food) {
+  drawFood(ctx, food, camera, halfWidth, halfHeight) {
     for (const f of food) {
+      if (Math.abs(f.x - camera.x) > halfWidth + 36 || Math.abs(f.y - camera.y) > halfHeight + 36) continue;
       ctx.save();
       ctx.translate(f.x, f.y);
       ctx.rotate(f.rotation);
@@ -894,6 +1085,16 @@ class Renderer {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, TAU);
       ctx.fill();
+      if (p.type === "magnet") {
+        ctx.strokeStyle = "#101720";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(p.x - 5, p.y - 5);
+        ctx.lineTo(p.x - 5, p.y + 1);
+        ctx.arc(p.x, p.y + 1, 5, Math.PI, 0, true);
+        ctx.lineTo(p.x + 5, p.y - 5);
+        ctx.stroke();
+      }
       ctx.globalAlpha = 1;
     }
   }
@@ -926,9 +1127,27 @@ class Renderer {
   drawCell(ctx, cell) {
     const wobble = Math.sin(cell.wobble) * clamp(cell.radius * 0.018, 0.4, 2.2);
     const r = cell.radius + wobble;
+    if (cell.magnetTime > 0) {
+      ctx.strokeStyle = "rgba(130, 220, 202, 0.3)";
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 8]);
+      ctx.beginPath();
+      ctx.arc(cell.x, cell.y, cell.radius + CONFIG.magnetReach, 0, TAU);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
     const grad = ctx.createRadialGradient(cell.x - r * 0.34, cell.y - r * 0.38, r * 0.1, cell.x, cell.y, r);
-    grad.addColorStop(0, "#ffffff");
-    grad.addColorStop(0.08, cell.color);
+    if (cell.rushTime > 0 && !this.game.reducedMotion) {
+      ctx.fillStyle = cell.color;
+      for (const [lag, opacity] of [[0.16, 0.12], [0.09, 0.24]]) {
+        ctx.globalAlpha = opacity;
+        ctx.beginPath();
+        ctx.arc(cell.x - cell.vx * lag, cell.y - cell.vy * lag, r, 0, TAU);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    grad.addColorStop(0, cell.color);
     grad.addColorStop(1, this.darken(cell.color, 0.58));
     ctx.fillStyle = grad;
     ctx.beginPath();
@@ -944,7 +1163,7 @@ class Renderer {
       ctx.arc(cell.x, cell.y, r + 9, 0, TAU);
       ctx.stroke();
     }
-    if (cell.boostTime > 0) {
+    if (cell.boostTime > 0 || cell.rushTime > 0) {
       ctx.strokeStyle = "rgba(96,165,250,0.7)";
       ctx.lineWidth = 3;
       ctx.beginPath();
@@ -1031,19 +1250,53 @@ class Game {
     this.gameOverScreen = document.getElementById("gameOverScreen");
     this.pauseScreen = document.getElementById("pauseScreen");
     this.playerName = document.getElementById("playerName");
+    this.modeSelect = document.getElementById("gameMode");
+    const modeHint = document.getElementById("modeHint");
+    this.modeSelect.addEventListener("change", () => {
+      modeHint.textContent = this.modeSelect.value === "score"
+        ? "Chain rival takedowns for up to 4× points before time runs out."
+        : "Reach #1 and defend it for 30 seconds.";
+    });
+    this.objectiveText = document.getElementById("objectiveText");
+    this.gameOverTitle = document.getElementById("gameOverTitle");
+    this.rushButton = document.getElementById("rushButton");
+    this.overdriveButton = document.getElementById("overdriveButton");
+    this.rushStatus = document.getElementById("rushStatus");
+    this.magnetStatus = document.getElementById("magnetStatus");
+    this.magnetTimer = document.getElementById("magnetTimer");
+    this.rushButton.addEventListener("click", () => this.activateRush());
+    this.overdriveButton.addEventListener("click", () => this.activateRush(true));
+    addEventListener("keydown", (event) => {
+      if (!["Space", "KeyE"].includes(event.code) || !this.running ||
+          event.target.closest?.("input, select") ||
+          (event.code === "Space" && event.target.closest?.("button, a, summary"))) return;
+      event.preventDefault();
+      if (!event.repeat) this.activateRush(event.code === "KeyE");
+    });
     document.getElementById("playButton").addEventListener("click", () => this.start());
     document.getElementById("againButton").addEventListener("click", () => this.start());
+    document.getElementById("menuButton").addEventListener("click", () => {
+      this.gameOverScreen.classList.remove("active");
+      this.startScreen.classList.add("active");
+      this.modeSelect.focus();
+    });
     this.playerName.addEventListener("keydown", (e) => {
       if (e.key === "Enter") this.start();
     });
     const soundButton = document.getElementById("soundButton");
     soundButton.setAttribute("aria-pressed", String(this.audio.enabled));
-    soundButton.textContent = this.audio.enabled ? "♪" : "×";
     soundButton.addEventListener("click", () => {
       this.audio.setEnabled(!this.audio.enabled);
       soundButton.setAttribute("aria-pressed", String(this.audio.enabled));
-      soundButton.textContent = this.audio.enabled ? "♪" : "×";
+      this.audio.unlock();
       if (this.audio.enabled) this.audio.blip("power");
+    });
+    const musicButton = document.getElementById("musicButton");
+    musicButton.setAttribute("aria-pressed", String(this.audio.musicEnabled));
+    musicButton.addEventListener("click", () => {
+      this.audio.setMusicEnabled(!this.audio.musicEnabled);
+      musicButton.setAttribute("aria-pressed", String(this.audio.musicEnabled));
+      this.audio.unlock();
     });
   }
 
@@ -1057,6 +1310,7 @@ class Game {
 
   start() {
     this.audio.unlock();
+    this.audio.musicStep = 0;
     const name = (this.playerName.value || "YOU").trim().slice(0, 10).toUpperCase() || "YOU";
     this.stats = {
       score: 0,
@@ -1068,21 +1322,63 @@ class Game {
       lastEatAt: 0,
     };
     this.elapsed = 0;
+    this.mode = this.modeSelect.value;
+    this.crownHeld = 0;
+    this.crownDropTimer = 0;
+    this.rivalSpawned = false;
     this.dead = false;
     this.running = true;
     document.getElementById("gameShell").classList.add("playing");
     this.world.reset(name);
+    this.updateRushControl();
+    this.updateObjective(0, 0);
     this.camera.x = this.world.player.x;
     this.camera.y = this.world.player.y;
     this.camera.zoom = 1.14;
     this.startScreen.classList.remove("active");
     this.gameOverScreen.classList.remove("active");
     this.pauseScreen.classList.remove("active");
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+  }
+
+  activateRush(overdrive = false) {
+    if (!this.running || this.dead) return;
+    const player = this.world.player;
+    if (player.rushCooldown > 0 || player.rushTime > 0) return;
+    if (overdrive && player.mass < CONFIG.overdriveMass) return;
+    if (overdrive) player.addMass(-player.mass * CONFIG.overdriveCost);
+    player.overdrive = overdrive;
+    player.rushTime = CONFIG.rushDuration + (overdrive ? 0.65 : 0);
+    player.rushCooldown = CONFIG.rushCooldown;
+    this.audio.blip(overdrive ? "overdrive" : "rush");
+    this.updateRushControl();
+  }
+
+  updateRushControl() {
+    const player = this.world.player;
+    const magnetSeconds = Math.ceil(player.magnetTime);
+    this.magnetStatus.hidden = magnetSeconds === 0;
+    if (magnetSeconds > 0 && this.magnetTimer.textContent !== `${magnetSeconds}s`) {
+      this.magnetTimer.textContent = `${magnetSeconds}s`;
+    }
+    const ready = player.rushCooldown === 0 && player.rushTime === 0;
+    const overdriveLocked = player.mass < CONFIG.overdriveMass;
+    if (this.overdriveButton.hidden !== overdriveLocked) this.overdriveButton.hidden = overdriveLocked;
+    if (this.overdriveButton.getAttribute("aria-disabled") !== String(!ready)) {
+      this.overdriveButton.setAttribute("aria-disabled", String(!ready));
+    }
+    const status = player.rushTime > 0 ? "Active" : ready ? "Ready" : `${Math.ceil(player.rushCooldown)}s`;
+    if (this.rushStatus.textContent !== status) this.rushStatus.textContent = status;
+    if (this.rushButton.getAttribute("aria-disabled") !== String(!ready)) {
+      this.rushButton.setAttribute("aria-disabled", String(!ready));
+    }
+    this.rushButton.style.setProperty("--charge", 1 - player.rushCooldown / CONFIG.rushCooldown);
   }
 
   onVisibility() {
     if (document.hidden && this.running && !this.dead) {
       this.running = false;
+      this.audio.stopMusic();
       this.pauseScreen.classList.add("active");
     } else if (!document.hidden && !this.dead && !this.startScreen.classList.contains("active")) {
       this.running = true;
@@ -1101,14 +1397,53 @@ class Game {
   }
 
   update(dt) {
+    this.audio.updateMusic();
     this.elapsed += dt;
     this.stats.survival = this.elapsed;
-    this.stats.maxMass = Math.max(this.stats.maxMass, this.world.player.mass);
     if (this.elapsed - this.stats.lastEatAt > 3) this.stats.streak = 0;
     this.world.update(dt);
+    this.stats.maxMass = Math.max(this.stats.maxMass, this.world.player.mass);
     this.camera.update(this.world.player, dt, this.reducedMotion);
     this.particles.update(dt);
-    this.ui.update();
+    const rank = this.ui.update();
+    this.updateRushControl();
+    if (!this.dead) this.updateObjective(dt, rank);
+  }
+
+  updateObjective(dt, rank) {
+    if (this.mode === "score") {
+      const left = Math.max(0, Math.ceil(CONFIG.scoreAttackDuration - this.elapsed));
+      this.setObjective(`Score Attack · ${left}s`);
+      if (left === 0) this.finishRun("Time’s up");
+      return;
+    }
+
+    const mass = this.world.player.mass;
+    if (!this.rivalSpawned && (mass >= CONFIG.rivalMass || rank === 1)) {
+      this.world.spawnRival(Math.max(240, mass * 0.9));
+      this.rivalSpawned = true;
+      this.toast("APEX HAS ENTERED THE ARENA");
+      this.audio.blip("rival");
+    }
+    if (rank !== 1) {
+      this.crownHeld = 0;
+      this.crownDropTimer = 0;
+      this.setObjective("Crown Hold · Reach #1");
+      return;
+    }
+    this.crownHeld += dt;
+    this.crownDropTimer -= dt;
+    if (this.crownDropTimer <= 0) {
+      this.world.spawnCrownGold();
+      this.crownDropTimer = 4;
+    }
+    const left = Math.max(0, Math.ceil(CONFIG.crownDuration - this.crownHeld));
+    this.setObjective(`Crown Hold · ${left}s`);
+    if (left === 0) this.finishRun("Crown secured", true);
+  }
+
+  setObjective(text) {
+    if (this.objectiveText.textContent !== text) this.objectiveText.textContent = text;
   }
 
   screenToWorld(clientX, clientY) {
@@ -1118,21 +1453,26 @@ class Game {
   }
 
   killPlayer(killer) {
-    if (this.dead) return;
-    this.dead = true;
-    this.running = false;
-    document.getElementById("gameShell").classList.remove("playing");
     this.audio.blip("death");
     this.camera.bump(1.2);
     this.toast(`EATEN BY ${killer.name}`);
-    setTimeout(() => this.gameOver(), 520);
+    this.finishRun("Run complete", false, 520);
   }
 
-  gameOver() {
-    const isRecord = this.storage.save(this.stats);
-    if (isRecord) this.audio.blip("record");
-    this.ui.showGameOver(this.storage.records, isRecord);
-    this.gameOverScreen.classList.add("active");
+  finishRun(title, won = false, delay = 0) {
+    if (this.dead) return;
+    this.dead = true;
+    this.running = false;
+    this.audio.stopMusic();
+    document.getElementById("gameShell").classList.remove("playing");
+    setTimeout(() => {
+      const isRecord = this.storage.save(this.stats, this.mode, won);
+      if (isRecord || won) this.audio.blip("record");
+      this.gameOverTitle.textContent = title;
+      this.ui.showGameOver(this.storage.records, isRecord);
+      this.gameOverScreen.classList.add("active");
+      document.getElementById("againButton").focus();
+    }, delay);
   }
 
   toast(text) {
@@ -1166,10 +1506,23 @@ class Game {
     }
     ctx.globalAlpha = 0.75;
     for (const b of this.world.bots) {
-      ctx.fillStyle = b.radius > this.world.player.radius * 1.15 ? "#ff6b8a" : "#edf7ff";
-      ctx.beginPath();
-      ctx.arc(b.x * scale, b.y * scale, clamp(b.radius * scale, 1.5, 4.5) * this.dpr, 0, TAU);
-      ctx.fill();
+      if (b.rival) {
+        const x = b.x * scale;
+        const y = b.y * scale;
+        const size = 6 * this.dpr;
+        ctx.fillStyle = b.color;
+        ctx.beginPath();
+        ctx.moveTo(x, y - size);
+        ctx.lineTo(x + size, y);
+        ctx.lineTo(x, y + size);
+        ctx.lineTo(x - size, y);
+        ctx.fill();
+      } else {
+        ctx.fillStyle = b.radius > this.world.player.radius * 1.15 ? "#ff6b8a" : "#edf7ff";
+        ctx.beginPath();
+        ctx.arc(b.x * scale, b.y * scale, clamp(b.radius * scale, 1.5, 4.5) * this.dpr, 0, TAU);
+        ctx.fill();
+      }
     }
     ctx.globalAlpha = 1;
     ctx.fillStyle = "#63ead7";
